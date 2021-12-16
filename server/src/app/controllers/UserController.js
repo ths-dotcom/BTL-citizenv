@@ -8,9 +8,9 @@ class UserController {
 
     // [POST] /api/user/signup
     signup(req, res, next) {
-        const hash = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
-        req.body.password = hash;
-        User.create(req.body)
+        const hash = bcrypt.hashSync(req.body.data.password, SALT_ROUNDS);
+        req.body.data.password = hash;
+        User.create(req.body.data)
             .then(() => res.status(201).json({
                 success: true,
                 message: 'Tạo tài khoản thành công'

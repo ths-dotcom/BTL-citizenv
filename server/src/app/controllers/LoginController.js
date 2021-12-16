@@ -10,11 +10,11 @@ class LoginController {
     async login(req, res, next) {
         const user = await User.findOne({
             where: {
-                username: req.body.username
+                username: req.body.data.username
             }
         });
         if(!user) return next(createHttpError(404, 'Tài khoản không đúng'));
-        bcrypt.compare(req.body.password, user.dataValues.password, function(err, result) {
+        bcrypt.compare(req.body.data.password, user.dataValues.password, function(err, result) {
             if(err) return next(createHttpError(500, 'Lỗi hệ thống'));
             if(result) {
                 const token = encodedToken(user.dataValues.id);

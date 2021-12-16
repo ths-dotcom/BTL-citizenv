@@ -4,7 +4,7 @@ const User = require('../models/User');
 function signupCheck(req, rex, next) {
     User.findOne({
         where: {
-            username: req.body.username
+            username: req.body.data.username
         }
     })
         .then(user => {
