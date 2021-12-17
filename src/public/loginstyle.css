@@ -1,0 +1,140 @@
+
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.body-app{
+    position: relative;
+    background: linear-gradient(90deg,rgba(2,86,125,.1),rgba(2,86,125,.1)),
+    url('https://www.naco.org/sites/default/files/styles/hero_1_up/public/GettyImages-1041512864.jpg?itok=vyzoLZks');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.in-bottom-box{
+    position: absolute;
+    width: 50vw;
+    height: 50vh;
+    min-width: 700px;
+    background: rgba(25,54,70,.45);
+    box-shadow: 0 4px 10px 8px rgb(33 95 123 / 50%);
+    border-radius: 4px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: none;
+}
+
+.logo-danso{
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkl4a965IeN9nRvnzs-wbrAI3NxiaA6t5bq9UWiZYXPKYK1V6CSIdQkSHWn0m1mxNv-Ws&usqp=CAU');
+    width: 257px;
+    height: 73px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 20px 20px 20px 10px;
+}
+
+.login-box{
+    width: 24vw;
+    height: 500px;
+    min-width: 350px;
+    background-color: #fff;
+    box-shadow: 8px 12px 6px rgb(0 0 0 / 15%);
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%,-50%);
+}
+
+.login-box-content{
+    padding: 10%;
+}
+
+.content-logo-danso{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-danso-img img{
+    width: 80px;
+    height: 60px;
+}
+
+.logo-danso-text{
+    margin-left: 16px;
+    font-size: 20px;
+    color: #333;
+}
+
+.danso-text2{
+    font-weight: 600;
+}
+
+.content-title{
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 4.6vh;
+    margin-top: 2vh;
+}
+
+.account-name-label{
+    font-size: 17px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.signup-form-group{
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    position: relative;
+    border-radius: 4px;
+    border: 1px solid #1790c9;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+    color: #222;
+    height: 40px;
+    padding: 10px;
+    transition: border-color .1s ease;
+    margin-bottom: 14px;
+}
+
+/* Khi input co loi */
+
+/* .input-with-validator--error{
+    border-color: #ff424f;
+    background-color: #fff9fa;
+} */
+
+.signup-form-input{
+    flex: 1;
+    font-size: 14px;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    border: 0;
+}
+
+.submit-login-btn{
+    background-color: #1790c9;
+    border: none;
+    width: 100%;
+    height: 40px;
+    outline: none;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 3vh;
+}
+
+.submit-login-btn:hover{
+    background-color: #2788b4;
+}
