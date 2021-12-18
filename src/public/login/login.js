@@ -1,3 +1,5 @@
+// const { default: axios } = require("axios");
+
 $(document).ready(() => {
     $('.submit-login-btn').on('click', () => {
         if ($('#username').val() != '' && $('#password').val() != '') {
@@ -13,7 +15,7 @@ $(document).ready(() => {
             }).then((res) => {
                 console.log(res);
                 if (res.data.success) {
-                    window.localStorage.setItem('token ', res.data.token);
+                    $('document').cookie = `token=${res.data.token}`;
                     window.location = '/home';
                 }
             })

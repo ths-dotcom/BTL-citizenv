@@ -1,0 +1,64 @@
+
+.body-table{
+    margin: 30px 6px;
+    max-height: 460px;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px #ccc;
+    border: 1px solid #ccc;
+}
+
+.table-head{
+    padding: 10px 20px;
+    background-color: #c48f21;
+    color: white;
+    font-size: 20px;
+}
+
+.table-result-title{
+    margin: 6px 0;
+    font-size: 18px;
+}
+
+table {
+    border: 1px solid #ccc;
+}
+
+table, td, th {
+    border: 1px solid #ccc;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 10px;
+}
+
+th {
+    background-color: #00918c;
+    color: white;
+}
+
+td {
+    text-align: center;
+}
+
+.td-detail-btn{
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.td-same-btn{
+    margin: 0 2px;
+    cursor: pointer;
+}
+
+.td-same-btn i{
+    margin: 0 4px;
+}
+
+.change-state-btn{
+    cursor: pointer;
+    margin-left: 6px;
+}
