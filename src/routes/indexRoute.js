@@ -2,6 +2,7 @@ const createHttpError = require('http-errors');
 const ErrorController = require('../app/controllers/ErrorController');
 const loginRouter = require('./login');
 const userRouter = require('./user');
+const cityRouter = require('./city');
 const authorization = require('../app/middlewares/authorization');
 
 function route(app) {
@@ -11,6 +12,7 @@ function route(app) {
     app.get('/home', authorization, (req, res) => {
         res.render('home.ejs');
     })
+    app.use('/api/city', cityRouter);
     app.use('/api/login', loginRouter);
     app.use('/api/user', userRouter);
 
