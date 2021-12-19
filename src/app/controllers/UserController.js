@@ -28,6 +28,7 @@ class UserController {
             .then(user => res.json({user}))
             .catch(err => next(createHttpError(500, ' Lỗi')));
     }
+
 }
 
 module.exports = new UserController;

@@ -6,8 +6,10 @@ const jwt = require('jsonwebtoken');
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 async function authToken(req, res, next) {
-    // var token = req.header('Authorization');
+    var tokenHeader = req.header('Authorization');
     var token = req.cookies.token;
+    //
+    // token = tokenHeader;
     if (!token) {
         req.login = false;
         return next();
@@ -28,6 +30,7 @@ async function authToken(req, res, next) {
         if (!user) return next(createHttpError(200), 'Tài khoản không tồn tại');
         req.login = true;
         req.user = user.dataValues;
+        res.locals.name = user.dataValues.name;
         next();
     });
 }
