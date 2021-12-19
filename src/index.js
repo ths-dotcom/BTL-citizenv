@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const route = require('./routes/indexRoute');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const authentication = require('./app/middlewares/authentication');
 const db = require('./config/db/connect');
@@ -13,6 +14,7 @@ app.use(
     }),
 );
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 app.use('/public', express.static(path.join(__dirname, '/public')));
 app.use(authentication);

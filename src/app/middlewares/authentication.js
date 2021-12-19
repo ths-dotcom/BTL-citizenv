@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken');
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 async function authToken(req, res, next) {
-    var token = req.header('Authorization');
+    // var token = req.header('Authorization');
+    var token = req.cookies.token;
     if (!token) {
         req.login = false;
         return next();
