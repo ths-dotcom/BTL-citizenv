@@ -15,8 +15,9 @@ $(document).ready(() => {
             }).then((res) => {
                 console.log(res);
                 if (res.data.success) {
-                    $('document').cookie = `token=${res.data.token}`;
-                    window.location = '/home';
+                    $.cookie('token', res.data.token);
+                    // window.location = '/home';
+                    console.log($.cookie('token'));
                 }
             })
         }
