@@ -2,6 +2,9 @@ const createHttpError = require('http-errors');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const City = require('../models/City');
+const District = require('../models/District');
+const Ward = require('../models/Ward');
+const Hamlet = require('../models/Hamlet');
 
 class check {
 
@@ -41,6 +44,44 @@ class check {
             .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
     }
 
+    checkDistrict(req, res, next) {
+        District.findOne({
+            where: {
+                district_id: req.body.data.district_id
+            }
+        })
+            .then(district => {
+                if(!district) return next();
+                else next(createHttpError(500, 'district_id đã tồn tại'));
+            })
+            .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
+    }
+
+    checkWard(req, res, next) {
+        Ward.findOne({
+            where: {
+                ward_id: req.body.data.ward_id
+            }
+        })
+            .then(ward => {
+                if(!ward) return next();
+                else next(createHttpError(500, 'ward_id đã tồn tại'));
+            })
+            .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
+    }
+
+    checkHamlet(req, res, next) {
+        Hamlet.findOne({
+            where: {
+                hamlet_id: req.body.data.hamlet_id
+            }
+        })
+            .then(hamlet => {
+                if(!hamlet) return next();
+                else next(createHttpError(500, 'hamlet_id đã tồn tại'));
+            })
+            .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
+    }
 
 }
 

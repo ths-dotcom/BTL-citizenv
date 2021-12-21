@@ -13,6 +13,18 @@ const User = sequelize.define('users', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    per_scope: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    role_id: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    declare_per: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     }
 })
 

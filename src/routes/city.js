@@ -5,7 +5,14 @@ const cityController = require('../app/controllers/CityController');
 const check = require('../app/middlewares/check');
 const authorization = require('../app/middlewares/authorization');
 
-router.post('/create', validator, authorization, 
+router.put('/:cityId', validator, authorization.a1, cityController.updateCity);
+
+router.delete('/:cityId', authorization.a1, cityController.deleteCity);
+
+router.post('/list', authorization.a1, cityController.searchCities);
+router.get('/list', authorization.a1, cityController.listOfCities);
+
+router.post('/', validator, authorization.a1, 
     check.checkPassword, check.checkCity,
     cityController.createCity
 );
