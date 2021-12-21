@@ -1,13 +1,21 @@
 
-.body-table{
+.contain-table{
     margin: 30px 6px;
+}
+
+.body-table{
     max-height: 460px;
     overflow-y: auto;
     box-shadow: 0 4px 10px #ccc;
-    border: 1px solid #ccc;
 }
 
-.table-head{
+.body-table thead th{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table-head-title{
     padding: 10px 20px;
     background-color: #c48f21;
     color: white;
