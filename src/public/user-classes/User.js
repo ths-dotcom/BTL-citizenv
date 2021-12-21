@@ -1,4 +1,4 @@
-define(function () {
+define(['jquery'], function ($) {
     return class User {
         constructor(id, username, name, per_scope, role_id, declare_per) {
             this.id = id;
@@ -8,6 +8,11 @@ define(function () {
             this.role_id = role_id;
             this.declare_per = declare_per;
         };
+
+        renderInfo() {
+            $('div.left-account-name').text('Cán bộ ' + this.name);
+            $('span.name-account-text').text('Cán bộ ' + this.name);
+        }
     }
 }
 );

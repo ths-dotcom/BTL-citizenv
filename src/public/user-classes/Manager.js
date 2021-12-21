@@ -5,7 +5,8 @@ define(['user-classes/User'], function (User) {
         };
         renderMenuLeft() {
 
-        }
+        };
+
     }
 });
 
