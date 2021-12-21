@@ -1,25 +1,9 @@
-export default class User {
-    constructor() {
-
-    };
-
-    renderDeclaringPlace() {
-
-    }
-
-    renderCreatingAccount() {
-
-    }
-
-    renderViewingCitizen() {
-
-    }
-
-    renderMonitoring() {
-
-    }
-
-    renderChart() {
-
+define(function () {
+    return class User {
+        constructor(role) {
+            this.role = role;
+        };
     }
 }
+);
+

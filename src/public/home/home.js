@@ -1,6 +1,9 @@
-import User from '../user-classes/User';
+define(["jquery", "axios", "A1", "A2"], function ($, axios, A1, A2) {
+    $(document).ready(() => {
+        const user1 = new A1("admin");
+        // let user2 = new A2("user");
 
-$(document).ready(() => {
-    let user1 = new User;
-    console.log(user1);
-})
+        user1.renderChart();
+    });
+});
+

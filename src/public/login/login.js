@@ -1,12 +1,4 @@
-// const { default: axios } = require("axios");
-requirejs.config({
-    paths: {
-        jquery: "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js",
-        axios: "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
-    }
-});
-
-define(["jquery", "axios"], function () {
+define(["jquery", "axios"], function ($, axios) {
     $(document).ready(() => {
         $('.submit-login-btn').on('click', () => {
             if ($('#username').val() != '' && $('#password').val() != '') {
