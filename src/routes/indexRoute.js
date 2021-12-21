@@ -3,15 +3,17 @@ const ErrorController = require('../app/controllers/ErrorController');
 const loginRouter = require('./login');
 const userRouter = require('./user');
 const cityRouter = require('./city');
+const districtRouter = require('./district');
 const authorization = require('../app/middlewares/authorization');
 
 function route(app) {
     app.get('/', (req, res) => {
         res.render('login.ejs');
     });
-    app.get('/home', authorization, (req, res) => {
+    app.get('/home', authorization.all, (req, res) => {
         res.render('home.ejs');
     })
+    app.use('/api/district', districtRouter);
     app.use('/api/city', cityRouter);
     app.use('/api/login', loginRouter);
     app.use('/api/user', userRouter);
