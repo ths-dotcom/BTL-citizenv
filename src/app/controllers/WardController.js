@@ -62,7 +62,7 @@ class WardController {
                 }
             })
                 .then(wards => res.json({
-                    cussess: true,
+                    success: true,
                     wards
                 }))
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách xã')));
@@ -79,7 +79,7 @@ class WardController {
                 }
             })
                 .then(wards => res.json({
-                    cussess: true,
+                    success: true,
                     wards
                 }))
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách xã')));
@@ -90,19 +90,19 @@ class WardController {
     //[DELETE] api/district/:districtId
     // chưa làm
 
-    // [PUT] /api/district/:districtId
-    // updateDistrict(req, res, next) {
-    //     District.update({district_name: req.body.data.district_name}, {
-    //         where: {
-    //             district_id: req.params.districtId
-    //         }
-    //     })
-    //         .then(() => res.json({
-    //             success: true,
-    //             message: 'Cập nhật thành công'
-    //         }))
-    //         .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
-    // }
+    // [PUT] /api/ward/:wardId
+    updateWard(req, res, next) {
+        Ward.update({ward_name: req.body.data.ward_name}, {
+            where: {
+                ward_id: req.params.wardId
+            }
+        })
+            .then(() => res.json({
+                success: true,
+                message: 'Cập nhật thành công'
+            }))
+            .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
+    }
 }
 
 module.exports = new WardController;

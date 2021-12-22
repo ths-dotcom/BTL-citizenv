@@ -22,7 +22,7 @@ class CityController {
     listOfCities(req, res, next) {
         City.findAll()
             .then(cities => res.json({
-                cussess: true,
+                success: true,
                 cities
             }))
             .catch(err => next(createHttpError(
@@ -41,7 +41,7 @@ class CityController {
             }
         })
             .then(cities => res.json({
-                cussess: true,
+                success: true,
                 cities
             }))
             .catch(err => next(createHttpError(
