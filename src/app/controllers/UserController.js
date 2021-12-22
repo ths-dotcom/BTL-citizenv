@@ -14,7 +14,7 @@ class UserController {
         User.create({
             username: req.body.data.username,
             password: req.body.data.password,
-            name: req.body.data.username.slice(0, 2),
+            name: req.body.data.name,
             per_scope: req.body.data.username.slice(5),
             role_id: req.user.role_id + 1
         })
@@ -41,8 +41,8 @@ class UserController {
             }
         })
             .then((user) => {
-                if (user.declare_per) {
-                    User.update({ declare_per: false }, {
+                if(user.declare_per) {
+                    User.update({declare_per: false},{
                         where: {
                             per_scope: {
                                 [Op.startsWith]: user.dataValues.per_scope
@@ -56,7 +56,7 @@ class UserController {
                         .catch(err => next(createHttpError(500), 'lỗi hệ thống'))
                 }
                 else {
-                    User.update({ declare_per: true }, {
+                    User.update({declare_per: true},{
                         where: {
                             per_scope: {
                                 [Op.startsWith]: user.dataValues.per_scope
@@ -76,8 +76,8 @@ class UserController {
     // [GET] /api/user/city/list
     userCity(req, res, next) {
         User.findAll({
-            where: {
-                role_id: 2
+            where : {
+                role_id : 2
             }
         })
             .then(users => {
@@ -91,7 +91,7 @@ class UserController {
 
     // [GET] /api/user/district/list
     userDistrict(req, res, next) {
-
+        
     }
 }
 
