@@ -64,7 +64,7 @@ class CityController {
                 }
             })
                 .then(districts => res.json({
-                    cussess: true,
+                    success: true,
                     districts
                 }))
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')));
@@ -81,7 +81,7 @@ class CityController {
                 }
             })
                 .then(districts => res.json({
-                    cussess: true,
+                    success: true,
                     districts
                 }))
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')));

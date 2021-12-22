@@ -5,7 +5,7 @@ const wardController = require('../app/controllers/WardController');
 const check = require('../app/middlewares/check');
 const authorization = require('../app/middlewares/authorization');
 
-// router.put('/:districtId', validator, authorization.a12, districtController.updateDistrict);
+router.put('/:wardId', validator, authorization.a123, wardController.updateWard);
 
 // router.delete('/:districtId', authorization.a12, districtController.deletedistrict);
 
