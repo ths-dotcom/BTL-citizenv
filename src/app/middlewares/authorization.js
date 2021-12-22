@@ -16,6 +16,11 @@ class authorization {
         else next(createHttpError(200, 'không được quyền'));
     }
 
+    a123(req, res, next) {
+        if(req.login && req.user.role_id <= 3) next();
+        else next(createHttpError(200, 'không được quyền'));
+    }
+
     a123b1(req, res, next) {
         if(req.login && req.user.role_id < 5) next();
         else next(createHttpError(200, 'không được quyền'));

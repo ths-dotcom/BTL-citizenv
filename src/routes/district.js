@@ -9,7 +9,7 @@ router.put('/:districtId', validator, authorization.a12, districtController.upda
 
 // router.delete('/:districtId', authorization.a12, districtController.deletedistrict);
 
-// router.post('/list', authorization.a12, districtController.listOfCities);
+router.post('/list', authorization.a12, districtController.searchDistrict);
 router.get('/list', authorization.a12, districtController.listOfDistricts);
 
 router.post('/', validator, authorization.a12, 

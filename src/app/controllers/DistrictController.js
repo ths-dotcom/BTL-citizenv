@@ -35,6 +35,7 @@ class CityController {
                     success: true,
                     districts
                 }))
+                .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')))
         }
         else {
             District.findAll({
@@ -48,37 +49,48 @@ class CityController {
                     success: true,
                     districts
                 }))
+                .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')))
         }
     }
 
-    //[DELETE] api/city/:cityId
-    // chưa xong
-    // deleteCity(req, res, next) {
-    //     City.destroy({
-    //         where: {
-    //             city_id: req.params.cityId
-    //         }
-    //     })
-    //         .then(() => {
-    //             User.destroy({
-    //                 where: {
-    //                     per_scope: req.params.cityId
-    //                 }
-    //             })
-    //                 .then(() => res.json({
-    //                     success: true,
-    //                     message: 'Xóa thành công'
-    //                 }))
-    //                 .catch(err => next(createHttpError(
-    //                     500,
-    //                     'Lỗi xóa thành phố'
-    //                 )))
-    //         })
-    //         .catch(err => next(createHttpError(
-    //             500,
-    //             'Lỗi xóa thành phố'
-    //         )))
-    // }
+    // [POST] /api/search/district
+    searchDistrict(req, res, next) {
+        if(!req.user.per_scope) {
+            District.findAll({
+                where: {
+                    district_name : {
+                        [Op.substring]: req.body.data.district_name
+                    }
+                }
+            })
+                .then(districts => res.json({
+                    cussess: true,
+                    districts
+                }))
+                .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')));
+        }
+        else {
+            District.findAll({
+                where: {
+                    district_name : {
+                        [Op.substring]: req.body.data.district_name
+                    },
+                    district_id: {
+                        [Op.startsWith] : req.user.per_scope
+                    }
+                }
+            })
+                .then(districts => res.json({
+                    cussess: true,
+                    districts
+                }))
+                .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')));
+        }
+             
+    }
+
+    //[DELETE] api/district/:districtId
+    // chưa làm
 
     // [PUT] /api/district/:districtId
     updateDistrict(req, res, next) {

@@ -1,10 +1,11 @@
 const createHttpError = require('http-errors');
 const ErrorController = require('../app/controllers/ErrorController');
+const authorization = require('../app/middlewares/authorization');
 const loginRouter = require('./login');
 const userRouter = require('./user');
 const cityRouter = require('./city');
 const districtRouter = require('./district');
-const authorization = require('../app/middlewares/authorization');
+const wardRouter = require('./ward');
 
 function route(app) {
     app.get('/', (req, res) => {
@@ -13,6 +14,7 @@ function route(app) {
     app.get('/home', authorization.all, (req, res) => {
         res.render('home.ejs');
     })
+    app.use('/api/ward', wardRouter);
     app.use('/api/district', districtRouter);
     app.use('/api/city', cityRouter);
     app.use('/api/login', loginRouter);

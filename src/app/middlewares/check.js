@@ -22,8 +22,6 @@ class check {
     }
 
     checkPassword(req, res, next) {
-        console.log(req.body.data);
-        console.log(req.user);
         bcrypt.compare(req.body.data.password, req.user.password, function (err, result) {
             if (err) return next(createHttpError(500, 'Lỗi hệ thống'));
             if (result) next();
@@ -45,6 +43,9 @@ class check {
     }
 
     checkDistrict(req, res, next) {
+        // if(req.user.per_scope && !req.body.data.district_id.startsWith(req.user.per_scope)) {
+        //     return next(createHttpError(400, 'Mã huyện không trong quyền quản lý'));
+        // }
         District.findOne({
             where: {
                 district_id: req.body.data.district_id
@@ -58,6 +59,9 @@ class check {
     }
 
     checkWard(req, res, next) {
+        // if(req.user.per_scope && !req.body.data.ward_id.startsWith(req.user.per_scope)) {
+        //     return next(createHttpError(400, 'Mã xã không trong quyền quản lý'));
+        // }
         Ward.findOne({
             where: {
                 ward_id: req.body.data.ward_id
@@ -67,7 +71,7 @@ class check {
                 if(!ward) return next();
                 else next(createHttpError(500, 'ward_id đã tồn tại'));
             })
-            .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
+            .catch(err => next(createHttpError(500, err)));
     }
 
     checkHamlet(req, res, next) {
