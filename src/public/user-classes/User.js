@@ -7,22 +7,28 @@ define(['jquery'], function ($) {
             this.per_scope = per_scope;
             this.role_id = role_id;
             this.declare_per = declare_per;
-            let temp = '';
+            let temp1 = '';
+            let temp2 = '';
             switch (role_id) {
                 case 1:
-                    temp = 'tỉnh thành phố';
+                    temp1 = 'tỉnh thành phố';
+                    temp2 = 'A2';
                     break;
                 case 2:
-                    temp = 'quận Huyện';
+                    temp1 = 'quận Huyện';
+                    temp2 = 'A3';
                     break;
                 case 3:
-                    temp = 'xã phường';
+                    temp1 = 'xã phường';
+                    temp2 = 'B1';
                     break;
                 case 4:
-                    temp = 'thôn bản';
+                    temp1 = 'thôn bản';
+                    temp2 = 'B2';
                     break;
             };
-            this.monitoring = temp;
+            this.monitoring = temp1;
+            this.supervising = temp2;
         };
 
         renderInfo() {
