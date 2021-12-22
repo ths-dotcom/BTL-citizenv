@@ -75,6 +75,9 @@ class check {
     }
 
     checkHamlet(req, res, next) {
+        // if(req.user.per_scope && !req.body.data.hamlet_id.startsWith(req.user.per_scope)) {
+        //     return next(createHttpError(400, 'Mã thôn không trong quyền quản lý'));
+        // }
         Hamlet.findOne({
             where: {
                 hamlet_id: req.body.data.hamlet_id

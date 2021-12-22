@@ -6,6 +6,8 @@ const userRouter = require('./user');
 const cityRouter = require('./city');
 const districtRouter = require('./district');
 const wardRouter = require('./ward');
+const hamletRouter = require('./hamlet');
+const citizenRouter = require('./citizen');
 
 function route(app) {
     app.get('/', (req, res) => {
@@ -14,6 +16,9 @@ function route(app) {
     app.get('/home', authorization.all, (req, res) => {
         res.render('home.ejs');
     })
+
+    app.use('/api/citizen', citizenRouter);
+    app.use('/api/hamlet', hamletRouter)
     app.use('/api/ward', wardRouter);
     app.use('/api/district', districtRouter);
     app.use('/api/city', cityRouter);
