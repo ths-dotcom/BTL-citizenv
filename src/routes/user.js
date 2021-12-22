@@ -7,10 +7,10 @@ const UserController = require('../app/controllers/UserController');
 
 router.get('/city/list', authorization.a1, UserController.userCity);
 
-router.patch('/declare-permission/:userId', authorization.a123b1, 
+router.patch('/declare-permission/:userId', authorization.a123b1,
     UserController.declarePermission
 );
-router.post('/signup', validator, authorization.a123b1, 
+router.post('/signup', validator, authorization.a123b1,
     check.checkSignup, UserController.signup
 );
 router.get('/info', authorization.all, UserController.info);

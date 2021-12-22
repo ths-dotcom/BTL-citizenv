@@ -1,4 +1,4 @@
-import { User } from "./User";
+
 class A2 extends User {
     renderDeclaringPlace() {
 
