@@ -57,7 +57,38 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     }
                 }).then((res) => {
                     if (res.data.success) {
-                        console.log(userResponse);
+                        axios({ // fill the table of city
+                            method: 'GET',
+                            url: '/api/city/list',
+                        }).then((res) => {
+                            if (res.data.success) {
+                                $('tbody').empty();
+                                res.data.cities.forEach((e) => {
+                                    $('tbody').append('<tr>' +
+                                        `<td>${e.city_id}</td>` +
+                                        `<td>${e.city_name}</td>` +
+                                        `<td>chưa có</td>` +
+                                        `<td>chưa có</td>` +
+                                        '<td>Chưa hoàn thành' +
+                                        '<button class="td-detail-btn">Chi tiết</button>' +
+                                        ' </td>' +
+                                        '<td>' +
+                                        '<button class="td-see-btn td-same-btn">' +
+                                        '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                                        ' Xem</button>' +
+                                        '<button class="td-fix-btn td-same-btn">' +
+                                        '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                                        ' Sửa</button>' +
+                                        '<button class="td-delete-btn td-same-btn">' +
+                                        '<i class="fa fa-times" aria-hidden="true"></i>' +
+                                        'Xóa</button>' +
+                                        '</td>' +
+                                        '</tr>');
+                                })
+                            } else {
+                                console.log(res);
+                            }
+                        })
                     } else {
                         console.log(userResponse);
                     }
