@@ -33,7 +33,11 @@ class UserController {
     async info(req, res, next) {
         //
         if(req.user.role_id == 1) {
-            console.log('cán bộ a1');
+            req.user.addresss = 'Tổng cục thống kê';
+            res.json({
+                success: true,
+                user: req.user
+            })
         }
         else if(req.user.role_id == 2) {
             const city = await City.findOne({
