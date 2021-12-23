@@ -165,7 +165,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
             );
 
             $('div.body-right-content').append('<div class="contain-table taikhoan-tabel">' +
-                '<div class="table-head-title">Danh sách các tài khoản chi cục A2</div>' +
+                `<div class="table-head-title">Danh sách các tài khoản chi cục ${this.supervising}</div>` +
                 '<div class="body-table">' +
                 ' <table style="width:100%">' +
                 ' <thead>' +
