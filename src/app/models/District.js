@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/db/sequelize');
+const City = require('../models/City');
 
 const District = sequelize.define('districts', {
     district_id: {
@@ -16,5 +17,7 @@ const District = sequelize.define('districts', {
         allowNull: true
     },
 })
+
+// District.belongsTo(City, )
 
 module.exports = District;
