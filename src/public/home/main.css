@@ -1,0 +1,694 @@
+.body-right-home{
+    display: none;
+}
+.body-right-khaibao{
+    display: none;
+}
+.body-right-inphieu{
+    display: none;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header-contain{
+    height: 64px;   
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.navbar-list-icon{
+    display: none;
+}
+
+.nav-overlay{
+    position: fixed;
+    top: 64px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    animation: fadeIn linear 0.15s;
+}
+
+.home-content-text{
+    font-size: 16px;
+    color: #fff;
+    width: 16.67%;
+    min-width: 240px;
+    /* background-color: #1da1f2; */
+    background-color: #00918E;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    /* font-family: 'Roboto', sans-serif;
+    font-weight: 500; */
+    box-shadow: 0 6px 10px #686042;
+    /* border-bottom: 2px solid #ccc; */
+    z-index: 1;
+}
+
+.home-content-text i{
+    font-size: 32px;
+    margin-right: 10px;
+    padding-left: 16px;
+}
+
+.home-content-right{
+    width: 83.33%;
+    border-bottom: 2px solid #ccc;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    justify-content: space-between;
+    color: #747474;
+    box-shadow: 0 4px 10px #ccc;
+}
+
+
+.home-content-name{
+    display: flex;
+    align-items: center;
+}
+
+.home-content-name i{
+    margin: 0 40px;
+    font-size: 20px;
+}
+
+.content-name-account{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    position: relative;
+}
+
+.content-name-account:hover .navbar__user-menu{
+    display: block;
+}
+
+.home-content-logo{
+    display: flex;
+    align-items: center;
+}
+
+.home-content-logo img{
+    height: 60px;
+}
+
+.name-account-text{
+    margin-left: 6px;
+    font-size: 15px;
+}
+
+
+.name-account-img{
+    width: 40px;
+    height: 40px;
+}
+
+.navbar__user-menu{
+    position: absolute;
+    padding: 8px 0px;
+    border-radius: 2px;
+    width: 160px;
+    top: 31px;
+    right: 0px;
+    background-color: #ccc;
+    list-style: none;
+    z-index: 1;
+    border: 1px solid #d3d3d3;
+    border-top: none;
+    display: none;
+}   
+
+.navbar__user-menu::before{
+    content: "";
+    position: absolute;
+    right: 30px;
+    top: -26px;
+    border-width: 16px 20px;
+    border-style: solid;
+    border-color: transparent transparent #ccc transparent;
+    cursor: pointer;
+}
+.navbar__user-menu::after{
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: -20px;
+    width: 200px;
+    height: 30px;
+}
+.navbar__user-menu li a{
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 14px;
+    display: block;
+    padding: 10px 16px;
+    
+}
+
+.navbar__user-menu li a:hover{
+    background-color: #fafafa;
+}
+
+.body-contain{
+    min-height: 600px;
+    width: 100%;
+    background-color: rgb(240, 240, 240);;
+    display: flex;
+}
+
+.body-left{
+    min-width: 240px;
+    width: 16.67%;
+    background-color: #494949;
+}
+/* Mobile nav */
+
+.nav-input:checked ~ .nav-overlay{
+    display: block;
+}
+
+.nav-input:checked ~ .body-left-mobile{
+    transform: translateX(0%);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+.body-left-mobile{
+    /* display: none; */
+    background-color: #494949;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    width: 270px;
+    z-index: 2;
+    max-width: 100%;
+    transform: translateX(-100%);
+    transition: transform linear 0.15s;
+}
+
+
+.body-right{
+    width: 83.33%;
+    padding: 0 20px;
+    height: 100%;
+    min-height: 800px;
+}
+
+.body-left-account{
+    display: block;
+    background-color: #e4cda3;
+    border-bottom: 2px solid #ccc;
+}
+
+.left-account-img{
+    display: flex;
+    justify-content: center;
+    padding: 6px 0;
+}
+.left-account-img img{
+    width: 50px;
+    height: 50px;
+}
+
+.left-account-name{
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+.left-account-descoration{
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    padding-bottom: 8px;
+}
+
+.body-left-home{
+    height: 50px;
+    padding: 0 16px;
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    color: white;
+   
+}
+
+.body-left-home a{
+    text-decoration: none;
+    color: #ccc;
+}
+
+.body-left-home-content{
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.body-left-home-content-active{
+    height: 80%;
+    background-color: #00918c ;
+    border-radius: 2px;
+}
+
+.body-left-home-content i{
+    padding: 0 8px;
+    font-size: 18px;
+}
+
+.body-right-content{
+    padding-top: 20px;
+}
+
+.right-content-name{
+    display: flex;
+    justify-content: center;
+    padding: 10px 10px 20px 10px;
+    font-size: 20px;
+}
+
+.right-content-ratio{
+    display: flex;
+    align-items: center;
+}
+
+.content-ratio-same{
+    width: 25%;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 6px;
+    border-radius: 2px;
+    box-shadow: 0 4px 10px #ccc;
+}
+
+.ratio-same-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.same-top-left-number{
+    font-size: 40px;
+}
+.children-top-left-number{
+    color: violet;
+}
+.woman-top-left-number{
+    color: blue;
+}
+.old-top-left-number{
+    color: orange;
+}
+.all-top-left-number, .best-top-left-number, .best-bottom-description{
+    color: green;
+}
+.worst-top-left-number, .worst-bottom-description{
+    color: red;
+}
+
+.same-top-left-text{
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.ratio-children-top-right i{
+    font-size: 30px;
+    color: violet;
+}
+.ratio-woman-top-right i{
+    font-size: 30px;
+    color: blue;
+}
+.ratio-old-top-right i{
+    font-size: 30px;
+    color: orange;
+}
+.ratio-all-top-right i, .ratio-best-top-right i{
+    font-size: 30px;
+    color: green;
+}
+.ratio-worst-top-right i{
+    font-size: 30px;
+    color: red;
+}
+.ratio-same-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    color: #333;
+}
+
+.ratio-children-bottom{
+    border-top: 4px solid violet;
+}
+.ratio-woman-bottom{
+    border-top: 4px solid blue;
+}
+.ratio-old-bottom{
+    border-top: 4px solid orange;
+}
+.ratio-all-bottom, .ratio-best-bottom{
+    border-top: 4px solid green;
+}
+.ratio-worst-bottom{
+    border-top: 4px solid red;
+}
+.right-content-all{
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-content-same{
+    width: 50%;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px #ccc;
+    padding: 20px;
+    margin: 0 6px;
+}
+
+.right-content-code{
+    width: 50%;
+}
+
+.content-same-head{
+    font-size: 20px;
+    color: #1d9d74;
+}
+
+.this-body-same{
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.body-same-left{
+    width: 30%;
+    text-align: right;
+}
+
+.same-left-input{
+    margin-left: 20px;
+    font-weight: 460;
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,.14);
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+    color: #222;
+    height: 30px;
+    padding: 10px;
+    min-width: 200px;
+    background-color: #e4e4e4;
+}
+
+.body-time-from{
+    margin: 0 30px;
+}
+
+.body-time-to{
+    margin: 0 20px;
+}
+
+.permission-time-start, .permission-time-end{
+    height: 30px;
+    background-color: #e4e4e4;
+    box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+    border: 1px solid rgba(0,0,0,.14);
+    border-radius: 2px;
+}
+
+.content-same-foot{
+    display: flex;
+    margin-top: 6px;
+    justify-content: space-around;
+}
+
+.same-foot-no-btn{
+    float: right;
+    background-color: #f42b10;
+    border: none;
+    min-width: 100px;
+    height: 30px;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.same-foot-no-btn:hover{
+    background-color: rgb(244 74 9);
+}
+
+.same-foot-yes-btn{
+    background-color: #0c04c6;
+    border: none;
+    min-width: 120px;
+    height: 30px;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.same-foot-yes-btn:hover{
+    background-color: #1f1ac2 ;
+}
+
+.permission-foot-block-btn{
+    background-color: rgb(51 47 47);
+    border: none;
+    min-width: 120px;
+    height: 30px;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.permission-foot-block-btn:hover{
+    background-color: rgb(66, 60, 60);
+}
+
+/* Phan xem nguoi dan */
+
+.right-content-search{
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px #ccc;
+    padding: 20px;
+    margin: 0 6px;
+    /* width: 80%; */
+}
+
+.content-search-body{
+    font-size: 18px;
+}
+
+.search-body-same{
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.search-same-divinput{
+    display: flex;
+    align-items: center;
+    width: 33.33%;
+}
+
+
+.search-same-divinput div{
+    width: 40%;
+    display: flex;
+    justify-content: right;
+    margin-right: 10px;
+}
+
+.search-same-divinput input{
+    font-weight: 460;
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,.14);
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+    color: #222;
+    height: 26px;
+    padding: 10px;
+    background-color: #e4e4e4;
+}
+
+.search-body-address{
+    margin: 16px 10px;
+}
+.body-address-text{
+    width: 13.2%;
+    display: flex;
+    justify-content: right;
+    margin-right: 10px;
+}
+
+
+.body-address-content select{
+    min-width: 150px;
+    height: 30px;
+    background-color: #e4e4e4;
+}
+
+.content-search-foot{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-foot-btn{
+    background-color: #0135e0;
+    border: none;
+    min-width: 120px;
+    height: 30px;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* tiendo nhap lieu */
+
+.content-progress-chart{
+    width: 50%;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px #ccc;
+}
+
+.tiendo-chart{
+    background-color: #ccc;
+}
+.right-content-progress{
+    display: flex;
+    margin: 0 6px;
+}
+
+.best-bottom-description, .worst-bottom-description{
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+    font-size: 20px;
+}
+
+/* Nhap them dan */
+
+.body-tamtru-text div, .body-hometown-text div{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.body-tamtru-text, .body-hometown-text{
+    width: 13.2%;
+    margin-right: 10px;
+}
+
+.right-add-people, .right-print-phieu{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.add-finish-btn, .add-print-btn{
+    height: 50px;
+    color: white;
+    background-color: #00918c;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 4px 10px #ccc;
+    padding: 0 10px;
+}
+
+.add-finish-btn i, .add-print-btn{
+    padding: 0 8px;
+    font-size: 20px;
+}
+
+.add-finish-btn:hover, .add-print-btn:hover{
+    background-color: #17726f;
+}
+
+/* Bao cao thong ke */
+
+.solieu-div-text{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+.right-bieudo-div{
+    margin: 30px 0px;
+}
+
+.bieudo-div-top, .bieudo-div-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.bieudo-chart{
+    margin: 0 6px;
+    box-shadow: 0 4px 10px #ccc;
+}
+
+.bieudo-text-description{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+
+/* In phieu */
+
+.right-inphieu-text{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.right-inphieu-image{
+    margin: 0 auto;
+    width: 50%;
+    align-items: center;
+}
+
+.right-inphieu-image img{
+    width: 100%;
+}
