@@ -4,6 +4,10 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS);
 const { Op } = require("sequelize");
 const User = require('../models/User');
+const City = require('../models/City');
+const District = require('../models/District');
+const Ward = require('../models/Ward');
+const Hamlet = require('../models/Hamlet');
 
 class UserController {
 
@@ -26,12 +30,84 @@ class UserController {
     }
 
     // [GET] /api/user/info
-    info(req, res, next) {
-        res.json({
-            success: true,
-            user: req.user
-        })
-    }
+    async info(req, res, next) {
+        //
+        if(req.user.role_id == 1) {
+            console.log('cán bộ a1');
+        }
+        else if(req.user.role_id == 2) {
+            const city = await City.findOne({
+                where: {
+                    city_id: req.user.per_scope
+                }
+            })
+            req.user.addresss = city.dataValues.city_name;
+            res.json({
+                success: true,
+                user: req.user
+            })
+        }
+        else if(req.user.role_id == 3) {
+            let address = [];
+            const district = await District.findOne({
+                where: {district_id: req.user.per_scope}
+            })
+            address.push(district.dataValues.district_name);
+            const city = await City.findOne({
+                where : {city_id: district.dataValues.city_id}
+            })
+            address.push(city.dataValues.city_name);
+            req.user.address = address.join(" - ");
+            res.json({
+                success: true,
+                user: req.user
+            })
+        }
+        else if(req.user.role_id == 4) {
+            let address = [];
+            const ward = await Ward.findOne({
+                where: {ward_id: req.user.per_scope}
+            })
+            address.push(ward.dataValues.ward_name);
+            const district = await District.findOne({
+                where: {district_id: ward.dataValues.district_id}
+            })
+            address.push(district.dataValues.district_name);
+            const city = await City.findOne({
+                where : {city_id: district.dataValues.city_id}
+            })
+            address.push(city.dataValues.city_name);
+            req.user.address = address.join(" - ");
+            res.json({
+                success: true,
+                user: req.user
+            })
+        }
+        else if(req.user.role_id == 5) {
+            let address = [];
+            const hamlet = await Hamlet.findOne({
+                where: {hamlet_id: req.user.per_scope}
+            })
+            address.push(hamlet.dataValues.hamlet_name);
+            const ward = await Ward.findOne({
+                where: {ward_id: hamlet.dataValues.ward_id}
+            })
+            address.push(ward.dataValues.ward_name);
+            const district = await District.findOne({
+                where: {district_id: ward.dataValues.district_id}
+            })
+            address.push(district.dataValues.district_name);
+            const city = await City.findOne({
+                where : {city_id: district.dataValues.city_id}
+            })
+            address.push(city.dataValues.city_name);
+            req.user.address = address.join(" - ");
+            res.json({
+                success: true,
+                user: req.user
+            })
+        }
+    } 
 
     // [PATCH] api/user/declare-permission/:userId
     declarePermission(req, res, next) {
