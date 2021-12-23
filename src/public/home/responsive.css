@@ -1,1 +1,221 @@
-/* HEllo */
+
+@media only screen and (max-width: 830px) {
+    .login-box{
+        position: relative;
+        left: 50%;
+    }
+}
+
+/* Iphone 5 */
+@media only screen and (max-width: 320px) {
+    .login-box{
+        min-width: 320px;
+    }
+    .login-box-content{
+        padding: 10% 6%;
+    }
+}
+
+/* Home responsive */
+
+@media only screen and (max-width: 1300px){
+    .body-right{
+        padding: 0;
+    }
+    .body-left-home{
+        padding: 0;
+    }
+    .td-same-btn span{
+        display: none;
+    }
+}
+
+/* 3 the div */
+@media only screen and (max-width: 1240px) and (min-width: 1025px){
+    .right-content-ratio{
+        flex-wrap: wrap;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .right-content-ratio{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .content-ratio-same{
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .content-ratio-same{
+        width: 40%;
+    }
+    .content-name-icon{
+        display: none;
+    }
+    .content-name-address{
+        margin-right: 18px;
+    }
+    .body-table thead th{
+        white-space: nowrap;
+    }
+    td {
+        white-space: nowrap;
+    }
+}
+
+@media only screen and (max-width: 684px){
+    .content-name-address{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 544px){
+    .content-ratio-same{
+        min-width: 240px;
+    }
+
+}
+
+@media only screen and (max-width: 424px){
+    .content-name-account{
+        margin: 0;
+    }
+    .home-content-logo img{
+        width: 100px;
+    }
+    .home-content-right{
+        padding: 0 10px;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+    .body-left{
+        display: none;
+    }
+    
+    .body-right{
+        width: 100%;
+        /* padding: 0 10px; */
+    }
+    
+    .home-content-text{
+        display: none;
+    }
+
+    .navbar-list-icon{
+        display: block;
+        /* width: 16.67%; */
+        margin: 0 20px 0 30px;
+    }
+
+    .home-content-logo img{
+        height: 50px;
+    }
+
+    .home-content-right{
+        box-shadow: none;
+        border-bottom: none;
+        width: 100%;
+    }
+
+    .header-contain{
+        border-bottom: 1px solid #ccc;
+        position: fixed;
+        z-index: 2;
+    }
+
+    .body-right-content{
+        margin-top: 64px;
+    }
+    .navbar-list-icon i{
+        font-size: 26px;
+    }
+
+    .body-left-home{
+        padding: 0 16px;
+    }
+}
+
+
+/* Cap tai khoan responsive */
+
+@media only screen and (max-width: 1300px){
+    .right-content-all{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .right-content-same{
+        margin: 10px;
+        min-width: 50%;
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .body-same-left{
+        width: 40%;
+    }
+}
+@media only screen and (max-width: 520px){
+    .permission-body-time{
+        flex-wrap: wrap;
+    }
+    .body-time-to, .body-time-from{
+        width: 30%;
+        margin: 0;
+        text-align: right;
+    }
+    .permission-time-start, .permission-time-end{
+        margin-left: 20px;
+        min-width: 200px;
+    }
+
+}
+
+@media only screen and (max-width: 400px){
+    .body-same-left, .body-time-to, .body-time-from{
+        width: 40%;
+    }
+    .same-left-input, .permission-time-start, .permission-time-end{
+        margin-left: 10px;
+        min-width: 50%;
+    }
+    .body-password-left{
+        font-size: 15px;
+    }
+    
+}
+
+@media only screen and (max-width: 374px){
+    .content-permission-foot{
+        flex-wrap: wrap;
+    }
+    .permission-foot-block-btn{
+        margin-top: 10px;
+    }
+    .content-permission-head{
+        font-size: 18px;
+    }
+}
+
+/* In phieu responsive */
+
+@media only screen and (max-width: 800px){
+    .right-inphieu-image{
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 378px){
+    .right-inphieu-image{
+        width: 90%;
+    }
+    .inphieu-head-text{
+        display: none;
+    }
+    .right-print-phieu{
+        justify-content: center;
+    }
+}
