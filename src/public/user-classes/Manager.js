@@ -1,10 +1,36 @@
-define(['user-classes/User', 'jquery', 'https://www.gstatic.com/charts/loader.js'], function (User, $, google) {
+define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, chartapi) {
     return class Manager extends User {
         constructor(id, username, name, per_scope, role_id, declare_per) {
             super(id, username, name, per_scope, role_id, declare_per);
         };
 
+        renderTableOfPlaces() {
+            $('div.body-right-content').append($('<div class="contain-table">' +
+                `<div class="table-head-title">Danh sách các ${this.monitoring}</div>` +
+                '<div class="body-table khaibao-tabel">' +
+                '<table style="width:100%">' +
+                '<!-- head-table -->' +
+                '<thead>' +
+                '<tr>' +
+                `<th>Mã ${this.monitoring}</th>` +
+                `<th>Tên ${this.monitoring}</th>` +
+                '<th>Chỉ tiêu số dân</th>' +
+                '<th>Tổng số dân đã nhập</th>' +
+                '<th>Tiến độ nhập liệu</th>' +
+                '<th>Thao tác</th>' +
+                '</tr>' +
+                ' </thead>' +
+                '<!-- body-table -->' +
+                '<tbody>' +
+                '</tbody>' +
+                '</table>' +
+                '</div>' +
+                '</div>'));
+        };
+
         renderMenuLeft() {  // Render button and create structure of functions of manager users
+            super.renderMenuLeft();
+
             this.creatingPlaceButton = $("<div></div>", { "class": "body-left-home body-left-home-code" });
             $("<div class='body-left-home-content'><i class='fa fa-id-card' aria-hidden='true'></i><span>Khai báo và cấp mã</span></div>")
                 .appendTo($(this.creatingPlaceButton));
@@ -44,6 +70,11 @@ define(['user-classes/User', 'jquery', 'https://www.gstatic.com/charts/loader.js
             $('div.body-left').append($(this.creatingPlaceButton), $(this.creatingAccountButton), $(this.citizenInfoButton), $(this.monitoringProgressButton), $(this.showStatisticButton));
         };
 
+        homeButtonClickEvent() { // overloading home button event because of the table of city, district, ward, hamlet
+            super.homeButtonClickEvent();
+            this.renderTableOfPlaces();
+        };
+
         creatingPlaceButtonClickEvent() { // render structure of creating place function
             super.clearRightContent();
             $('div.body-right-content').append($('<div class="right-content-name">Khai báo và cấp mã</div>' +
@@ -71,30 +102,10 @@ define(['user-classes/User', 'jquery', 'https://www.gstatic.com/charts/loader.js
                 '</div>' +
                 '</div>'));
 
-            $('div.body-right-content').append($('<div class="contain-table">' +
-                `<div class="table-head-title">Danh sách các ${this.monitoring}</div>` +
-                '<div class="body-table khaibao-tabel">' +
-                '<table style="width:100%">' +
-                '<!-- head-table -->' +
-                '<thead>' +
-                '<tr>' +
-                `<th>Mã ${this.monitoring}</th>` +
-                `<th>Tên ${this.monitoring}</th>` +
-                '<th>Chỉ tiêu số dân</th>' +
-                '<th>Tổng số dân đã nhập</th>' +
-                '<th>Tiến độ nhập liệu</th>' +
-                '<th>Thao tác</th>' +
-                '</tr>' +
-                ' </thead>' +
-                '<!-- body-table -->' +
-                '<tbody>' +
-                '</tbody>' +
-                '</table>' +
-                '</div>' +
-                '</div>'));
+            this.renderTableOfPlaces();
         };
 
-        creatingAccountButtonClickEvent() {
+        creatingAccountButtonClickEvent() { // render structure of creating account function
             super.clearRightContent();
             $('div.body-right-content').append(
                 '<div class="right-content-name">Cấp và quản lý tài khoản</div>' +
@@ -170,29 +181,13 @@ define(['user-classes/User', 'jquery', 'https://www.gstatic.com/charts/loader.js
                 ' </tr>' +
                 '</thead>' +
                 '<tbody>' +
-                ' <tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>Đã kích hoạt' +
-                '<button class="change-state-btn">Thay đổi</button>' +
-                '</td>' +
-                '<td>14/12/2021</td>' +
-                '<td>' +
-                ' 22/12/2021' +
-                ' </td>' +
-                ' <td>' +
-                ' <button>Xem</button>' +
-                '<button>Sua</button>' +
-                ' <button>Xoa</button>' +
-                ' </td>' +
-                ' </tr>' +
                 ' </tbody>' +
                 ' </table>' +
                 ' </div>'
             );
         };
 
-        citizenInfoButtonClickEvent() {
+        citizenInfoButtonClickEvent() { // render structure of viewing citizen info function
             super.clearRightContent();
             $('div.body-right-content').append('<div class="right-content-name">Xem danh sách dân số, thông tin người dân</div>' +
                 '<div class="right-content-search">' +
@@ -234,19 +229,6 @@ define(['user-classes/User', 'jquery', 'https://www.gstatic.com/charts/loader.js
                 '<div class="body-address-content">' +
                 '<select name="tinh" id="body-address-city">' +
                 '<option selected disabled>Chon tinh thanh</option>' +
-                '<option>Ha Noi</option>' +
-                '<option>HCM</option>' +
-                '<option>Da NANG</option>' +
-                '<option>Hai Phong</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
                 '</select>' +
 
                 '<select name="huyen" id="body-address-distric">' +
@@ -305,178 +287,13 @@ define(['user-classes/User', 'jquery', 'https://www.gstatic.com/charts/loader.js
                 '<button class="see-detail-person">Xem chi tiết</button>' +
                 '</td>' +
                 '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
                 '</tbody>' +
                 '</table>' +
                 '</div>' +
                 '</div>');
         };
 
-        monitoringProgressButtonClickEvent() {
+        monitoringProgressButtonClickEvent() { // render structure of monitoring progress function
             super.clearRightContent();
             $('div.body-right-content').append('<div class="right-content-name">Theo dõi tiến độ nhập liệu</div>' +
                 '<div class="right-content-progress">' +
@@ -541,330 +358,10 @@ define(['user-classes/User', 'jquery', 'https://www.gstatic.com/charts/loader.js
                 '</div>' +
                 '</div>');
 
-            $('div.body-right-content').append('<div class="contain-table tiendo-tabel">' +
-                '<div class="table-head-title">Danh sách các tỉnh / thành phố</div>' +
-                '<div class="body-table">' +
-                '<table style="width:100%">' +
-                '<!-- head-table -->' +
-                '<thead>' +
-                '<tr>' +
-                '<th>Mã tỉnh thành</th>' +
-                '<th>Tên tỉnh thành</th>' +
-                '<th>Chỉ tiêu số dân</th>' +
-                '<th>Tổng số dân đã nhập</th>' +
-                '<th>Tiến độ nhập liệu</th>' +
-                '<th>Thao tác</th>' +
-                '</tr>' +
-                '</thead>' +
-                '<!-- body-table -->' +
-                '<tbody>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>20.000</td>' +
-                '<td>18.000</td>' +
-                '<td>Chưa hoàn thành' +
-                '<button class="td-detail-btn">Chi tiết</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="td-see-btn td-same-btn">' +
-                '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                'Xem</button>' +
-                '<button class="td-fix-btn td-same-btn">' +
-                '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                'Sửa</button>' +
-                '<button class="td-delete-btn td-same-btn">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                'Xóa</button>' +
-                '</td>' +
-                '</tr>' +
-                '</tbody>' +
-                '</table>' +
-                '</div>' +
-                '</div>');
+            this.renderTableOfPlaces();
         };
 
-        showStatisticButtonClickEvent() {
+        showStatisticButtonClickEvent() { // render structure of showing statistics function
             super.clearRightContent();
 
             $('div.body-right-content').append('<div class="right-content-name">Tổng hợp và phân tích số liệu</div>' +
