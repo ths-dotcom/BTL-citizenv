@@ -358,6 +358,25 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '</div>');
 
+            // render piechart
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(() => {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['Đã nhập hồ sơ', 11],
+                    ['Chưa nhập hồ sơ', 2],
+
+                ]);
+
+                var options = {
+                    title: 'Tiến độ nhập liệu',
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('tiendo'));
+
+                chart.draw(data, options);
+            });
+
             this.renderTableOfPlaces();
         };
 
