@@ -5,6 +5,7 @@ const City = require('../models/City');
 const District = require('../models/District');
 const Ward = require('../models/Ward');
 const Hamlet = require('../models/Hamlet');
+const Citizen = require('../models/Citizen');
 
 class check {
 
@@ -40,6 +41,20 @@ class check {
                 else next(createHttpError(500, 'city_id đã tồn tại'));
             })
             .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
+    }
+
+    checkCitizen(req, res, next) {
+        if(req.params.citizenId) return next();
+        Citizen.findOne({
+            where: {
+                number: req.body.data.number
+            }
+        })
+            .then(citizen => {
+                if(!citizen) return next();
+                else next(createHttpError(500, 'mã căn cước đã tồn tại'));
+            })
+            .catch(err => next(createHttpError(500, err)));
     }
 
     checkDistrict(req, res, next) {
