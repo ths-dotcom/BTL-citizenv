@@ -25,6 +25,7 @@ body {
 }
 
 .nav-overlay{
+    z-index: 2;
     position: fixed;
     top: 64px;
     right: 0;
@@ -177,7 +178,11 @@ body {
     display: block;
 }
 
-.nav-input:checked ~ .body-left-mobile{
+/* .nav-input:checked ~ .body-left-mobile{
+    transform: translateX(0%);
+} */
+
+.nav-input:checked ~ .body-left{
     transform: translateX(0%);
 }
 
@@ -193,7 +198,7 @@ body {
 
 
 .body-left-mobile{
-    /* display: none; */
+    display: none;
     background-color: #494949;
     position: fixed;
     top: 64px;

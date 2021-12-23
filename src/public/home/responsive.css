@@ -92,7 +92,16 @@
 
 @media only screen and (max-width: 1024px){
     .body-left{
-        display: none;
+        background-color: #494949;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        bottom: 0;
+        width: 270px;
+        z-index: 2;
+        max-width: 100%;
+        transform: translateX(-100%);
+        transition: transform linear 0.15s;
     }
     
     .body-right{
