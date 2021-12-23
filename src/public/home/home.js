@@ -1,4 +1,4 @@
-define(["jquery", "axios", "A1"], function ($, axios, A1) {
+define(["jquery", "axios", "A1", "A2", "A3", "B1", "B2"], function ($, axios, A1, A2, A3, B1, B2) {
     $(document).ready(() => {
         let currentUser;
         axios({

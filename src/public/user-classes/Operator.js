@@ -32,7 +32,7 @@ define(['user-classes/User', 'jquery'], function (User, $) {
         };
 
         inputCitizenButtonClickEvent() {
-
+            console.log('function of operator');
         };
 
         printButtonClickEvent() {

@@ -90,10 +90,16 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 if (res.data.success) {
                     $('tbody').empty();
                     res.data.users.forEach((e) => {
+                        let declarePer = '';
+                        if (e.declare_per) {
+                            declarePer = 'Đã kích hoạt';
+                        } else {
+                            declarePer = 'Chưa kích hoạt';
+                        }
                         $('tbody').append('<tr>' +
-                            '<td>01</td>' +
-                            '<td>Hà Nội</td>' +
-                            '<td>Đã kích hoạt' +
+                            `<td>${e.id}</td>` +
+                            `<td>${e.name.slice(3)}</td>` +
+                            `<td>${declarePer}` +
                             '<button class="change-state-btn">Thay đổi</button>' +
                             '</td>' +
                             '<td>14/12/2021</td>' +

@@ -1,5 +1,5 @@
-define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios) {
-    return class B1 extends Manager {
+define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], function (Manager, Operator, $, axios) {
+    return class B1 extends aggregation(Operator, Manager) {
         constructor(id, username, name, per_scope, role_id, declare_per) {
             super(id, username, name, per_scope, role_id, declare_per);
         };
@@ -7,6 +7,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             this.homeButtonClickEvent();
             this.renderMenuLeft();
             this.renderInfo();
+            this.inputCitizenButtonClickEvent();
         };
 
         fillTableOfHamlet() { // fill the table of hamlet
@@ -73,3 +74,29 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
         };
     }
 });
+
+
+var aggregation = (baseClass, ...mixins) => {
+    class base extends baseClass {
+        constructor(...args) {
+            super(...args);
+            mixins.forEach((mixin) => {
+                copyProps(this, (new mixin));
+            });
+        }
+    }
+    let copyProps = (target, source) => {  // this function copies all properties and symbols, filtering out some special ones
+        Object.getOwnPropertyNames(source)
+            .concat(Object.getOwnPropertySymbols(source))
+            .forEach((prop) => {
+                if (!prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/))
+                    Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop));
+            })
+    }
+    mixins.forEach((mixin) => { // outside contructor() to allow aggregation(A,B,C).staticFunction() to be called etc.
+        copyProps(base.prototype, mixin.prototype);
+        copyProps(base, mixin);
+    });
+    return base;
+} // multiple inheritance
+
