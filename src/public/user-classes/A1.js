@@ -141,7 +141,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-distric').empty();
                         $('#body-address-distric').append('<option selected disabled>Chọn huyện</option>');
                         res.data.districts.forEach((e) => {
-                            if (e.city_id == this.val()) {
+                            if (e.city_id == $('#body-address-city').val()) {
                                 $('#body-address-distric').append(`<option value="${e.district_id}">${e.district_name}</option>`);
                             };
 
@@ -161,7 +161,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-commune').empty();
                         $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
                         res.data.wards.forEach((e) => {
-                            if (e.district_id == this.val()) {
+                            if (e.district_id == $('#body-address-distric').val()) {
                                 $('#body-address-commune').append(`<option value="${e.ward_id}">${e.ward_name}</option>`);
                             };
                         })
@@ -180,7 +180,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').empty();
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
                         res.data.wards.forEach((e) => {
-                            if (e.ward_id == this.val()) {
+                            if (e.ward_id == $('#body-address-commune').val()) {
                                 $('#body-address-hamlet').append(`<option value="${e.hamlet_id}">${e.hamlet_name}</option>`);
                             };
                         })

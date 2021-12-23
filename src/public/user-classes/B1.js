@@ -1,5 +1,5 @@
 define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios) {
-    return class A2 extends Manager {
+    return class B1 extends Manager {
         constructor(id, username, name, per_scope, role_id, declare_per) {
             super(id, username, name, per_scope, role_id, declare_per);
         };
@@ -9,17 +9,17 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             this.renderInfo();
         };
 
-        fillTableOfDistrict() { // fill the table of district
+        fillTableOfHamlet() { // fill the table of hamlet
             axios({
                 method: 'GET',
-                url: '/api/district/list'
+                url: '/api/hamlet/list'
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
-                    res.data.districts.forEach((e) => {
+                    res.data.hamlets.forEach((e) => {
                         $('tbody').append('<tr>' +
-                            `<td>${e.district_id}</td>` +
-                            `<td>${e.district_name}</td>` +
+                            `<td>${e.hamlet_id}</td>` +
+                            `<td>${e.hamlet_name}</td>` +
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
@@ -42,6 +42,10 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     console.log(res);
                 }
             })
+        };
+
+        renderMenuLeft() {
+
         };
 
         homeButtonClickEvent() {

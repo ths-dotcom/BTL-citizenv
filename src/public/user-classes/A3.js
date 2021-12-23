@@ -1,5 +1,5 @@
 define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios) {
-    return class A2 extends Manager {
+    return class A3 extends Manager {
         constructor(id, username, name, per_scope, role_id, declare_per) {
             super(id, username, name, per_scope, role_id, declare_per);
         };
@@ -9,17 +9,17 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             this.renderInfo();
         };
 
-        fillTableOfDistrict() { // fill the table of district
+        fillTableOfWard() { // fill the table of ward
             axios({
                 method: 'GET',
-                url: '/api/district/list'
+                url: '/api/ward/list'
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
-                    res.data.districts.forEach((e) => {
+                    res.data.wards.forEach((e) => {
                         $('tbody').append('<tr>' +
-                            `<td>${e.district_id}</td>` +
-                            `<td>${e.district_name}</td>` +
+                            `<td>${e.ward_id}</td>` +
+                            `<td>${e.ward_name}</td>` +
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
