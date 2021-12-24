@@ -13,7 +13,7 @@ router.post('/list', authorization.a123, wardController.searchWard);
 router.get('/list', authorization.a123, wardController.listOfWards);
 
 router.post('/', validator, authorization.a123, 
-    check.checkPassword, check.checkWard,
+    check.checkWard,
     wardController.createWard
 );
 

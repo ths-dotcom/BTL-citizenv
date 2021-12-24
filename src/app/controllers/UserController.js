@@ -33,7 +33,7 @@ class UserController {
     async info(req, res, next) {
         //
         if(req.user.role_id == 1) {
-            req.user.addresss = 'Tổng cục thống kê';
+            req.user.address = 'Tổng cục thống kê';
             res.json({
                 success: true,
                 user: req.user
@@ -45,7 +45,7 @@ class UserController {
                     city_id: req.user.per_scope
                 }
             })
-            req.user.addresss = city.dataValues.city_name;
+            req.user.address = city.dataValues.city_name;
             res.json({
                 success: true,
                 user: req.user

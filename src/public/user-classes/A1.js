@@ -66,19 +66,32 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     data: {
                         data: {
                             city_name: $('input.name-khaibao-input.same-left-input').val(),
-                            city_id: $('input.code-khaibao-input.same-left-input').val(),
-                            password: $('input.password-khaibao-input.same-left-input').val()
+                            city_id: $('input.code-khaibao-input.same-left-input').val()
                         }
                     }
                 }).then((res) => {
-                    $('input.name-khaibao-input.same-left-input').val("");
-                    $('input.code-khaibao-input.same-left-input').val("");
-                    $('input.password-khaibao-input.same-left-input').val("");
                     if (res.data.success) {
                         this.fillTableOfCity();
+
+                        axios({
+                            method: 'POST',
+                            url: '/api/user/signup',
+                            data: {
+                                data: {
+                                    username: 'a2gov' + $('input.code-khaibao-input.same-left-input').val(),
+                                    name: 'A2 ' + $('input.name-khaibao-input.same-left-input').val(),
+                                    password: $('input.password-khaibao-input.same-left-input').val()
+                                }
+                            }
+                        }).then((res) => {
+                            if (!res.data.success) console.log(res);
+                        });
                     } else {
                         console.log(userResponse);
                     }
+                    $('input.name-khaibao-input.same-left-input').val("");
+                    $('input.code-khaibao-input.same-left-input').val("");
+                    $('input.password-khaibao-input.same-left-input').val("");
                 })
             });
         };
