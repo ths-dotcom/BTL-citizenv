@@ -28,13 +28,16 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
                             '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            ' Xem</button>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
                             '<button class="td-fix-btn td-same-btn">' +
                             '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            ' Sửa</button>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
                             '<button class="td-delete-btn td-same-btn">' +
                             '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            'Xóa</button>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
                             '</td>' +
                             '</tr>');
                     })
@@ -193,7 +196,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').empty();
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
-                        res.data.wards.forEach((e) => { // add hamlets to hamlet input
+                        res.data.hamlets.forEach((e) => { // add hamlets to hamlet input
                             if (e.ward_id == $('#body-address-commune').val()) {
                                 $('#body-address-hamlet').append(`<option value="${e.hamlet_id}">${e.hamlet_name}</option>`);
                             };
@@ -207,6 +210,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
         monitoringProgressButtonClickEvent() {
             super.monitoringProgressButtonClickEvent();
+            this.fillTableOfDistrict();
         };
 
         showStatisticButtonClickEvent() {

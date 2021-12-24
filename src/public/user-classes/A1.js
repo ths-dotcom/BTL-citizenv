@@ -228,7 +228,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').empty();
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
-                        res.data.wards.forEach((e) => { // add hamlets to hamlet input
+                        res.data.hamlets.forEach((e) => { // add hamlets to hamlet input
                             if (e.ward_id == $('#body-address-commune').val()) {
                                 $('#body-address-hamlet').append(`<option value="${e.hamlet_id}">${e.hamlet_name}</option>`);
                             };

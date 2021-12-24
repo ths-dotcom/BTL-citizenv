@@ -28,13 +28,16 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
                             '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            ' Xem</button>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
                             '<button class="td-fix-btn td-same-btn">' +
                             '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            ' Sửa</button>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
                             '<button class="td-delete-btn td-same-btn">' +
                             '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            'Xóa</button>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
                             '</td>' +
                             '</tr>');
                     })
@@ -67,6 +70,7 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
 
         homeButtonClickEvent() {
             super.homeButtonClickEvent();
+            this.fillTableOfHamlet();
         };
 
         creatingPlaceButtonClickEvent() {
@@ -79,6 +83,39 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
 
         citizenInfoButtonClickEvent() {
             super.citizenInfoButtonClickEvent();
+            function resetAddressInput() {
+                $('#body-address-city').empty();
+                $('#body-address-city').append('<option selected disabled>Chon tinh thanh</option>');
+                $('#body-address-distric').empty();
+                $('#body-address-distric').append('<option selected disabled>Chọn huyện</option>');
+                $('#body-address-commune').empty();
+                $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
+                $('#body-address-hamlet').empty();
+                $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
+            };
+
+            axios({ // find all wards
+                method: 'GET',
+                url: '/api/hamlet/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    // reset all the input
+                    $('#body-address-city').empty();
+                    $('#body-address-city').append(`'<option selected disabled>Chọn thành phố</option>'`);
+                    $('#body-address-distric').empty();
+                    $('#body-address-distric').append(`'<option selected disabled>Chọn quận huyện</option>'`);
+                    $('#body-address-commune').empty();
+                    $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
+                    $('#body-address-hamlet').empty();
+                    $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
+
+                    res.data.hamlets.forEach((e) => { // add district to the district input
+                        $('#body-address-hamlet').append(`<option value="${e.hamlet_id}">${e.hamlet_name}</option>`);
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
         };
 
         monitoringProgressButtonClickEvent() {
