@@ -13,7 +13,7 @@ router.post('/list', authorization.a123b1, hamletController.searchHamlet);
 router.get('/list', authorization.a123b1, hamletController.listOfHamlets);
 
 router.post('/', validator, authorization.a123b1, 
-    check.checkPassword, check.checkHamlet,
+    check.checkHamlet,
     hamletController.createHamlet
 );
 

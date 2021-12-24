@@ -13,7 +13,7 @@ router.post('/list', authorization.a1, cityController.searchCities);
 router.get('/list', authorization.a1, cityController.listOfCities);
 
 router.post('/', validator, authorization.a1, 
-    check.checkPassword, check.checkCity,
+    check.checkCity,
     cityController.createCity
 );
 

@@ -13,7 +13,7 @@ router.post('/list', authorization.a12, districtController.searchDistrict);
 router.get('/list', authorization.a12, districtController.listOfDistricts);
 
 router.post('/', validator, authorization.a12, 
-    check.checkPassword, check.checkDistrict,
+    check.checkDistrict,
     districtController.createDistrict
 );
 
