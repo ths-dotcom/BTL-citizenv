@@ -1,7 +1,7 @@
 define(['user-classes/Operator', 'jquery', 'axios'], function (Operator, $, axios) {
     return class B2 extends Operator {
-        constructor(id, username, name, per_scope, role_id, declare_per) {
-            super(id, username, name, per_scope, role_id, declare_per);
+        constructor(id, username, name, per_scope, role_id, declare_per, address) {
+            super(id, username, name, per_scope, role_id, declare_per, address);
         };
         start() { //run all the functionalities of B2 user
             this.homeButtonClickEvent();

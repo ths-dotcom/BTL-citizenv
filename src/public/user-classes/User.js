@@ -1,12 +1,13 @@
 define(['jquery'], function ($) {
     return class User {
-        constructor(id, username, name, per_scope, role_id, declare_per) {
+        constructor(id, username, name, per_scope, role_id, declare_per, address) {
             this.id = id;
             this.username = username;
             this.name = name;
             this.per_scope = per_scope;
             this.role_id = role_id;
             this.declare_per = declare_per;
+            this.address = address;
             let temp1 = '';
             let temp2 = '';
             switch (role_id) {
@@ -146,8 +147,9 @@ define(['jquery'], function ($) {
         };
 
         renderInfo() {
-            $('div.left-account-name').text('Cán bộ ' + this.name);
-            $('span.name-account-text').text('Cán bộ ' + this.name);
+            $('div.left-account-name').text(this.name);
+            $('span.name-account-text').text(this.name);
+            $('div.content-name-address').append(`<span>${this.address}</span>`);
         };
 
         clearRightContent() {

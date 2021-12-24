@@ -1,7 +1,7 @@
 define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios) {
     return class A2 extends Manager {
-        constructor(id, username, name, per_scope, role_id, declare_per) {
-            super(id, username, name, per_scope, role_id, declare_per);
+        constructor(id, username, name, per_scope, role_id, declare_per, address) {
+            super(id, username, name, per_scope, role_id, declare_per, address);
         };
         start() { //run all the functionalities of A1 user
             this.homeButtonClickEvent();

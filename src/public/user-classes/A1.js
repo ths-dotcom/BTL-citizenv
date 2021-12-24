@@ -1,7 +1,7 @@
 define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios) {
     return class A1 extends Manager {
-        constructor(id, username, name, per_scope, role_id, declare_per) {
-            super(id, username, name, per_scope, role_id, declare_per);
+        constructor(id, username, name, per_scope, role_id, declare_per, address) {
+            super(id, username, name, per_scope, role_id, declare_per, address);
         };
         start() { //run all the functionalities of A1 user
             this.homeButtonClickEvent();
@@ -28,15 +28,15 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
                             '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>'+
+                            '<span>Xem</span>' +
                             '</button>' +
                             '<button class="td-fix-btn td-same-btn">' +
                             '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>'+
+                            '<span>Sửa</span>' +
                             '</button>' +
                             '<button class="td-delete-btn td-same-btn">' +
                             '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>'+
+                            '<span>Xóa</span>' +
                             '</button>' +
                             '</td>' +
                             '</tr>');
@@ -112,15 +112,15 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
                             '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>'+
+                            '<span>Xem</span>' +
                             '</button>' +
                             '<button class="td-fix-btn td-same-btn">' +
                             '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>'+
+                            '<span>Sửa</span>' +
                             '</button>' +
                             '<button class="td-delete-btn td-same-btn">' +
                             '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>'+
+                            '<span>Xóa</span>' +
                             '</button>' +
                             '</td>' +
                             '</tr>');
@@ -135,14 +135,33 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
         citizenInfoButtonClickEvent() {
             super.citizenInfoButtonClickEvent();
 
+            function resetAddressInput() {
+                $('#body-address-city').empty();
+                $('#body-address-city').append('<option selected disabled>Chọn tỉnh thành</option>');
+                $('#body-address-distric').empty();
+                $('#body-address-distric').append('<option selected disabled>Chọn huyện</option>');
+                $('#body-address-commune').empty();
+                $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
+                $('#body-address-hamlet').empty();
+                $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
+            };
+
             axios({ // find all cities
                 method: 'GET',
                 url: '/api/city/list'
             }).then((res) => {
                 if (res.data.success) {
+                    // reset all the input
                     $('#body-address-city').empty();
                     $('#body-address-city').append('<option selected disabled>Chọn tỉnh thành</option>');
-                    res.data.cities.forEach((e) => {
+                    $('#body-address-distric').empty();
+                    $('#body-address-distric').append('<option selected disabled>Chọn huyện</option>');
+                    $('#body-address-commune').empty();
+                    $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
+                    $('#body-address-hamlet').empty();
+                    $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
+
+                    res.data.cities.forEach((e) => { // add city to the city input
                         $('#body-address-city').append(`<option value="${e.city_id}">${e.city_name}</option>`);
                     })
                 } else {
@@ -156,9 +175,15 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     url: '/api/district/list'
                 }).then((res) => {
                     if (res.data.success) {
+                        //reset the remain input
                         $('#body-address-distric').empty();
                         $('#body-address-distric').append('<option selected disabled>Chọn huyện</option>');
-                        res.data.districts.forEach((e) => {
+                        $('#body-address-commune').empty();
+                        $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
+                        $('#body-address-hamlet').empty();
+                        $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
+
+                        res.data.districts.forEach((e) => { // add districts to the district input
                             if (e.city_id == $('#body-address-city').val()) {
                                 $('#body-address-distric').append(`<option value="${e.district_id}">${e.district_name}</option>`);
                             };
@@ -176,9 +201,13 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     url: '/api/ward/list'
                 }).then((res) => {
                     if (res.data.success) {
+                        // reset the remain input
                         $('#body-address-commune').empty();
                         $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
-                        res.data.wards.forEach((e) => {
+                        $('#body-address-hamlet').empty();
+                        $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
+
+                        res.data.wards.forEach((e) => { // add communes to the commune input
                             if (e.district_id == $('#body-address-distric').val()) {
                                 $('#body-address-commune').append(`<option value="${e.ward_id}">${e.ward_name}</option>`);
                             };
@@ -195,9 +224,11 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     url: '/api/hamlet/list'
                 }).then((res) => {
                     if (res.data.success) {
+                        // reset the remain input
                         $('#body-address-hamlet').empty();
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
-                        res.data.wards.forEach((e) => {
+
+                        res.data.wards.forEach((e) => { // add hamlets to hamlet input
                             if (e.ward_id == $('#body-address-commune').val()) {
                                 $('#body-address-hamlet').append(`<option value="${e.hamlet_id}">${e.hamlet_name}</option>`);
                             };

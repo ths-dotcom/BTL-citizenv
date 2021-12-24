@@ -1,7 +1,7 @@
 define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], function (Manager, Operator, $, axios) {
     return class B1 extends aggregation(Operator, Manager) {
-        constructor(id, username, name, per_scope, role_id, declare_per) {
-            super(id, username, name, per_scope, role_id, declare_per);
+        constructor(id, username, name, per_scope, role_id, declare_per, address) {
+            super(id, username, name, per_scope, role_id, declare_per, address);
         };
         start() { //run all the functionalities of B1 user
             this.homeButtonClickEvent();
