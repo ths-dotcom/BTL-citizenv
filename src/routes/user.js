@@ -5,6 +5,9 @@ const authorization = require('../app/middlewares/authorization');
 const check = require('../app/middlewares/check');
 const UserController = require('../app/controllers/UserController');
 
+router.get('/hamlet/list', authorization.a123b1, UserController.userHamlet);
+router.get('/ward/list', authorization.a123, UserController.userWard);
+router.get('/district/list', authorization.a12, UserController.userDistrict);
 router.get('/city/list', authorization.a1, UserController.userCity);
 
 router.patch('/declare-permission/:userId', authorization.a123b1,

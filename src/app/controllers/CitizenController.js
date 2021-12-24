@@ -14,6 +14,7 @@ class CitizenController {
         req.body.data.permanent_address = req.user.per_scope;
         req.body.data.home_address = req.user.per_scope;
         req.body.data.temporary_address = req.user.per_scope;
+        req.body.data.hamlet_id = req.user.per_scope;
         Citizen.create(req.body.data)
             .then(() => res.json({
                 success: true,
@@ -27,6 +28,7 @@ class CitizenController {
         req.body.data.permanent_address = req.user.per_scope;
         req.body.data.home_address = req.user.per_scope;
         req.body.data.temporary_address = req.user.per_scope;
+        req.body.data.hamlet_id = req.user.per_scope;
         Citizen.update(req.body.data, {
             where: {
                 citizen_id: req.params.citizenId
@@ -56,7 +58,7 @@ class CitizenController {
         else {
             Citizen.findAll({
                 where: {
-                    permanent_address : {
+                    hamlet_id : {
                         [Op.startsWith]: req.user.per_scope
                     },
                     is_deleted: false
@@ -93,7 +95,7 @@ class CitizenController {
                     full_name : {
                         [Op.substring]: req.body.data.full_name
                     },
-                    permanent_address: {
+                    hamlet_id: {
                         [Op.startsWith] : req.user.per_scope
                     },
                     is_deleted: false
@@ -126,6 +128,43 @@ class CitizenController {
                 message: 'Xóa dân cư thành công'
             }))
             .catch(err => next(createHttpError(500, err)));
+    }
+
+    // [GET] /api/citizen/detail/:citizenId
+    async detailCitizen(req, res, next) {
+        const citizen = await Citizen.findOne({
+            where: {
+                citizen_id : req.params.citizenId
+            }
+        })
+        if(!citizen) return res.json({
+            success: false,
+            message: 'không tìm thấy người này'
+        })
+        let address = [];
+        const hamlet = await Hamlet.findOne({
+            where: {hamlet_id: citizen.dataValues.permanent_address}
+        })
+        address.push(hamlet.dataValues.hamlet_name);
+        const ward = await Ward.findOne({
+            where: {ward_id: hamlet.dataValues.ward_id}
+        })
+        address.push(ward.dataValues.ward_name);
+        const district = await District.findOne({
+            where: {district_id: ward.dataValues.district_id}
+        })
+        address.push(district.dataValues.district_name);
+        const city = await City.findOne({
+            where : {city_id: district.dataValues.city_id}
+        })
+        address.push(city.dataValues.city_name);
+        let citizenDetail = citizen.dataValues;
+        citizenDetail.address_name = address.join(" - ");
+        console.log(address.join(" - "));
+        res.json({
+            success: true,
+            citizen: citizenDetail
+        })
     }
 }
 

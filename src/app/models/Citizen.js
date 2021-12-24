@@ -52,6 +52,10 @@ const Citzen = sequelize.define('citizen', {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
+    hamlet_id: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 })
 
 module.exports = Citzen;
