@@ -89,7 +89,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
-                    console.log(res.data.districts);
                     res.data.districts.forEach((e) => {
                         let declarePer = '';
                         if (e.declare_per) {
