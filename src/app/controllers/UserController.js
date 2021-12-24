@@ -171,7 +171,71 @@ class UserController {
 
     // [GET] /api/user/district/list
     userDistrict(req, res, next) {
-        
+        if(!req.user.per_scope) {
+            return res.json({
+                success: false,
+                message: 'api này dành cho a2, đang ở a1'
+            })
+        }
+        User.findAll({
+            where: {
+                role_id: 3,
+                per_scope: {
+                    [Op.startsWith]: req.user.per_scope
+                }
+            }
+        })
+            .then(users => res.json({
+                success: true,
+                users
+            }))
+            .catch(err => next(createHttpError(500, err)));
+    }
+
+    // [GET] /api/user/ward/list
+    userWard(req, res, next) {
+        if(!req.user.per_scope) {
+            return res.json({
+                success: false,
+                message: 'api này dành cho a3, đang ở a1'
+            })
+        }
+        User.findAll({
+            where: {
+                role_id: 4,
+                per_scope: {
+                    [Op.startsWith]: req.user.per_scope
+                }
+            }
+        })
+            .then(users => res.json({
+                success: true,
+                users
+            }))
+            .catch(err => next(createHttpError(500, err)));
+    }
+
+    // [GET] /api/user/ward/list
+    userHamlet(req, res, next) {
+        if(!req.user.per_scope) {
+            return res.json({
+                success: false,
+                message: 'api này dành cho b1, đang ở a1'
+            })
+        }
+        User.findAll({
+            where: {
+                role_id: 5,
+                per_scope: {
+                    [Op.startsWith]: req.user.per_scope
+                }
+            }
+        })
+            .then(users => res.json({
+                success: true,
+                users
+            }))
+            .catch(err => next(createHttpError(500, err)));
     }
 }
 
