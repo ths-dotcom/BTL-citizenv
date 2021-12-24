@@ -28,13 +28,16 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
                             '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            ' Xem</button>' +
+                            '<span>Xem</span>'+
+                            '</button>' +
                             '<button class="td-fix-btn td-same-btn">' +
                             '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            ' Sửa</button>' +
+                            '<span>Sửa</span>'+
+                            '</button>' +
                             '<button class="td-delete-btn td-same-btn">' +
                             '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            'Xóa</button>' +
+                            '<span>Xóa</span>'+
+                            '</button>' +
                             '</td>' +
                             '</tr>');
                     })
@@ -107,9 +110,18 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '22/12/2021' +
                             '</td>' +
                             '<td>' +
-                            '<button>Xem</button>' +
-                            '<button>Sua</button>' +
-                            '<button>Xoa</button>' +
+                            '<button class="td-see-btn td-same-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem</span>'+
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>'+
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>'+
+                            '</button>' +
                             '</td>' +
                             '</tr>');
                     })

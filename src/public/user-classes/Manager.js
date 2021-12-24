@@ -315,9 +315,9 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="ratio-best-bottom ratio-same-bottom">' +
                 '<div class="ratio-best-bottom-left">' +
-                '<span>12</span>' +
-                '/' +
-                '<span>99</span>' +
+                '<span>12 </span>' +
+                '/ ' +
+                '<span>99 </span>' +
                 'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-best-bottom-right">' +
@@ -343,9 +343,9 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="ratio-worst-bottom ratio-same-bottom">' +
                 '<div class="ratio-worst-bottom-left">' +
-                '<span>10</span>' +
-                '/' +
-                '<span>99</span>' +
+                '<span>10 </span>' +
+                '/ ' +
+                '<span>99 </span>' +
                 'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-worst-bottom-right">' +
