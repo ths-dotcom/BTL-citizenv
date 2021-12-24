@@ -70,9 +70,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         }
                     }
                 }).then((res) => {
-                    $('input.name-khaibao-input.same-left-input').val("");
-                    $('input.code-khaibao-input.same-left-input').val("");
-                    $('input.password-khaibao-input.same-left-input').val("");
                     if (res.data.success) {
                         this.fillTableOfCity();
 
@@ -81,8 +78,8 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             url: '/api/user/signup',
                             data: {
                                 data: {
-                                    username: 'a2gov' + city_id,
-                                    name: 'A2' + city_name,
+                                    username: 'a2gov' + $('input.code-khaibao-input.same-left-input').val(),
+                                    name: 'A2 ' + $('input.name-khaibao-input.same-left-input').val(),
                                     password: $('input.password-khaibao-input.same-left-input').val()
                                 }
                             }
@@ -92,6 +89,9 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     } else {
                         console.log(userResponse);
                     }
+                    $('input.name-khaibao-input.same-left-input').val("");
+                    $('input.code-khaibao-input.same-left-input').val("");
+                    $('input.password-khaibao-input.same-left-input').val("");
                 })
             });
         };
