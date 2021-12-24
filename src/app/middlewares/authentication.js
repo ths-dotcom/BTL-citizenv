@@ -9,7 +9,7 @@ async function authToken(req, res, next) {
     var tokenHeader = req.header('Authorization');
     var token = req.cookies.token;
     //
-    token = tokenHeader;
+    // token = tokenHeader;
     if (!token) {
         req.login = false;
         return next();

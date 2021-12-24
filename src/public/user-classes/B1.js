@@ -7,7 +7,6 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
             this.homeButtonClickEvent();
             this.renderMenuLeft();
             this.renderInfo();
-            console.log(this);
         };
 
         fillTableOfHamlet() { // fill the table of hamlet
