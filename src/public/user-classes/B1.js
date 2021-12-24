@@ -61,15 +61,8 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                 this.printButtonClickEvent();
             }); //add printting citizen input form function
 
-            this.reportButton = $("<div></div>", { "class": "body-left-home" });
-            $("<div class='body-left-home-content'><i class='fa fa-check' aria-hidden='true'></i><span>Báo cáo hoàn thành</span></div>")
-                .appendTo($(this.reportButton));
-            $(this.reportButton).on('click', () => {
-                this.reportButtonClickEvent();
-            }); //add report progress function
 
-
-            $('div.body-left').append($(this.inputCitizenButton), $(this.printButton), $(this.reportButton));
+            $('div.body-left').append($(this.inputCitizenButton), $(this.printButton));
         };
 
         homeButtonClickEvent() {
@@ -102,10 +95,6 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
 
         printButtonClickEvent() {
             super.printButtonClickEvent();
-        };
-
-        reportButtonClickEvent() {
-            super.reportButtonClickEvent();
         };
     }
 });

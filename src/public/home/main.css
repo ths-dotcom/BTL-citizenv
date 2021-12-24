@@ -637,7 +637,7 @@ body {
     padding: 0 10px;
 }
 
-.add-finish-btn i, .add-print-btn{
+.add-finish-btn i, .add-print-btn i{
     padding: 0 8px;
     font-size: 20px;
 }
