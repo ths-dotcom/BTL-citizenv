@@ -15,6 +15,10 @@ const Ward = sequelize.define('wards', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    is_deleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
 })
 
 module.exports = Ward;

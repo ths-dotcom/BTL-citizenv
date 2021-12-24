@@ -30,7 +30,11 @@ class CityController {
     // [GET] api/district/list
     listOfDistricts(req, res, next) {
         if(!req.user.per_scope) {
-            District.findAll()
+            District.findAll({
+                where: {
+                    is_deleted: false
+                }
+            })
                 .then(districts => res.json({
                     success: true,
                     districts
@@ -42,7 +46,8 @@ class CityController {
                 where: {
                     district_id : {
                         [Op.startsWith]: req.user.per_scope
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(districts => res.json({
@@ -60,7 +65,8 @@ class CityController {
                 where: {
                     district_name : {
                         [Op.substring]: req.body.data.district_name
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(districts => res.json({
@@ -77,7 +83,8 @@ class CityController {
                     },
                     district_id: {
                         [Op.startsWith] : req.user.per_scope
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(districts => res.json({
@@ -90,7 +97,29 @@ class CityController {
     }
 
     //[DELETE] api/district/:districtId
-    // chưa làm
+    deleteDistrict(req, res, next) {
+        District.update({is_deleted: true}, {
+            where: {
+               district_id : req.params.districtId 
+            }
+        })
+            .then(() => {
+                User.update({is_deleted: true}, {
+                    where: {
+                        per_scope: {
+                            [Op.startsWith]: req.params.districtId
+                        }
+                    }
+                })
+                    .then(() => res.json({
+                        success: true,
+                        message: "Xóa huyện thành công"
+                    }))
+                    .catch(err => next(createHttpError(500, err)));
+                
+            })
+            .catch(err => next(createHttpError(500, err)));
+    }
 
     // [PUT] /api/district/:districtId
     updateDistrict(req, res, next) {

@@ -16,6 +16,10 @@ const District = sequelize.define('districts', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    is_deleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
 })
 
 // District.belongsTo(City, )

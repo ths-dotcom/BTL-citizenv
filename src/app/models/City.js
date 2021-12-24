@@ -10,7 +10,11 @@ const City = sequelize.define('cities', {
     city_name: {
         type: DataTypes.STRING,
         allowNull: false
-    }
+    },
+    is_deleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
 })
 
 module.exports = City;

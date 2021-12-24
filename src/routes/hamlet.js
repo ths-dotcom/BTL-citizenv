@@ -7,7 +7,7 @@ const authorization = require('../app/middlewares/authorization');
 
 router.put('/:hamletId', validator, authorization.a123b1, hamletController.updateHamlet);
 
-// router.delete('/:districtId', authorization.a12, districtController.deletedistrict);
+router.delete('/:hamletId', authorization.a123b1, hamletController.deleteHamlet);
 
 router.post('/list', authorization.a123b1, hamletController.searchHamlet);
 router.get('/list', authorization.a123b1, hamletController.listOfHamlets);
