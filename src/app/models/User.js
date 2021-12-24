@@ -25,7 +25,11 @@ const User = sequelize.define('users', {
     declare_per: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
-    }
+    },
+    is_deleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
 })
 
 module.exports = User;

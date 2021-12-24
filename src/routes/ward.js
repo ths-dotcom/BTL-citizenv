@@ -7,7 +7,7 @@ const authorization = require('../app/middlewares/authorization');
 
 router.put('/:wardId', validator, authorization.a123, wardController.updateWard);
 
-// router.delete('/:districtId', authorization.a12, districtController.deletedistrict);
+router.delete('/:wardId', authorization.a123, wardController.deleteWard);
 
 router.post('/list', authorization.a123, wardController.searchWard);
 router.get('/list', authorization.a123, wardController.listOfWards);

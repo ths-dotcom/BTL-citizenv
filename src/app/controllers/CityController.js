@@ -20,7 +20,11 @@ class CityController {
 
     // [GET] api/city/list
     listOfCities(req, res, next) {
-        City.findAll()
+        City.findAll({
+            where: {
+                is_deleted: false
+            }
+        })
             .then(cities => res.json({
                 success: true,
                 cities
@@ -37,7 +41,8 @@ class CityController {
             where: {
                 city_name : {
                     [Op.substring]: req.body.data.city_name
-                }
+                },
+                is_deleted: false
             }
         })
             .then(cities => res.json({
@@ -51,32 +56,28 @@ class CityController {
     }
 
     //[DELETE] api/city/:cityId
-    // chưa xong
     deleteCity(req, res, next) {
-        City.destroy({
+        City.update({is_deleted: true}, {
             where: {
-                city_id: req.params.cityId
+               city_id : req.params.cityId 
             }
         })
             .then(() => {
-                User.destroy({
+                User.update({is_deleted: true}, {
                     where: {
-                        per_scope: req.params.cityId
+                        per_scope: {
+                            [Op.startsWith]: req.params.cityId
+                        }
                     }
                 })
                     .then(() => res.json({
                         success: true,
-                        message: 'Xóa thành công'
+                        message: "Xóa thành phố thành công"
                     }))
-                    .catch(err => next(createHttpError(
-                        500,
-                        'Lỗi xóa thành phố'
-                    )))
+                    .catch(err => next(createHttpError(500, err)));
+                
             })
-            .catch(err => next(createHttpError(
-                500,
-                'Lỗi xóa thành phố'
-            )))
+            .catch(err => next(createHttpError(500, err)));
     }
 
     // [PUT] /api/city/:cityId

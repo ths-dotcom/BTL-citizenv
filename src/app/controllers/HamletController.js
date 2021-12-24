@@ -29,7 +29,11 @@ class HamletController {
     // [GET] api/hamlet/list
     listOfHamlets(req, res, next) {
         if(!req.user.per_scope) {
-            Hamlet.findAll()
+            Hamlet.findAll({
+                where : {
+                    is_deleted: false
+                }
+            })
                 .then(hamlets => res.json({
                     success: true,
                     hamlets
@@ -41,7 +45,8 @@ class HamletController {
                 where: {
                     hamlet_id : {
                         [Op.startsWith]: req.user.per_scope
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(hamlets => res.json({
@@ -59,7 +64,8 @@ class HamletController {
                 where: {
                     hamlet_name : {
                         [Op.substring]: req.body.data.hamlet_name
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(hamlets => res.json({
@@ -76,7 +82,8 @@ class HamletController {
                     },
                     hamlet_id: {
                         [Op.startsWith] : req.user.per_scope
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(hamlets => res.json({
@@ -87,8 +94,30 @@ class HamletController {
         }     
     }
 
-    //[DELETE] api/district/:districtId
-    // chưa làm
+    //[DELETE] api/hamlet/:hamletId
+    deleteHamlet(req, res, next) {
+        Hamlet.update({is_deleted: true}, {
+            where: {
+                hamlet_id : req.params.hamletId 
+            }
+        })
+            .then(() => {
+                User.update({is_deleted: true}, {
+                    where: {
+                        per_scope: {
+                            [Op.startsWith]: req.params.hamletId
+                        }
+                    }
+                })
+                    .then(() => res.json({
+                        success: true,
+                        message: "Xóa thôn thành công"
+                    }))
+                    .catch(err => next(createHttpError(500, err)));
+                
+            })
+            .catch(err => next(createHttpError(500, err)));
+    }
 
     // [PUT] /api/hamlet/:hamletId
     updateHamlet(req, res, next) {

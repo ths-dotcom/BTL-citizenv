@@ -28,7 +28,11 @@ class WardController {
     // [GET] api/ward/list
     listOfWards(req, res, next) {
         if(!req.user.per_scope) {
-            Ward.findAll()
+            Ward.findAll({
+                where: {
+                    is_deleted: false
+                }
+            })
                 .then(wards => res.json({
                     success: true,
                     wards
@@ -40,7 +44,8 @@ class WardController {
                 where: {
                     ward_id : {
                         [Op.startsWith]: req.user.per_scope
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(wards => res.json({
@@ -58,7 +63,8 @@ class WardController {
                 where: {
                     ward_name : {
                         [Op.substring]: req.body.data.ward_name
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(wards => res.json({
@@ -75,7 +81,8 @@ class WardController {
                     },
                     ward_id: {
                         [Op.startsWith] : req.user.per_scope
-                    }
+                    },
+                    is_deleted: false
                 }
             })
                 .then(wards => res.json({
@@ -87,8 +94,30 @@ class WardController {
              
     }
 
-    //[DELETE] api/district/:districtId
-    // chưa làm
+    //[DELETE] api/ward/:wardId
+    deleteWard(req, res, next) {
+        Ward.update({is_deleted: true}, {
+            where: {
+               ward_id : req.params.wardId 
+            }
+        })
+            .then(() => {
+                User.update({is_deleted: true}, {
+                    where: {
+                        per_scope: {
+                            [Op.startsWith]: req.params.wardId
+                        }
+                    }
+                })
+                    .then(() => res.json({
+                        success: true,
+                        message: "Xóa xã thành công"
+                    }))
+                    .catch(err => next(createHttpError(500, err)));
+                
+            })
+            .catch(err => next(createHttpError(500, err)));
+    }
 
     // [PUT] /api/ward/:wardId
     updateWard(req, res, next) {
