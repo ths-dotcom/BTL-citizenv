@@ -35,6 +35,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
             $("<div class='body-left-home-content'><i class='fa fa-id-card' aria-hidden='true'></i><span>Khai báo và cấp mã</span></div>")
                 .appendTo($(this.creatingPlaceButton));
             $(this.creatingPlaceButton).on('click', () => {
+                this.resetSelectedButton();
+                this.creatingPlaceButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.creatingPlaceButtonClickEvent();
             }); // Add city function
 
@@ -42,6 +44,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
             $("<div class='body-left-home-content'><i class='fa fa-user' aria-hidden='true'></i><span>Quản lý tài khoản</span></div>")
                 .appendTo($(this.creatingAccountButton));
             $(this.creatingAccountButton).on('click', () => {
+                this.resetSelectedButton();
+                this.creatingAccountButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.creatingAccountButtonClickEvent();
             }); // Add account function
 
@@ -49,6 +53,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
             $("<div class='body-left-home-content'><i class='fa fa-search' aria-hidden='true'></i><span>Xem thông tin người dân</span></div>")
                 .appendTo($(this.citizenInfoButton));
             $(this.citizenInfoButton).on('click', () => {
+                this.resetSelectedButton();
+                this.citizenInfoButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.citizenInfoButtonClickEvent();
             }); // View citizen function
 
@@ -56,6 +62,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
             $("<div class='body-left-home-content'><i class='fa fa-line-chart' aria-hidden='true'></i><span>Theo dõi tiến độ nhập liệu</span></div>")
                 .appendTo($(this.monitoringProgressButton));
             $(this.monitoringProgressButton).on('click', () => {
+                this.resetSelectedButton();
+                this.monitoringProgressButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.monitoringProgressButtonClickEvent();
             });
 
@@ -63,6 +71,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
             $("<div class='body-left-home-content'><i class='fa fa-bar-chart' aria-hidden='true'></i><span>Báo cáo, thống kê</span></div>")
                 .appendTo($(this.showStatisticButton));
             $(this.showStatisticButton).on('click', () => {
+                this.resetSelectedButton();
+                this.showStatisticButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.showStatisticButtonClickEvent();
             });
 

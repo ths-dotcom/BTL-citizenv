@@ -10,6 +10,8 @@ define(['user-classes/User', 'jquery'], function (User, $) {
             $("<div class='body-left-home-content'><i class='fa fa-keyboard-o' aria-hidden='true'></i><span>Nhập liệu dân số</span></div>")
                 .appendTo($(this.inputCitizenButton));
             $(this.inputCitizenButton).on('click', () => {
+                this.resetSelectedButton();
+                this.inputCitizenButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.inputCitizenButtonClickEvent();
             }); //add input citizen function
 
@@ -17,6 +19,8 @@ define(['user-classes/User', 'jquery'], function (User, $) {
             $("<div class='body-left-home-content'><i class='fa fa-print' aria-hidden='true'></i><span>In phiếu điều tra</span></div>")
                 .appendTo($(this.printButton));
             $(this.printButton).on('click', () => {
+                this.resetSelectedButton();
+                this.printButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.printButtonClickEvent();
             }); //add printting citizen input form function
 
@@ -24,7 +28,7 @@ define(['user-classes/User', 'jquery'], function (User, $) {
             $('div.body-left').append($(this.inputCitizenButton), $(this.printButton));
         };
 
-        homeButtonClickEvent(){
+        homeButtonClickEvent() {
             super.homeButtonClickEvent();
 
         }

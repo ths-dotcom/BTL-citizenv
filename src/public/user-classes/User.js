@@ -32,11 +32,17 @@ define(['jquery'], function ($) {
             this.supervising = temp2;
         };
 
+        resetSelectedButton() {
+            $('div.body-left').children().children('.body-left-home-content-active').removeClass('body-left-home-content-active');
+        };
+
         renderMenuLeft() {
             this.homeButton = $("<div></div>", { "class": "body-left-home body-left-home-home" });
             $("<div class='body-left-home-content body-left-home-content-active'><i class='fa fa-home' aria-hidden='true'></i><span>Trang chủ</span></div>")
                 .appendTo($(this.homeButton));
             $(this.homeButton).on('click', () => {
+                this.resetSelectedButton();
+                this.homeButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.homeButtonClickEvent();
             }); // Add home function
 

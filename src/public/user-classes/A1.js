@@ -17,6 +17,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 if (res.data.success) {
                     $('tbody').empty();
                     res.data.cities.forEach((e) => {
+                        // add content to the city table
                         $('tbody').append('<tr>' +
                             `<td>${e.city_id}</td>` +
                             `<td>${e.city_name}</td>` +
@@ -40,6 +41,20 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '</button>' +
                             '</td>' +
                             '</tr>');
+
+                        // delete city event
+                        $('button.td-delete-btn.td-same-btn').on('click', () => {
+                            console.log("a");
+                            axios({
+                                method: 'DELETE',
+                                url: `/api/city/${e.city_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    $('tbody').empty();
+                                    this.fillTableOfCity();
+                                };
+                            });
+                        });
                     })
                 } else {
                     console.log(res);
@@ -148,18 +163,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
         citizenInfoButtonClickEvent() {
             super.citizenInfoButtonClickEvent();
 
-            function resetAddressInput() {
-                $('#body-address-city').empty();
-                $('#body-address-city').append('<option selected disabled>Chọn tỉnh thành</option>');
-                $('#body-address-distric').empty();
-                $('#body-address-distric').append('<option selected disabled>Chọn huyện</option>');
-                $('#body-address-commune').empty();
-                $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
-                $('#body-address-hamlet').empty();
-                $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
-            };
-
-            axios({ // find all cities
+            axios({ // find all cities and render it in city select
                 method: 'GET',
                 url: '/api/city/list'
             }).then((res) => {
@@ -250,6 +254,33 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         console.log(res);
                     }
                 });
+            });
+
+            axios({ // add citizen to the citizen table
+                method: 'GET',
+                url: '/api/citizen/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    res.data.citizens.forEach((e) => { // add city to the city input
+                        $('tbody').append('<tr>' +
+                            `<td>${e.citizen_id}</td>` +
+                            `<td>${e.number}</td>` +
+                            '<td>' +
+                            `${e.full_name}` +
+                            '</td>' +
+                            `<td>${e.dob}</td>` +
+                            '<td>' +
+                            `${e.gender}` +
+                            '</td>' +
+                            `<td>${e.permanent_address}</td>` +
+                            '<td>' +
+                            '<button class="see-detail-person">Xem chi tiết</button>' +
+                            '</td>' +
+                            '</tr>');
+                    })
+                } else {
+                    console.log(res);
+                }
             });
         };
 
