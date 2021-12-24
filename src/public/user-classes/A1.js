@@ -66,8 +66,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     data: {
                         data: {
                             city_name: $('input.name-khaibao-input.same-left-input').val(),
-                            city_id: $('input.code-khaibao-input.same-left-input').val(),
-                            password: $('input.password-khaibao-input.same-left-input').val()
+                            city_id: $('input.code-khaibao-input.same-left-input').val()
                         }
                     }
                 }).then((res) => {
@@ -76,6 +75,20 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('input.password-khaibao-input.same-left-input').val("");
                     if (res.data.success) {
                         this.fillTableOfCity();
+
+                        axios({
+                            method: 'POST',
+                            url: '/api/user/signup',
+                            data: {
+                                data: {
+                                    username: 'a2gov' + city_id,
+                                    name: 'A2' + city_name,
+                                    password: $('input.password-khaibao-input.same-left-input').val()
+                                }
+                            }
+                        }).then((res) => {
+                            if (!res.data.success) console.log(res);
+                        });
                     } else {
                         console.log(userResponse);
                     }

@@ -39,7 +39,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
             }); // Add city function
 
             this.creatingAccountButton = $("<div></div>", { "class": "body-left-home body-left-home-account" });
-            $("<div class='body-left-home-content'><i class='fa fa-user' aria-hidden='true'></i><span>Cấp và quản lý tài khoản</span></div>")
+            $("<div class='body-left-home-content'><i class='fa fa-user' aria-hidden='true'></i><span>Quản lý tài khoản</span></div>")
                 .appendTo($(this.creatingAccountButton));
             $(this.creatingAccountButton).on('click', () => {
                 this.creatingAccountButtonClickEvent();
@@ -79,7 +79,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
             super.clearRightContent();
             $('div.body-right-content').append($('<div class="right-content-name">Khai báo và cấp mã</div>' +
                 '<div class="right-content-code right-content-same">' +
-                `<div class="content-code-head content-same-head">Khai báo / Cấp mã cho ${this.monitoring}</div>` +
+                `<div class="content-code-head content-same-head">Khai báo ${this.monitoring} và cấp tài khoản</div>` +
                 '<div class="content-code-body">' +
                 '<div class="code-body-name this-body-same">' +
                 '<div class="body-name-left body-same-left">' +
@@ -92,7 +92,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<input type="text" class="code-khaibao-input same-left-input">' +
                 '</div>' +
                 '<div class="code-body-password this-body-same">' +
-                '<div class="body-password-left body-same-left">Xác nhận mật khẩu</div>' +
+                '<div class="body-password-left body-same-left">Nhập mật khẩu</div>' +
                 '<input type="password" class="password-khaibao-input same-left-input" >' +
                 '</div>' +
                 '</div>' +
@@ -108,32 +108,32 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
         creatingAccountButtonClickEvent() { // render structure of creating account function
             super.clearRightContent();
             $('div.body-right-content').append(
-                '<div class="right-content-name">Cấp và quản lý tài khoản</div>' +
-                '<div class="right-content-all">' +
-                '<!-- Cap tai khoan -->' +
-                '<div class="right-content-account right-content-same">' +
-                `<div class="content-account-head content-same-head">Tạo tài khoản chi cục ${this.supervising}</div>` +
-                '<div class="content-account-body">' +
-                '<div class="account-body-name this-body-same">' +
-                '<div class="body-name-left body-same-left">' +
-                ' Tên tài khoản' +
-                '</div>' +
-                '<input type="text" class="name-taikhoan-input same-left-input">' +
-                '</div>' +
-                '<div class="account-body-password this-body-same">' +
-                '<div class="body-password-left body-same-left">Nhập mật khẩu</div>' +
-                '<input type="password" class="password-taikhoan-input same-left-input">' +
-                '</div>' +
-                '<div class="account-body-repassword this-body-same">' +
-                '<div class="body-repassword-left body-same-left">Nhập lại mật khẩu</div>' +
-                '<input type="password" class="repassword-taikhoan-input same-left-input" >' +
-                '</div>' +
-                '</div>' +
-                '<div class="content-account-foot content-same-foot">' +
-                '<button class="account-foot-no-btn same-foot-no-btn">Hủy</button>' +
-                '<button class="account-foot-yes-btn same-foot-yes-btn">Tạo tài khoản</button>' +
-                '</div>' +
-                '</div>' +
+                // '<div class="right-content-all">' +
+                // '<!-- Cap tai khoan -->' +
+                // '<div class="right-content-account right-content-same">' +
+                // `<div class="content-account-head content-same-head">Tạo tài khoản chi cục ${this.supervising}</div>` +
+                // '<div class="content-account-body">' +
+                // '<div class="account-body-name this-body-same">' +
+                // '<div class="body-name-left body-same-left">' +
+                // ' Tên tài khoản' +
+                // '</div>' +
+                // '<input type="text" class="name-taikhoan-input same-left-input">' +
+                // '</div>' +
+                // '<div class="account-body-password this-body-same">' +
+                // '<div class="body-password-left body-same-left">Nhập mật khẩu</div>' +
+                // '<input type="password" class="password-taikhoan-input same-left-input">' +
+                // '</div>' +
+                // '<div class="account-body-repassword this-body-same">' +
+                // '<div class="body-repassword-left body-same-left">Nhập lại mật khẩu</div>' +
+                // '<input type="password" class="repassword-taikhoan-input same-left-input" >' +
+                // '</div>' +
+                // '</div>' +
+                // '<div class="content-account-foot content-same-foot">' +
+                // '<button class="account-foot-no-btn same-foot-no-btn">Hủy</button>' +
+                // '<button class="account-foot-yes-btn same-foot-yes-btn">Tạo tài khoản</button>' +
+                // '</div>' +
+                // '</div>' +
+                '<div class="right-content-name">Quản lý tài khoản</div>' +
                 '<!-- Cap quyen khai bao -->' +
                 '<div class="right-content-permission right-content-same">' +
                 '<div class="content-permission-head content-same-head">Cấp / đóng quyền khai báo chi cục</div>' +
