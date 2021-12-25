@@ -397,7 +397,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
                     res.data.cities.forEach((e) => { // add city to the city input
-                        $('#body-address-city').append(`<option value="${e.city_name}">${e.city_name}</option>`);
+                        $('#body-address-city').append(`<option value="${e.city_id}">${e.city_name}</option>`);
                     })
                 } else {
                     console.log(res);
@@ -419,8 +419,8 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
                         res.data.districts.forEach((e) => { // add districts to the district input
-                            if (e.city_name == $('#body-address-city').val()) {
-                                $('#body-address-distric').append(`<option value="${e.district_name}">${e.district_name}</option>`);
+                            if (e.city_id == $('#body-address-city').val()) {
+                                $('#body-address-distric').append(`<option value="${e.district_id}">${e.district_name}</option>`);
                             };
 
                         })
@@ -443,8 +443,8 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
                         res.data.wards.forEach((e) => { // add communes to the commune input
-                            if (e.district_name == $('#body-address-distric').val()) {
-                                $('#body-address-commune').append(`<option value="${e.ward_name}">${e.ward_name}</option>`);
+                            if (e.district_id == $('#body-address-distric').val()) {
+                                $('#body-address-commune').append(`<option value="${e.ward_id}">${e.ward_name}</option>`);
                             };
                         })
                     } else {
@@ -464,8 +464,8 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
                         res.data.hamlets.forEach((e) => { // add hamlets to hamlet input
-                            if (e.ward_name == $('#body-address-commune').val()) {
-                                $('#body-address-hamlet').append(`<option value="${e.hamlet_name}">${e.hamlet_name}</option>`);
+                            if (e.ward_id == $('#body-address-commune').val()) {
+                                $('#body-address-hamlet').append(`<option value="${e.hamlet_id}">${e.hamlet_name}</option>`);
                             };
                         })
                     } else {
@@ -477,31 +477,31 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             $('button.search-foot-btn').off();
             $('button.search-foot-btn').on('click', () => {
                 let gender = '';
-                let home_address = '';
+                let permanent_address = '';
                 if ($('input:radio[name=gender]:checked').eq(0).val()) {
                     gender = $('input:radio[name=gender]:checked').eq(0).val();
                 }
 
                 if ($('[id=body-address-hamlet]').eq(0).val() != null) {
-                    home_address += $('[id=body-address-hamlet]').eq(0).val();
-                };
-                if ($('[id=body-address-distric]').eq(0).val() != null) {
-                    if (home_address) {
-                        home_address += ' - ';
-                    }
-                    home_address += $('[id=body-address-distric]').eq(0).val();
+                    permanent_address += $('[id=body-address-hamlet]').eq(0).children("option").filter(":selected").text();
                 };
                 if ($('[id=body-address-commune]').eq(0).val() != null) {
-                    if (home_address) {
-                        home_address += ' - ';
+                    if (permanent_address) {
+                        permanent_address += ' - ';
                     }
-                    home_address += $('[id=body-address-commune]').eq(0).val();
+                    permanent_address += $('[id=body-address-commune]').eq(0).children("option").filter(":selected").text();
+                };
+                if ($('[id=body-address-distric]').eq(0).val() != null) {
+                    if (permanent_address) {
+                        permanent_address += ' - ';
+                    }
+                    permanent_address += $('[id=body-address-distric]').eq(0).children("option").filter(":selected").text();
                 };
                 if ($('[id=body-address-city]').eq(0).val() != null) {
-                    if (home_address) {
-                        home_address += ' - ';
+                    if (permanent_address) {
+                        permanent_address += ' - ';
                     }
-                    home_address += $('[id=body-address-city]').eq(0).val();
+                    permanent_address += $('[id=body-address-city]').eq(0).children("option").filter(":selected").text();
                 };
                 axios({
                     method: 'POST',
@@ -512,7 +512,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             full_name: $('input.name-left-input').eq(0).val(),
                             dob: $('input.date-left-input').eq(0).val(),
                             gender: gender,
-                            home_address: home_address,
+                            permanent_address: permanent_address,
                             religion: $('input.religion-mid-input').eq(0).val(),
                             academic_level: $('input.study-left-input').eq(0).val(),
                             job: $('input.job-right-input').eq(0).val()
