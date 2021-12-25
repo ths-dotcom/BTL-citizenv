@@ -20,7 +20,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         // add content to the city table
                         $('tbody').append('<tr>' +
                             `<td>${e.city_id}</td>` +
-                            `<td>${e.city_name}</td>` +
+                            `<td><input type="text" class="input-can-change input-citi-change" value="${e.city_name}"></td>` +
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
@@ -129,14 +129,13 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         }
                         $('tbody').append('<tr>' +
                             `<td>${e.id}</td>` +
-                            `<td>${e.name.slice(3)}</td>` +
+                            `<td><input type="text" class="input-can-change input-citi-change" value="${e.name.slice(3)}">
+                            </td>` +
                             `<td>${declarePer}` +
                             '<button class="change-state-btn">Thay đổi</button>' +
                             '</td>' +
-                            '<td>14/12/2021</td>' +
-                            '<td>' +
-                            '22/12/2021' +
-                            '</td>' +
+                            '<td><input type="text" class="input-can-change input-time-start-change" value="14/12/2021"></td>' +
+                            '<td><input type="text" class="input-can-change input-time-end-change" value="22/12/2021"></td>' +
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
                             '<i class="fa fa-eye" aria-hidden="true"></i>' +
