@@ -220,7 +220,7 @@ var aggregation = (baseClass, ...mixins) => {
         Object.getOwnPropertyNames(source)
             .concat(Object.getOwnPropertySymbols(source))
             .forEach((prop) => {
-                if (!prop.match(/^(?:constructor|prototype|arguments|caller|bind|call|apply|toString|length|declare_per|id|name|username|per_scope|role_id|monitoring|supervising|address)$/)) {
+                if (!prop.match(/^(?:constructor|prototype|arguments|caller|bind|call|apply|toString|length|declare_per|id|name|username|per_scope|role_id|monitoring|supervising|address|Array|arrayOfAddress)$/)) {
                     Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop));
                 }
 

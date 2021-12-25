@@ -2,8 +2,6 @@ define(['user-classes/User', 'jquery'], function (User, $) {
     return class Operator extends User {
         constructor(id, username, name, per_scope, role_id, declare_per, address) {
             super(id, username, name, per_scope, role_id, declare_per, address);
-
-            this.arrayOfAddress = address.split(' - ');
         };
         renderMenuLeft() {
             super.renderMenuLeft();

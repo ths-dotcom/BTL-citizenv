@@ -30,6 +30,7 @@ define(['jquery'], function ($) {
             };
             this.monitoring = temp1;
             this.supervising = temp2;
+            this.arrayOfAddress = String(address).split(' - ');
         };
 
         resetSelectedButton() {
