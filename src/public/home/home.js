@@ -27,6 +27,7 @@ define(["jquery", "axios", "A1", "A2", "A3", "B1", "B2"], function ($, axios, A1
                 console.log(userResponse);
             }
             currentUser.start();
+            console.log(currentUser);
 
             $('ul.navbar__user-menu').children().last().on('click', () => {
                 document.cookie = `token=`;
