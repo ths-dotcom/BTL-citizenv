@@ -387,7 +387,7 @@ body {
 }
 
 .right-content-same{
-    width: 50%;
+    width: fit-content;
     border: 1px solid #ccc;
     box-shadow: 0 4px 10px #ccc;
     padding: 20px;
@@ -396,8 +396,12 @@ body {
 
 .right-content-code{
     width: 50%;
+    margin: 0 auto;
 }
 
+.right-content-permission{
+    margin: 0 auto;
+}
 .content-same-head{
     font-size: 20px;
     color: #1d9d74;
