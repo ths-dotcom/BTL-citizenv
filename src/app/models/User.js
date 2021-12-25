@@ -36,6 +36,18 @@ const User = sequelize.define('users', {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
+    is_done: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    start_date: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
+    end_date: {
+        type: DataTypes.DATE,
+        allowNull: true
+    }
 })
 
 module.exports = User;
