@@ -157,7 +157,8 @@ class UserController {
     userCity(req, res, next) {
         User.findAll({
             where : {
-                role_id : 2
+                role_id : 2,
+                is_deleted: false
             }
         })
             .then(users => {
@@ -182,7 +183,8 @@ class UserController {
                 role_id: 3,
                 per_scope: {
                     [Op.startsWith]: req.user.per_scope
-                }
+                },
+                is_deleted: false
             }
         })
             .then(users => res.json({
@@ -205,7 +207,8 @@ class UserController {
                 role_id: 4,
                 per_scope: {
                     [Op.startsWith]: req.user.per_scope
-                }
+                },
+                is_deleted: false
             }
         })
             .then(users => res.json({
@@ -228,7 +231,8 @@ class UserController {
                 role_id: 5,
                 per_scope: {
                     [Op.startsWith]: req.user.per_scope
-                }
+                },
+                is_deleted: false
             }
         })
             .then(users => res.json({
