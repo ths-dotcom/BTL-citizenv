@@ -61,7 +61,7 @@ define(['user-classes/User', 'jquery'], function (User, $) {
                 '<div class="code-rigth-gender">Giới tính</div>' +
                 '<input type="radio" id="nam" name="gender" value="nam">' +
                 '<label for="nam">Nam</label>' +
-                '<input type="radio" id="nu" name="gender" value="nu">' +
+                '<input type="radio" id="nu" name="gender" value="nữ">' +
                 '<label for="nu">Nữ</label>' +
                 '</div>' +
                 '</div>' +

@@ -58,7 +58,6 @@ define(['jquery'], function ($) {
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="children-top-left-number same-top-left-number">' +
-                '12' +
                 '</div>' +
                 '<div class="children-top-left-text same-top-left-text">TRẺ EM</div>' +
                 '</div>' +
@@ -68,13 +67,8 @@ define(['jquery'], function ($) {
                 '</div>' +
                 '<div class="ratio-children-bottom ratio-same-bottom">' +
                 '<div class="ratio-children-bottom-left">' +
-                '<span>12 </span>' +
-                '/ ' +
-                '<span>99 </span>' +
-                'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-children-bottom-right">' +
-                '12,12%' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -100,7 +94,6 @@ define(['jquery'], function ($) {
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="old-top-left-number same-top-left-number">' +
-                '12' +
                 '</div>' +
                 '<div class="old-top-left-text same-top-left-text">NGƯỜI CAO TUỔI</div>' +
                 '</div>' +
@@ -110,13 +103,8 @@ define(['jquery'], function ($) {
                 '</div>' +
                 '<div class="ratio-old-bottom ratio-same-bottom">' +
                 '<div class="ratio-old-bottom-left">' +
-                '<span>12 </span>' +
-                '/ ' +
-                '<span>99 </span>' +
-                'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-old-bottom-right">' +
-                '12,12%' +
                 '</div>' +
                 '</div>' +
                 '</div>' +

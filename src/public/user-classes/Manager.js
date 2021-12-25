@@ -220,7 +220,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="code-rigth-gender">Giới tính</div>' +
                 '<input type="radio" id="nam" name="gender" value="nam">' +
                 '<label for="nam">Nam</label>' +
-                '<input type="radio" id="nu" name="gender" value="nu">' +
+                '<input type="radio" id="nu" name="gender" value="nữ">' +
                 '<label for="nu">Nữ</label>' +
                 '</div>' +
                 '</div>' +
@@ -284,7 +284,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="code-rigth-gender">Giới tính</div>' +
                 '<input type="radio" id="nam" name="gender" value="nam">' +
                 '<label for="nam">Nam</label>' +
-                '<input type="radio" id="nu" name="gender" value="nu">' +
+                '<input type="radio" id="nu" name="gender" value="nữ">' +
                 '<label for="nu">Nữ</label>' +
                 '</div>' +
                 '</div>' +
@@ -550,7 +550,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="children-top-left-number same-top-left-number">' +
-                '12' +
                 '</div>' +
                 '<div class="children-top-left-text same-top-left-text">TRẺ EM</div>' +
                 '</div>' +
@@ -560,13 +559,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="ratio-children-bottom ratio-same-bottom">' +
                 '<div class="ratio-children-bottom-left">' +
-                '<span>12</span>' +
-                '/' +
-                '<span>99</span>' +
-                'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-children-bottom-right">' +
-                '12,12%' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -574,7 +568,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="woman-top-left-number same-top-left-number">' +
-                '44' +
                 '</div>' +
                 '<div class="woman-top-left-text same-top-left-text">PHỤ NỮ</div>' +
                 '</div>' +
@@ -584,13 +577,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="ratio-woman-bottom ratio-same-bottom">' +
                 '<div class="ratio-woman-bottom-left">' +
-                '<span>44</span>' +
-                '/' +
-                '<span>99</span>' +
-                'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-woman-bottom-right">' +
-                '44,44%' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -598,7 +586,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="old-top-left-number same-top-left-number">' +
-                '12' +
                 '</div>' +
                 '<div class="old-top-left-text same-top-left-text">NGƯỜI CAO TUỔI</div>' +
                 '</div>' +
@@ -608,13 +595,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="ratio-old-bottom ratio-same-bottom">' +
                 '<div class="ratio-old-bottom-left">' +
-                '<span>12</span>' +
-                '/' +
-                '<span>99</span>' +
-                'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-old-bottom-right">' +
-                '12,12%' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -622,7 +604,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="all-top-left-number same-top-left-number">' +
-                '99' +
                 '</div>' +
                 '<div class="all-top-left-text same-top-left-text">TỔNG SỐ NGƯỜI</div>' +
                 '</div>' +
@@ -632,12 +613,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="ratio-all-bottom ratio-same-bottom">' +
                 '<div class="ratio-all-bottom-left">' +
-                'TỔNG' +
-                '<span>99</span>' +
-                'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-all-bottom-right">' +
-                '100%' +
                 '</div>' +
                 '</div>' +
                 '</div>' +

@@ -77,6 +77,58 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             })
         };
 
+        fillTableOfCitizenUtility(e, i) {
+            $('tbody').append('<tr>' +
+                `<td>${e.citizen_id}</td>` +
+                `<td>${e.number}</td>` +
+                '<td>' +
+                `${e.full_name}` +
+                '</td>' +
+                `<td>${e.dob}</td>` +
+                '<td>' +
+                `${e.gender}` +
+                '</td>' +
+                `<td>${e.permanent_address}</td>` +
+                '<td>' +
+                '<button class="td-delete-btn td-same-btn citizen-see-btn">' +
+                '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                '<span>Xem chi tiết</span>' +
+                '</button>' +
+                '</td>' +
+                '</tr>');
+
+            // view citizen event
+            $('button.td-delete-btn.td-same-btn.citizen-see-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                $('#right-content-search-search').hide();
+                $('#right-content-search-modify').show();
+
+                axios({
+                    method: 'GET',
+                    url: `/api/citizen/detail/${e.citizen_id}`,
+                }).then((res) => {
+                    if (res.data.success) {
+                        $('input.id-left-input').val(res.data.citizen.number);
+                        $('input.name-left-input').val(res.data.citizen.full_name);
+                        $('input.date-left-input').val(res.data.citizen.dob);
+                        $('input.religion-mid-input').val(res.data.citizen.religion);
+                        $('input.job-right-input').val(res.data.citizen.job);
+                        $('input.study-left-input').val(res.data.citizen.academic_level);
+                        if (res.data.citizen.gender == 'nam') {
+                            $('input:radio[name=gender]').val(['nam']);
+                        } else if (res.data.citizen.gender == 'nữ') {
+                            $('input:radio[name=gender]').val(['nu']);
+                        };
+
+                        const arrayOfhome_address = res.data.citizen.home_address.split(' - ');
+                        $('[id=body-address-city]').append(`<option selected value="${arrayOfhome_address[3]}">${arrayOfhome_address[3]}</option>`);
+                        $('[id=body-address-distric]').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
+                        $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
+                        $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
+                    };
+                })
+            });
+        };
+
         fillTableOfCitizen() {
             axios({ // add citizen to the citizen table
                 method: 'GET',
@@ -85,55 +137,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 if (res.data.success) {
                     $('tbody').empty();
                     res.data.citizens.forEach((e, i) => {
-                        $('tbody').append('<tr>' +
-                            `<td>${e.citizen_id}</td>` +
-                            `<td>${e.number}</td>` +
-                            '<td>' +
-                            `${e.full_name}` +
-                            '</td>' +
-                            `<td>${e.dob}</td>` +
-                            '<td>' +
-                            `${e.gender}` +
-                            '</td>' +
-                            `<td>${e.permanent_address}</td>` +
-                            '<td>' +
-                            '<button class="td-delete-btn td-same-btn citizen-see-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem chi tiết</span>' +
-                            '</button>' +
-                            '</td>' +
-                            '</tr>');
-
-                        // view citizen event
-                        $('button.td-see-btn.td-same-btn.citizen-see-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
-                            $('#right-content-search-search').hide();
-                            $('#right-content-search-modify').show();
-
-                            axios({
-                                method: 'GET',
-                                url: `/api/citizen/detail/${e.citizen_id}`,
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    $('input.id-left-input').val(res.data.citizen.number);
-                                    $('input.name-left-input').val(res.data.citizen.full_name);
-                                    $('input.date-left-input').val(res.data.citizen.dob);
-                                    $('input.religion-mid-input').val(res.data.citizen.religion);
-                                    $('input.job-right-input').val(res.data.citizen.job);
-                                    $('input.study-left-input').val(res.data.citizen.academic_level);
-                                    if (res.data.citizen.gender == 'nam') {
-                                        $('input:radio[name=gender]').val(['nam']);
-                                    } else if (res.data.citizen.gender == 'nữ') {
-                                        $('input:radio[name=gender]').val(['nu']);
-                                    };
-
-                                    const arrayOfhome_address = res.data.citizen.home_address.split(' - ');
-                                    $('[id=body-address-city]').append(`<option selected value="${arrayOfhome_address[3]}">${arrayOfhome_address[3]}</option>`);
-                                    $('[id=body-address-distric]').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
-                                    $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
-                                    $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
-                                };
-                            })
-                        });
+                        this.fillTableOfCitizenUtility(e, i);
 
                         // // delete citizen event
                         // $('button.td-delete-btn.td-same-btn.citizen-delete-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
@@ -249,6 +253,29 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.nu}`);
                     $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.nu} </span> / <span>${total} </span> NGƯỜI`);
                     $('div.ratio-woman-bottom-right').append(`${((res.data.gender.nu / total) * 100).toFixed(2)}%`);
+                };
+            });
+
+            axios({ // fill kid and elderly ratio
+                method: 'GET',
+                url: '/api/analyst/age'
+            }).then((res) => {
+                if (res.data.success) {
+                    //fill kid ratio
+                    $('div.children-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-children-bottom-left').empty();
+                    $('div.ratio-children-bottom-right').empty();
+                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.kid}`);
+                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.kid} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-children-bottom-right').append(`${((res.data.age.kid / total) * 100).toFixed(2)}%`);
+
+                    //kill elderly ratio
+                    $('div.old-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-old-bottom-left').empty();
+                    $('div.ratio-old-bottom-right').empty();
+                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.elder}`);
+                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.elder} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-old-bottom-right').append(`${((res.data.age.elder / total) * 100).toFixed(2)}%`);
                 };
             });
         };
@@ -370,7 +397,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
                     res.data.cities.forEach((e) => { // add city to the city input
-                        $('#body-address-city').append(`<option value="${e.city_id}">${e.city_name}</option>`);
+                        $('#body-address-city').append(`<option value="${e.city_name}">${e.city_name}</option>`);
                     })
                 } else {
                     console.log(res);
@@ -392,8 +419,8 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
                         res.data.districts.forEach((e) => { // add districts to the district input
-                            if (e.city_id == $('#body-address-city').val()) {
-                                $('#body-address-distric').append(`<option value="${e.district_id}">${e.district_name}</option>`);
+                            if (e.city_name == $('#body-address-city').val()) {
+                                $('#body-address-distric').append(`<option value="${e.district_name}">${e.district_name}</option>`);
                             };
 
                         })
@@ -416,8 +443,8 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
                         res.data.wards.forEach((e) => { // add communes to the commune input
-                            if (e.district_id == $('#body-address-distric').val()) {
-                                $('#body-address-commune').append(`<option value="${e.ward_id}">${e.ward_name}</option>`);
+                            if (e.district_name == $('#body-address-distric').val()) {
+                                $('#body-address-commune').append(`<option value="${e.ward_name}">${e.ward_name}</option>`);
                             };
                         })
                     } else {
@@ -437,12 +464,66 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 
                         res.data.hamlets.forEach((e) => { // add hamlets to hamlet input
-                            if (e.ward_id == $('#body-address-commune').val()) {
-                                $('#body-address-hamlet').append(`<option value="${e.hamlet_id}">${e.hamlet_name}</option>`);
+                            if (e.ward_name == $('#body-address-commune').val()) {
+                                $('#body-address-hamlet').append(`<option value="${e.hamlet_name}">${e.hamlet_name}</option>`);
                             };
                         })
                     } else {
                         console.log(res);
+                    }
+                });
+            });
+
+            $('button.search-foot-btn').off();
+            $('button.search-foot-btn').on('click', () => {
+                let gender = '';
+                let home_address = '';
+                if ($('input:radio[name=gender]:checked').eq(0).val()) {
+                    gender = $('input:radio[name=gender]:checked').eq(0).val();
+                }
+
+                if ($('[id=body-address-hamlet]').eq(0).val() != null) {
+                    home_address += $('[id=body-address-hamlet]').eq(0).val();
+                };
+                if ($('[id=body-address-distric]').eq(0).val() != null) {
+                    if (home_address) {
+                        home_address += ' - ';
+                    }
+                    home_address += $('[id=body-address-distric]').eq(0).val();
+                };
+                if ($('[id=body-address-commune]').eq(0).val() != null) {
+                    if (home_address) {
+                        home_address += ' - ';
+                    }
+                    home_address += $('[id=body-address-commune]').eq(0).val();
+                };
+                if ($('[id=body-address-city]').eq(0).val() != null) {
+                    if (home_address) {
+                        home_address += ' - ';
+                    }
+                    home_address += $('[id=body-address-city]').eq(0).val();
+                };
+                axios({
+                    method: 'POST',
+                    url: `/api/citizen/list`,
+                    data: {
+                        data: { // eq + 0 because the modify form having the same class as the search form, the modify form is display = none
+                            number: $('input.id-left-input').eq(0).val(),
+                            full_name: $('input.name-left-input').eq(0).val(),
+                            dob: $('input.date-left-input').eq(0).val(),
+                            gender: gender,
+                            home_address: home_address,
+                            religion: $('input.religion-mid-input').eq(0).val(),
+                            academic_level: $('input.study-left-input').eq(0).val(),
+                            job: $('input.job-right-input').eq(0).val()
+                        }
+                    }
+                }).then((res) => {
+                    if (res.data.success) {
+                        $('tbody').empty();
+                        res.data.citizens.forEach((e, i) => {
+                            this.fillTableOfCitizenUtility(e, i);
+                        });
                     }
                 });
             });
