@@ -43,7 +43,7 @@ class CitizenController {
 
     // [GET] /api/citizen/list
     listOfCitizens(req, res, next) {
-        if(!req.user.per_scope) {
+        if (!req.user.per_scope) {
             Citizen.findAll({
                 where: {
                     is_deleted: false
@@ -58,7 +58,7 @@ class CitizenController {
         else {
             Citizen.findAll({
                 where: {
-                    hamlet_id : {
+                    hamlet_id: {
                         [Op.startsWith]: req.user.per_scope
                     },
                     is_deleted: false
@@ -83,16 +83,16 @@ class CitizenController {
         let job = req.body.data.job;
         let options = { where: {} };
 
-        if(number) options.where.number = {[Op.substring]: number};
-        if(full_name) options.where.full_name = {[Op.substring]: full_name};
-        if(dob) options.where.dob = dob;
-        if(gender) options.where.gender = gender;
-        if(permanent_address) options.where.permanent_address = {[Op.substring]: permanent_address};
-        if(religion) options.where.religion = {[Op.substring]: religion};
-        if(job) options.where.job = {[Op.substring]: job};
-        
+        if (number) options.where.number = { [Op.substring]: number };
+        if (full_name) options.where.full_name = { [Op.substring]: full_name };
+        if (dob) options.where.dob = dob;
+        if (gender) options.where.gender = gender;
+        if (permanent_address) options.where.permanent_address = { [Op.substring]: permanent_address };
+        if (religion) options.where.religion = { [Op.substring]: religion };
+        if (job) options.where.job = { [Op.substring]: job };
+
         //
-        if(!req.user.per_scope) {
+        if (!req.user.per_scope) {
             Citizen.findAll(options)
                 .then(citizens => res.json({
                     success: true,
@@ -100,14 +100,14 @@ class CitizenController {
                 }))
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách dân cư')));
         }
-        else {  
+        else {
             Citizen.findAll(options)
                 .then(citizens => res.json({
                     success: true,
                     citizens
                 }))
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách dân cư')));
-        }     
+        }
     }
 
     // [DELETE] /api/citizen/:citizenId
@@ -119,7 +119,7 @@ class CitizenController {
         // })
 
         // -- Xóa mềm
-        Citizen.update({is_deleted: true}, {
+        Citizen.update({ is_deleted: true }, {
             where: {
                 citizen_id: req.params.citizenId
             }
@@ -135,28 +135,28 @@ class CitizenController {
     async detailCitizen(req, res, next) {
         const citizen = await Citizen.findOne({
             where: {
-                citizen_id : req.params.citizenId
+                citizen_id: req.params.citizenId
             }
         })
-        if(!citizen) return res.json({
+        if (!citizen) return res.json({
             success: false,
             message: 'không tìm thấy người này'
         })
         let address = [];
         const hamlet = await Hamlet.findOne({
-            where: {hamlet_id: citizen.dataValues.hamlet_id}
+            where: { hamlet_id: citizen.dataValues.hamlet_id }
         })
         address.push(hamlet.dataValues.hamlet_name);
         const ward = await Ward.findOne({
-            where: {ward_id: hamlet.dataValues.ward_id}
+            where: { ward_id: hamlet.dataValues.ward_id }
         })
         address.push(ward.dataValues.ward_name);
         const district = await District.findOne({
-            where: {district_id: ward.dataValues.district_id}
+            where: { district_id: ward.dataValues.district_id }
         })
         address.push(district.dataValues.district_name);
         const city = await City.findOne({
-            where : {city_id: district.dataValues.city_id}
+            where: { city_id: district.dataValues.city_id }
         })
         address.push(city.dataValues.city_name);
         let citizenDetail = citizen.dataValues;
