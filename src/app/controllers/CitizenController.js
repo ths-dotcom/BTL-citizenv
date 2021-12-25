@@ -11,9 +11,9 @@ const Citizen = require('../models/Citizen');
 class CitizenController {
     // [POST] /api/citizen/
     addCitizen(req, res, next) {
-        req.body.data.permanent_address = req.user.per_scope;
-        req.body.data.home_address = req.user.per_scope;
-        req.body.data.temporary_address = req.user.per_scope;
+        // req.body.data.permanent_address = req.user.per_scope;
+        // req.body.data.home_address = req.user.per_scope;
+        // req.body.data.temporary_address = req.user.per_scope;
         req.body.data.hamlet_id = req.user.per_scope;
         Citizen.create(req.body.data)
             .then(() => res.json({
@@ -25,9 +25,9 @@ class CitizenController {
 
     // [PUT] /api/citizen/:citizenId
     updateCitizen(req, res, next) {
-        req.body.data.permanent_address = req.user.per_scope;
-        req.body.data.home_address = req.user.per_scope;
-        req.body.data.temporary_address = req.user.per_scope;
+        // req.body.data.permanent_address = req.user.per_scope;
+        // req.body.data.home_address = req.user.per_scope;
+        // req.body.data.temporary_address = req.user.per_scope;
         req.body.data.hamlet_id = req.user.per_scope;
         Citizen.update(req.body.data, {
             where: {
