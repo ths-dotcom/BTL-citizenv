@@ -303,7 +303,18 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '</td>' +
                             `<td>${e.permanent_address}</td>` +
                             '<td>' +
-                            '<button class="see-detail-person">Xem chi tiết</button>' +
+                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
                             '</td>' +
                             '</tr>');
                     })
