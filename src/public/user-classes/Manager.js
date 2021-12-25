@@ -269,7 +269,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>');
             //render the modify form
             $('div.body-right-content').append('<div class="right-content-search" id="right-content-search-modify" style="display:none">' +
-                '<div class="content-search-head content-same-head">Nhập dữ liệu người dân</div>' +
+                '<div class="content-search-head content-same-head">Sửa dữ liệu người dân</div>' +
                 '<div class="content-search-body">' +
                 '<div class="search-body-code search-body-same">' +
                 '<div class="dan-code-left search-same-divinput">' +

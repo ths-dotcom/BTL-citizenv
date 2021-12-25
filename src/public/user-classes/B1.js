@@ -186,6 +186,36 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                     console.log(res);
                 }
             });
+
+            axios({ // add citizen to the district table
+                method: 'GET',
+                url: '/api/citizen/list'
+            }).then((res) => {
+                console.log(res);
+                if (res.data.success) {
+                    res.data.citizens.forEach((e) => { // add disitict to the distict input
+                        $('tbody').append('<tr>' +
+                            `<td>${e.citizen_id}</td>` +
+                            `<td>${e.number}</td>` +
+                            '<td>' +
+                            `${e.full_name}` +
+                            '</td>' +
+                            `<td>${e.dob}</td>` +
+                            '<td>' +
+                            `${e.gender}` +
+                            '</td>' +
+                            `<td>${e.permanent_address}</td>` +
+                            '<td>' +
+                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem chi tiết</span>' +
+                            '</td>' +
+                            '</tr>');
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
         };
 
         monitoringProgressButtonClickEvent() {
