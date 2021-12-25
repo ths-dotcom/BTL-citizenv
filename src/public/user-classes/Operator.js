@@ -16,7 +16,7 @@ define(['user-classes/User', 'jquery'], function (User, $) {
             }); //add input citizen function
 
             this.printButton = $("<div></div>", { "class": "body-left-home" });
-            $("<div class='body-left-home-content'><i class='fa fa-print' aria-hidden='true'></i><span>In phiếu điều tra</span></div>")
+            $("<div class='body-left-home-content'><i class='fa fa-print' aria-hidden='true'></i><span>Phát phiếu điều tra</span></div>")
                 .appendTo($(this.printButton));
             $(this.printButton).on('click', () => {
                 this.resetSelectedButton();
@@ -212,7 +212,7 @@ define(['user-classes/User', 'jquery'], function (User, $) {
                 '<thead>' +
                 '<tr>' +
                 '<th>' +
-                'STT' +
+                'ID' +
                 '</th>' +
                 '<th>Số CMND</th>' +
                 '<th>Họ và tên</th>' +
@@ -233,12 +233,12 @@ define(['user-classes/User', 'jquery'], function (User, $) {
             super.clearRightContent();
 
             $('div.body-right-content').append('<div class="right-content-name right-print-phieu">' +
-                '<div class="right-content-text">In phiếu điều tra dân số</div>' +
+                '<div class="right-content-text">Phát phiếu điều tra dân số</div>' +
                 '<div class="right-content-print">' +
                 '<a href="https://docs.google.com/document/d/1Q_x4n7pn3WGLODiI4lsPOFbAme9PY0Eu/edit?usp=sharing&ouid=104234781315676327803&rtpof=true&sd=true" target="_blank">' +
                 '<button class="add-print-btn">' +
                 '<i class="fa fa-print" aria-hidden="true"></i>' +
-                '<span>In phiếu điều tra</span>' +
+                '<span>Phát phiếu điều tra</span>' +
                 '</button>' +
                 '</a>' +
                 '</div>' +
