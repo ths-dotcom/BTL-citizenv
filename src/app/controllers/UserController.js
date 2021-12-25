@@ -245,9 +245,14 @@ class UserController {
     // [PATCH] /api/user/done/:userId
     done(req, res, next) {
         console.log(req.params.userId);
-        User.update({is_done: true},{
+        // User.update({is_done: true},{
+        //     where: {
+        //         per_scope: req.params.userId 
+        //     }
+        // })
+        User.findAll({
             where: {
-                per_scope: req.params.userId 
+                id: req.params.userId
             }
         })
             .then((a) => res.json({
