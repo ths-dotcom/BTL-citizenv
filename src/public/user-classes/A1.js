@@ -112,22 +112,10 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '</td>' +
                             '</tr>');
 
-                        // delete citizen event
-                        $('button.td-delete-btn.td-same-btn.citizen-delete-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
-                            axios({
-                                method: 'DELETE',
-                                url: `/api/citizen/${e.citizen_id}`,
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    this.fillTableOfCitizen();
-                                };
-                            });
-                        });
-
-                        // modify citizen event
-                        $('button.td-fix-btn.td-same-btn.citizen-fix-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                        // view citizen event
+                        $('button.td-see-btn.td-same-btn.citizen-see-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
                             $('#right-content-search-search').hide();
-                            $('#right-content-search-modify').css('display', 'block');
+                            $('#right-content-search-modify').show();
 
                             axios({
                                 method: 'GET',
@@ -151,48 +139,91 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                                     $('[id=body-address-distric]').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
                                     $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
                                     $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
-
-                                    $('button.search-foot-btn').off();
-                                    $('button.search-foot-btn').on('click', () => {
-                                        axios({
-                                            method: 'PUT',
-                                            url: `/api/citizen/${e.citizen_id}`,
-                                            data: {
-                                                data: { // eq + 1 because the search form having display none have the same class as modify form
-                                                    number: $('input.id-left-input').eq(1).val(),
-                                                    full_name: $('input.name-left-input').eq(1).val(),
-                                                    dob: $('input.date-left-input').eq(1).val(),
-                                                    gender: $('input:radio[name=gender]').eq(1).val(),
-                                                    home_address: $('[id=body-address-hamlet]').eq(2 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(2 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(2 + 1).val() + ' - ' + $('[id=body-address-city]').eq(2 + 1).val(),
-                                                    permanent_address: $('[id=body-address-hamlet]').eq(0 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(0 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(0 + 1).val() + ' - ' + $('[id=body-address-city]').eq(0 + 1).val(),
-                                                    temporary_address: $('[id=body-address-hamlet]').eq(1 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(1 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(1 + 1).val() + ' - ' + $('[id=body-address-city]').eq(1 + 1).val(),
-                                                    religion: $('input.religion-mid-input').eq(1).val(),
-                                                    academic_level: $('input.study-left-input').eq(1).val(),
-                                                    job: $('input.job-right-input').eq(1).val()
-                                                }
-                                            }
-                                        }).then((res) => {
-                                            if (res.success) {
-                                                $('input.id-left-input').eq(1).val("");
-                                                $('input.name-left-input').eq(1).val("");
-                                                $('input.date-left-input').eq(1).val("");
-                                                $('input:radio[name=gender]').eq(1).val("");
-                                                $('input.religion-mid-input').eq(1).val("");
-                                                $('input.study-left-input').eq(1).val("");
-                                                $('input.job-right-input').eq(1).val("");
-                                                $('[id=body-address-city]').val("");
-                                                $('[id=body-address-distric]').val("");
-                                                $('[id=body-address-commune]').val("");
-                                                $('[id=body-address-hamlet]').val("");
-
-                                                this.fillTableOfCitizen();
-                                            }
-                                        });
-                                    });
                                 };
-                            });
-
+                            })
                         });
+
+                        // // delete citizen event
+                        // $('button.td-delete-btn.td-same-btn.citizen-delete-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                        //     axios({
+                        //         method: 'DELETE',
+                        //         url: `/api/citizen/${e.citizen_id}`,
+                        //     }).then((res) => {
+                        //         if (res.data.success) {
+                        //             this.fillTableOfCitizen();
+                        //         };
+                        //     });
+                        // });
+
+                        // // modify citizen event
+                        // $('button.td-fix-btn.td-same-btn.citizen-fix-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                        //     $('#right-content-search-search').hide();
+                        //     $('#right-content-search-modify').css('display', 'block');
+
+                        //     axios({
+                        //         method: 'GET',
+                        //         url: `/api/citizen/detail/${e.citizen_id}`,
+                        //     }).then((res) => {
+                        //         if (res.data.success) {
+                        //             $('input.id-left-input').val(res.data.citizen.number);
+                        //             $('input.name-left-input').val(res.data.citizen.full_name);
+                        //             $('input.date-left-input').val(res.data.citizen.dob);
+                        //             $('input.religion-mid-input').val(res.data.citizen.religion);
+                        //             $('input.job-right-input').val(res.data.citizen.job);
+                        //             $('input.study-left-input').val(res.data.citizen.academic_level);
+                        //             if (res.data.citizen.gender == 'nam') {
+                        //                 $('input:radio[name=gender]').val(['nam']);
+                        //             } else if (res.data.citizen.gender == 'nữ') {
+                        //                 $('input:radio[name=gender]').val(['nu']);
+                        //             };
+
+                        //             const arrayOfhome_address = res.data.citizen.home_address.split(' - ');
+                        //             $('[id=body-address-city]').append(`<option selected value="${arrayOfhome_address[3]}">${arrayOfhome_address[3]}</option>`);
+                        //             $('[id=body-address-distric]').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
+                        //             $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
+                        //             $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
+
+                        //             $('button.search-foot-btn').off();
+                        //             $('button.search-foot-btn').on('click', () => {
+                        //                 axios({
+                        //                     method: 'PUT',
+                        //                     url: `/api/citizen/${e.citizen_id}`,
+                        //                     data: {
+                        //                         data: { // eq + 1 because the search form having display none have the same class as modify form
+                        //                             number: $('input.id-left-input').eq(1).val(),
+                        //                             full_name: $('input.name-left-input').eq(1).val(),
+                        //                             dob: $('input.date-left-input').eq(1).val(),
+                        //                             gender: $('input:radio[name=gender]').eq(1).val(),
+                        //                             home_address: $('[id=body-address-hamlet]').eq(2 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(2 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(2 + 1).val() + ' - ' + $('[id=body-address-city]').eq(2 + 1).val(),
+                        //                             permanent_address: $('[id=body-address-hamlet]').eq(0 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(0 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(0 + 1).val() + ' - ' + $('[id=body-address-city]').eq(0 + 1).val(),
+                        //                             temporary_address: $('[id=body-address-hamlet]').eq(1 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(1 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(1 + 1).val() + ' - ' + $('[id=body-address-city]').eq(1 + 1).val(),
+                        //                             religion: $('input.religion-mid-input').eq(1).val(),
+                        //                             academic_level: $('input.study-left-input').eq(1).val(),
+                        //                             job: $('input.job-right-input').eq(1).val()
+                        //                         }
+                        //                     }
+                        //                 }).then((res) => {
+                        //                     if (res.success) {
+                        //                         $('input.id-left-input').eq(1).val("");
+                        //                         $('input.name-left-input').eq(1).val("");
+                        //                         $('input.date-left-input').eq(1).val("");
+                        //                         $('input:radio[name=gender]').eq(1).val("");
+                        //                         $('input.religion-mid-input').eq(1).val("");
+                        //                         $('input.study-left-input').eq(1).val("");
+                        //                         $('input.job-right-input').eq(1).val("");
+                        //                         $('[id=body-address-city]').val("");
+                        //                         $('[id=body-address-distric]').val("");
+                        //                         $('[id=body-address-commune]').val("");
+                        //                         $('[id=body-address-hamlet]').val("");
+
+                        //                         this.fillTableOfCitizen();
+                        //                     }
+                        //                 });
+                        //             });
+                        //         };
+                        //     });
+
+                        // });
                     })
                 } else {
                     console.log(res);
