@@ -263,13 +263,13 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="content-search-foot">' +
                 ' <button class="search-foot-btn">' +
                 '<i class="fa fa-search" aria-hidden="true"></i>' +
-                'TÌM KIẾM' +
+                ' TÌM KIẾM' +
                 '</button>' +
                 '</div>' +
                 '</div>');
             //render the modify form
             $('div.body-right-content').append('<div class="right-content-search" id="right-content-search-modify" style="display:none">' +
-                '<div class="content-search-head content-same-head">Sửa dữ liệu người dân</div>' +
+                '<div class="content-search-head content-same-head">Dữ liệu người dân</div>' +
                 '<div class="content-search-body">' +
                 '<div class="search-body-code search-body-same">' +
                 '<div class="dan-code-left search-same-divinput">' +
@@ -339,36 +339,17 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="body-address-content">' +
                 '<select name="tinh" id="body-address-city">' +
-                '<option selected disabled>Chon tinh thanh</option>' +
-                '<option>Ha Noi</option>' +
-                '<option>HCM</option>' +
-                '<option>Da NANG</option>' +
-                '<option>Hai Phong</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
+                '<option selected disabled>Chọn tỉnh thành</option>' +
                 '</select>' +
                 '' +
                 '<select name="huyen" id="body-address-distric">' +
-                '<option selected disabled>Chon quan huyen</option>' +
-                '<option value="Thach That">Thach That</option>' +
-                '<option value="Ba vi">Ba Vi</option>' +
+                '<option selected disabled>Chọn quận huyện</option>' +
                 '</select>' +
                 '<select name="xa" id="body-address-commune">' +
-                '<option selected disabled>Chon phuong xa</option>' +
-                '<option value="Tan Phu">Tan Phu</option>' +
-                '<option value="Cong Hoa">Cong Hoa</option>' +
+                '<option selected disabled>Chọn phường xã</option>' +
                 '</select>' +
                 '<select name="thon" id="body-address-hamlet">' +
-                '<option selected disabled>Chon thon ban</option>' +
-                '<option value="ha hoa">Ha Hoa</option>' +
-                '<option value="yen quan">Yen Quan</option>' +
+                '<option selected disabled>Chọn thôn bản</option>' +
                 '</select>' +
                 '</div>' +
                 '</div>' +
@@ -385,43 +366,28 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="body-address-content">' +
                 '<select name="tinh" id="body-address-city">' +
                 '<option selected disabled>Chon tinh thanh</option>' +
-                '<option>Ha Noi</option>' +
-                '<option>HCM</option>' +
-                '<option>Da NANG</option>' +
-                '<option>Hai Phong</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
                 '</select>' +
                 '' +
                 '<select name="huyen" id="body-address-distric">' +
                 '<option selected disabled>Chon quan huyen</option>' +
-                '<option value="Thach That">Thach That</option>' +
-                '<option value="Ba vi">Ba Vi</option>' +
                 '</select>' +
                 '<select name="xa" id="body-address-commune">' +
                 '<option selected disabled>Chon phuong xa</option>' +
-                '<option value="Tan Phu">Tan Phu</option>' +
-                '<option value="Cong Hoa">Cong Hoa</option>' +
                 '</select>' +
                 '<select name="thon" id="body-address-hamlet">' +
                 '<option selected disabled>Chon thon ban</option>' +
-                '<option value="ha hoa">Ha Hoa</option>' +
-                '<option value="yen quan">Yen Quan</option>' +
                 '</select>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
                 '<div class="content-search-foot">' +
-                '<button class="search-foot-btn">' +
-                '<i class="fa fa-plus" aria-hidden="true"></i>' +
-                'THÊM MỚI' +
+                '<button class="search-foot-btn goback-foot-btn">' +
+                '<i class="fa fa-ban" aria-hidden="true"></i>' +
+                ' ĐÓNG LẠI' +
+                '</button>' +
+                '<button class="search-foot-btn save-foot-btn">' +
+                '<i class="fa fa-bookmark" aria-hidden="true"></i>' +
+                ' LƯU LẠI' +
                 '</button>' +
                 '</div>' +
                 '</div>');
