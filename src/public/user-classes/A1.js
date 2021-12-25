@@ -83,6 +83,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 url: '/api/citizen/list'
             }).then((res) => {
                 if (res.data.success) {
+                    $('tbody').empty();
                     res.data.citizens.forEach((e, i) => {
                         $('tbody').append('<tr>' +
                             `<td>${e.citizen_id}</td>` +
@@ -125,7 +126,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
                         // modify citizen event
                         $('button.td-fix-btn.td-same-btn.citizen-fix-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
-                            $('#right-content-search-search').css('display', 'none');
+                            $('#right-content-search-search').hide();
                             $('#right-content-search-modify').css('display', 'block');
 
                             axios({
@@ -151,8 +152,42 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                                     $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
                                     $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
 
+                                    $('button.search-foot-btn').off();
                                     $('button.search-foot-btn').on('click', () => {
+                                        axios({
+                                            method: 'PUT',
+                                            url: `/api/citizen/${e.citizen_id}`,
+                                            data: {
+                                                data: {
+                                                    number: $('input.id-left-input').val(),
+                                                    full_name: $('input.name-left-input').val(),
+                                                    dob: $('input.date-left-input').val(),
+                                                    gender: $('input:radio[name=gender]').val(),
+                                                    home_address: $('[id=body-address-hamlet]').eq(2).val() + ' - ' + $('[id=body-address-distric]').eq(2).val() + ' - ' + $('[id=body-address-commune]').eq(2).val() + ' - ' + $('[id=body-address-hamlet]').eq(2).val(),
+                                                    permanent_address: $('[id=body-address-hamlet]').eq(0).val() + ' - ' + $('[id=body-address-distric]').eq(0).val() + ' - ' + $('[id=body-address-commune]').eq(0).val() + ' - ' + $('[id=body-address-hamlet]').eq(0).val(),
+                                                    temporary_address: $('[id=body-address-hamlet]').eq(1).val() + ' - ' + $('[id=body-address-distric]').eq(1).val() + ' - ' + $('[id=body-address-commune]').eq(1).val() + ' - ' + $('[id=body-address-hamlet]').eq(1).val(),
+                                                    religion: $('input.religion-mid-input').val(),
+                                                    academic_level: $('input.study-left-input').val(),
+                                                    job: $('input.job-right-input').val()
+                                                }
+                                            }
+                                        }).then((res) => {
+                                            if (res.success) {
+                                                $('input.id-left-input').val("");
+                                                $('input.name-left-input').val("");
+                                                $('input.date-left-input').val("");
+                                                $('input:radio[name=gender]').val("");
+                                                $('input.religion-mid-input').val("");
+                                                $('input.study-left-input').val("");
+                                                $('input.job-right-input').val("");
+                                                $('[id=body-address-city]').val("");
+                                                $('[id=body-address-distric]').val("");
+                                                $('[id=body-address-commune]').val("");
+                                                $('[id=body-address-hamlet]').val("");
 
+                                                this.fillTableOfCitizen();
+                                            }
+                                        });
                                     });
                                 };
                             });
