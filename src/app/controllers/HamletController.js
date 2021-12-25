@@ -126,10 +126,18 @@ class HamletController {
                 hamlet_id: req.params.hamletId
             }
         })
-            .then(() => res.json({
-                success: true,
-                message: 'Cập nhật thành công'
-            }))
+            .then(() => {
+                User.update({name: "A2 " + req.body.data.hamlet_name + " - " + req.params.hamletId}, {
+                    where: {
+                        per_scope: req.params.hamletId
+                    }
+                })
+                    .then(() => res.json({
+                        success: true,
+                        message: 'Cập nhật thành công'
+                    }))
+                    .catch(err => next(createHttpError(500, err)));
+            })
             .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
     }
 }

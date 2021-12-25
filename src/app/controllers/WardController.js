@@ -126,10 +126,18 @@ class WardController {
                 ward_id: req.params.wardId
             }
         })
-            .then(() => res.json({
-                success: true,
-                message: 'Cập nhật thành công'
-            }))
+            .then(() => {
+                User.update({name: "A3 " + req.body.data.ward_name + " - " + req.params.wardId}, {
+                    where: {
+                        per_scope: req.params.wardId
+                    }
+                })
+                    .then(() => res.json({
+                        success: true,
+                        message: 'Cập nhật thành công'
+                    }))
+                    .catch(err => next(createHttpError(500, err)));
+            })
             .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
     }
 }
