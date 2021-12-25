@@ -65,7 +65,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 this.resetSelectedButton();
                 this.monitoringProgressButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.monitoringProgressButtonClickEvent();
-            });
+            }); // monitoring function
 
             this.showStatisticButton = $("<div></div>", { "class": "body-left-home body-left-home-statistical" });
             $("<div class='body-left-home-content'><i class='fa fa-bar-chart' aria-hidden='true'></i><span>Báo cáo, thống kê</span></div>")
@@ -74,10 +74,13 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 this.resetSelectedButton();
                 this.showStatisticButton.children('.body-left-home-content').addClass('body-left-home-content-active');
                 this.showStatisticButtonClickEvent();
-            });
+            }); // show statistic function
 
 
             $('div.body-left').append($(this.creatingPlaceButton), $(this.creatingAccountButton), $(this.citizenInfoButton), $(this.monitoringProgressButton), $(this.showStatisticButton));
+            if (!this.declare_per) {
+                $(this.creatingPlaceButton).prop('disabled', true);
+            }
         };
 
         homeButtonClickEvent() { // overloading home button event because of the table of city, district, ward, hamlet
@@ -271,7 +274,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<thead>' +
                 '<tr>' +
                 '<th>' +
-                'STT' +
+                'ID' +
                 '</th>' +
                 '<th>Số CMND</th>' +
                 '<th>Họ và tên</th>' +

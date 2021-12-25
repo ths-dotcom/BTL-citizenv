@@ -208,10 +208,11 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 method: 'GET',
                 url: '/api/citizen/list'
             }).then((res) => {
+                console.log(res);
                 if (res.data.success) {
                     res.data.citizens.forEach((e) => { // add disitict to the distict input
                         $('tbody').append('<tr>' +
-                            `<td>${e.district_id}</td>` +
+                            `<td>${e.citizen_id}</td>` +
                             `<td>${e.number}</td>` +
                             '<td>' +
                             `${e.full_name}` +
