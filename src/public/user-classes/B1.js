@@ -186,10 +186,50 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                     console.log(res);
                 }
             });
+
+            axios({ // add citizen to the district table
+                method: 'GET',
+                url: '/api/citizen/list'
+            }).then((res) => {
+                console.log(res);
+                if (res.data.success) {
+                    res.data.citizens.forEach((e) => { // add disitict to the distict input
+                        $('tbody').append('<tr>' +
+                            `<td>${e.citizen_id}</td>` +
+                            `<td>${e.number}</td>` +
+                            '<td>' +
+                            `${e.full_name}` +
+                            '</td>' +
+                            `<td>${e.dob}</td>` +
+                            '<td>' +
+                            `${e.gender}` +
+                            '</td>' +
+                            `<td>${e.permanent_address}</td>` +
+                            '<td>' +
+                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
+                            '</td>' +
+                            '</tr>');
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
         };
 
         monitoringProgressButtonClickEvent() {
             super.monitoringProgressButtonClickEvent();
+            this.fillTableOfHamlet();
         };
 
         showStatisticButtonClickEvent() {
@@ -198,6 +238,48 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
 
         inputCitizenButtonClickEvent() {
             super.inputCitizenButtonClickEvent();
+
+            $('[id=body-address-city]').append(`<option selected value="${this.arrayOfAddress[2]}">${this.arrayOfAddress[2]}</option>`);
+            $('[id=body-address-distric]').append(`<option selected value="${this.arrayOfAddress[1]}">${this.arrayOfAddress[1]}</option>`);
+            $('[id=body-address-commune]').append(`<option selected value="${this.arrayOfAddress[0]}">${this.arrayOfAddress[0]}</option>`);
+            // $('[id=body-address-hamlet]').append(`<option selected value="</option>`);
+            axios({ // add citizen to the citizen table
+                method: 'GET',
+                url: '/api/citizen/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    res.data.citizens.forEach((e) => {
+                        $('tbody').append('<tr>' +
+                            `<td>${e.citizen_id}</td>` +
+                            `<td>${e.number}</td>` +
+                            '<td>' +
+                            `${e.full_name}` +
+                            '</td>' +
+                            `<td>${e.dob}</td>` +
+                            '<td>' +
+                            `${e.gender}` +
+                            '</td>' +
+                            `<td>${e.permanent_address}</td>` +
+                            '<td>' +
+                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
+                            '</td>' +
+                            '</tr>');
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
         };
 
         printButtonClickEvent() {
