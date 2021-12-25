@@ -171,11 +171,11 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                 if (res.data.success) {
                     // reset all the input
                     $('#body-address-city').empty();
-                    $('#body-address-city').append(`'<option selected disabled>Chọn thành phố</option>'`);
+                    $('#body-address-city').append(`'<option selected disabled>${this.arrayOfAddress[2]}</option>'`);
                     $('#body-address-distric').empty();
-                    $('#body-address-distric').append(`'<option selected disabled>Chọn quận huyện</option>'`);
+                    $('#body-address-distric').append(`'<option selected disabled>${this.arrayOfAddress[1]}</option>'`);
                     $('#body-address-commune').empty();
-                    $('#body-address-commune').append('<option selected disabled>Chọn xã</option>');
+                    $('#body-address-commune').append(`'<option selected disabled>${this.arrayOfAddress[0]}</option>'`);
                     $('#body-address-hamlet').empty();
                     $('#body-address-hamlet').append('<option selected disabled>Chọn Thôn</option>');
 

@@ -145,7 +145,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 if (res.data.success) {
                     // reset all the input
                     $('#body-address-city').empty();
-                    $('#body-address-city').append(`'<option selected disabled>${this.name}</option>'`);
+                    $('#body-address-city').append(`'<option selected disabled>${this.arrayOfAddress[0]}</option>'`);
                     $('#body-address-distric').empty();
                     $('#body-address-distric').append('<option selected disabled>Chọn huyện</option>');
                     $('#body-address-commune').empty();
