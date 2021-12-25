@@ -18,7 +18,7 @@ class UserController {
         User.create({
             username: req.body.data.username,
             password: req.body.data.password,
-            name: req.body.data.name,
+            name: req.body.data.name + " - " + req.body.data.username.slice(5),
             per_scope: req.body.data.username.slice(5),
             role_id: req.user.role_id + 1
         })
