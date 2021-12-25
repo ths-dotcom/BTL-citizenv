@@ -205,6 +205,33 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     }
                 });
             });
+
+            axios({ // add citizen to the district table
+                method: 'GET',
+                url: '/api/district/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    res.data.citizens.forEach((e) => { // add disitict to the distict input
+                        $('tbody').append('<tr>' +
+                            `<td>${e.district_id}</td>` +
+                            `<td>${e.number}</td>` +
+                            '<td>' +
+                            `${e.full_name}` +
+                            '</td>' +
+                            `<td>${e.dob}</td>` +
+                            '<td>' +
+                            `${e.gender}` +
+                            '</td>' +
+                            `<td>${e.permanent_address}</td>` +
+                            '<td>' +
+                            '<button class="see-detail-person">Xem chi tiết</button>' +
+                            '</td>' +
+                            '</tr>');
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
         };
 
         monitoringProgressButtonClickEvent() {

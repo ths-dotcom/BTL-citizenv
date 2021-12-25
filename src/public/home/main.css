@@ -701,3 +701,19 @@ body {
 .right-inphieu-image img{
     width: 100%;
 }
+
+/* Change input  */
+
+.input-can-change{
+    background-color: rgb(228 228 228);
+    border: 1px solid rgb(212, 209, 209);
+    cursor: pointer;
+    text-align: center;
+    width: fit-content;
+    padding: 6px 0;
+}
+
+.input-can-change:hover{
+    border: 1px solid rgb(77, 76, 76);
+    background-color: rgb(212, 209, 209);
+}
