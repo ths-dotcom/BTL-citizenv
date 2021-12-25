@@ -282,21 +282,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</tr>' +
                 '</thead>' +
                 '<tbody>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
                 '</tbody>' +
                 '</table>' +
                 '</div>' +
