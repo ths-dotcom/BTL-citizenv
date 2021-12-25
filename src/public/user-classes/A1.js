@@ -77,6 +77,94 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             })
         };
 
+        fillTableOfCitizen() {
+            axios({ // add citizen to the citizen table
+                method: 'GET',
+                url: '/api/citizen/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    res.data.citizens.forEach((e, i) => {
+                        $('tbody').append('<tr>' +
+                            `<td>${e.citizen_id}</td>` +
+                            `<td>${e.number}</td>` +
+                            '<td>' +
+                            `${e.full_name}` +
+                            '</td>' +
+                            `<td>${e.dob}</td>` +
+                            '<td>' +
+                            `${e.gender}` +
+                            '</td>' +
+                            `<td>${e.permanent_address}</td>` +
+                            '<td>' +
+                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
+                            '</td>' +
+                            '</tr>');
+
+                        // delete citizen event
+                        $('button.td-delete-btn.td-same-btn.citizen-delete-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                            axios({
+                                method: 'DELETE',
+                                url: `/api/citizen/${e.citizen_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfCitizen();
+                                };
+                            });
+                        });
+
+                        // modify citizen event
+                        $('button.td-fix-btn.td-same-btn.citizen-fix-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                            $('#right-content-search-search').css('display', 'none');
+                            $('#right-content-search-modify').css('display', 'block');
+
+                            axios({
+                                method: 'GET',
+                                url: `/api/citizen/detail/${e.citizen_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    $('input.id-left-input').val(res.data.citizen.number);
+                                    $('input.name-left-input').val(res.data.citizen.full_name);
+                                    $('input.date-left-input').val(res.data.citizen.dob);
+                                    $('input.religion-mid-input').val(res.data.citizen.religion);
+                                    $('input.job-right-input').val(res.data.citizen.job);
+                                    $('input.study-left-input').val(res.data.citizen.academic_level);
+                                    if (res.data.citizen.gender == 'nam') {
+                                        $('input:radio[name=gender]').val(['nam']);
+                                    } else if (res.data.citizen.gender == 'nữ') {
+                                        $('input:radio[name=gender]').val(['nu']);
+                                    };
+
+                                    const arrayOfhome_address = res.data.citizen.home_address.split(' - ');
+                                    $('[id=body-address-city]').append(`<option selected value="${arrayOfhome_address[3]}">${arrayOfhome_address[3]}</option>`);
+                                    $('[id=body-address-distric]').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
+                                    $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
+                                    $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
+
+                                    $('button.search-foot-btn').on('click', () => {
+
+                                    });
+                                };
+                            });
+
+                        });
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
+        };
+
         fillRatioTabs() { // fill 4 ratio tabs (children, women, elderly, total)
             let total = 0;
             axios({ // fill total ratio
@@ -301,43 +389,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 });
             });
 
-            axios({ // add citizen to the citizen table
-                method: 'GET',
-                url: '/api/citizen/list'
-            }).then((res) => {
-                if (res.data.success) {
-                    res.data.citizens.forEach((e) => {
-                        $('tbody').append('<tr>' +
-                            `<td>${e.citizen_id}</td>` +
-                            `<td>${e.number}</td>` +
-                            '<td>' +
-                            `${e.full_name}` +
-                            '</td>' +
-                            `<td>${e.dob}</td>` +
-                            '<td>' +
-                            `${e.gender}` +
-                            '</td>' +
-                            `<td>${e.permanent_address}</td>` +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
-                            '</tr>');
-                    })
-                } else {
-                    console.log(res);
-                }
-            });
+            this.fillTableOfCitizen();
         };
 
         monitoringProgressButtonClickEvent() {
