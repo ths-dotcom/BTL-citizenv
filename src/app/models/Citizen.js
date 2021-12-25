@@ -54,7 +54,7 @@ const Citzen = sequelize.define('citizen', {
     },
     hamlet_id: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
 })
 
