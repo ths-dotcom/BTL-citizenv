@@ -87,10 +87,18 @@ class CityController {
                 city_id: req.params.cityId
             }
         })
-            .then(() => res.json({
-                success: true,
-                message: 'Cập nhật thành công'
-            }))
+            .then(() => {
+                User.update({name: "A2 " + req.body.data.city_name + " - " + req.params.cityId}, {
+                    where: {
+                        per_scope: req.params.cityId
+                    }
+                })
+                    .then(() => res.json({
+                        success: true,
+                        message: 'Cập nhật thành công'
+                    }))
+                    .catch(err => next(createHttpError(500, err)));
+            })
             .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
     }
 

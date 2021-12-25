@@ -5,6 +5,7 @@ const analystController = require('../app/controllers/AnalystController');
 const check = require('../app/middlewares/check');
 const authorization = require('../app/middlewares/authorization');
 
+router.get('/age', authorization.all, analystController.age);
 router.get('/gender', authorization.all, analystController.gender);
 router.get('/count', authorization.all, analystController.countAll);
 

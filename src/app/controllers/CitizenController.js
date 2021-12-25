@@ -143,7 +143,7 @@ class CitizenController {
         })
         let address = [];
         const hamlet = await Hamlet.findOne({
-            where: {hamlet_id: citizen.dataValues.permanent_address}
+            where: {hamlet_id: citizen.dataValues.hamlet_id}
         })
         address.push(hamlet.dataValues.hamlet_name);
         const ward = await Ward.findOne({

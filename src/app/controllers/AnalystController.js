@@ -7,6 +7,7 @@ const Ward = require('../models/Ward');
 const Hamlet = require('../models/Hamlet');
 const User = require('../models/User');
 const Citizen = require('../models/Citizen');
+const sequelize = require('../../config/db/sequelize');
 
 class AnalystController {
 
@@ -92,8 +93,56 @@ class AnalystController {
     }
 
     // [GET] /api/analist/age
-    age(req, res, next) {
-        
+    async age(req, res, next) {
+        if(!req.user.per_scope) {
+            const citizens = await Citizen.findAll({
+                where: {
+                    is_deleted: false
+                }
+            });
+            let kid = 0, adult = 0, elder = 0;
+            let now = new Date();
+            for(let i of citizens) {
+                let age = now.getFullYear() - i.dataValues.dob.slice(0, 4);
+                if(age <= 14) ++kid;
+                else if(age <65) ++ adult;
+                else ++ elder;
+            }
+            res.json({
+                success: true,
+                age: {
+                    kid,
+                    adult, 
+                    elder
+                }
+            })
+        }
+        else {
+            const citizens = await Citizen.findAll({
+                where: {
+                    is_deleted: false,
+                    hamlet_id: {
+                        [Op.startsWith]: req.user.per_scope
+                    }
+                }
+            });
+            let kid = 0, adult = 0, elder = 0;
+            let now = new Date();
+            for(let i of citizens) {
+                let age = now.getFullYear() - i.dataValues.dob.slice(0, 4);
+                if(age <= 14) ++kid;
+                else if(age <65) ++ adult;
+                else ++ elder;
+            }
+            res.json({
+                success: true,
+                age: {
+                    kid,
+                    adult, 
+                    elder
+                }
+            })
+        }
     }
 
 }
