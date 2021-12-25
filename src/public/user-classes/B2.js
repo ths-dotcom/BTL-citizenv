@@ -51,7 +51,7 @@ define(['user-classes/Operator', 'jquery', 'axios'], function (Operator, $, axio
             $('[id=body-address-city]').append(`<option selected value="${this.arrayOfAddress[3]}">${this.arrayOfAddress[3]}</option>`);
             $('[id=body-address-distric]').append(`<option selected value="${this.arrayOfAddress[2]}">${this.arrayOfAddress[2]}</option>`);
             $('[id=body-address-commune]').append(`<option selected value="${this.arrayOfAddress[1]}">${this.arrayOfAddress[1]}</option>`);
-
+            $('[id=body-address-hamlet]').append(`<option selected value="${this.arrayOfAddress[0]}">${this.arrayOfAddress[0]}</option>`);
             axios({ // add citizen to the citizen table
                 method: 'GET',
                 url: '/api/citizen/list'

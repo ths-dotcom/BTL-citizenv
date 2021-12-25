@@ -100,8 +100,6 @@ define(['user-classes/User', 'jquery'], function (User, $) {
                 '</select>' +
                 '<select name="thon" id="body-address-hamlet">' +
                 '<option selected disabled>Chon thon ban</option>' +
-                '<option value="ha hoa">Ha Hoa</option>' +
-                '<option value="yen quan">Yen Quan</option>' +
                 '</select>' +
                 '</div>' +
                 '' +
