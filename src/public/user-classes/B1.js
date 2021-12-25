@@ -19,7 +19,7 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                     res.data.hamlets.forEach((e) => {
                         $('tbody').append('<tr>' +
                             `<td>${e.hamlet_id}</td>` +
-                            `<td>${e.hamlet_name}</td>` +
+                            `<td><input type="text" class="input-can-change input-hamlet-change" value="${e.hamlet_name}"></td>` +
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
@@ -79,10 +79,76 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
 
         creatingPlaceButtonClickEvent() {
             super.creatingPlaceButtonClickEvent();
+            this.fillTableOfHamlet();
+
+            $('button.code-foot-yes-btn.same-foot-yes-btn').on('click', () => { // post Hamlet event
+                axios({
+                    method: 'POST',
+                    url: '/api/hamlet',
+                    data: {
+                        data: {
+                            hamlet_name: $('input.name-khaibao-input.same-left-input').val(),
+                            hamlet_id: $('input.code-khaibao-input.same-left-input').val(),
+                            password: $('input.password-khaibao-input.same-left-input').val()
+                        }
+                    }
+                }).then((res) => {
+                    $('input.name-khaibao-input.same-left-input').val("");
+                    $('input.code-khaibao-input.same-left-input').val("");
+                    $('input.password-khaibao-input.same-left-input').val("");
+                    if (res.data.success) {
+                        this.fillTableOfHamlet();
+                    } else {
+                        console.log(userResponse);
+                    }
+                })
+            });
         };
 
         creatingAccountButtonClickEvent() {
             super.creatingAccountButtonClickEvent();
+
+            axios({ // fill the table of hamlet
+                method: 'GET',
+                url: '/api/hamlet/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    $('tbody').empty();
+                    res.data.hamlets.forEach((e) => {
+                        let declarePer = '';
+                        if (e.declare_per) {
+                            declarePer = 'Đã kích hoạt';
+                        } else {
+                            declarePer = 'Chưa kích hoạt';
+                        }
+                        $('tbody').append('<tr>' +
+                            `<td>${e.hamlet_id}</td>` +
+                            `<td><input type="text" class="input-can-change input-ward-change" value="${e.hamlet_id}"></td>` +
+                            `<td>${declarePer}` +
+                            '<button class="change-state-btn">Thay đổi</button>' +
+                            '</td>' +
+                            '<td><input type="text" class="input-can-change input-time-start-change" value="14/12/2021"></td>' +
+                            '<td><input type="text" class="input-can-change input-time-end-change" value="22/12/2021"></td>' +
+                            '<td>' +
+                            '<button class="td-see-btn td-same-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
+                            '</td>' +
+                            '</tr>');
+                    })
+                } else {
+                    console.log(res);
+                }
+            })
         };
 
         citizenInfoButtonClickEvent() {

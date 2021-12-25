@@ -19,7 +19,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     res.data.districts.forEach((e) => {
                         $('tbody').append('<tr>' +
                             `<td>${e.district_id}</td>` +
-                            `<td>${e.district_name}</td>` +
+                            `<td><input type="text" class="input-can-change input-district-change" value="${e.district_name}"></td>` +
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
@@ -98,14 +98,12 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         }
                         $('tbody').append('<tr>' +
                             `<td>${e.district_id}</td>` +
-                            `<td>${e.district_name}</td>` +
+                            `<td><input type="text" class="input-can-change input-district-change" value="${e.district_name}"></td>` +
                             `<td>${declarePer}` +
                             '<button class="change-state-btn">Thay đổi</button>' +
                             '</td>' +
-                            '<td>14/12/2021</td>' +
-                            '<td>' +
-                            '22/12/2021' +
-                            '</td>' +
+                            '<td><input type="text" class="input-can-change input-time-start-change" value="14/12/2021"></td>' +
+                            '<td><input type="text" class="input-can-change input-time-end-change" value="22/12/2021"></td>' +
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
                             '<i class="fa fa-eye" aria-hidden="true"></i>' +
@@ -208,7 +206,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
             axios({ // add citizen to the district table
                 method: 'GET',
-                url: '/api/district/list'
+                url: '/api/citizen/list'
             }).then((res) => {
                 if (res.data.success) {
                     res.data.citizens.forEach((e) => { // add disitict to the distict input

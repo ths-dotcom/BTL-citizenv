@@ -11,7 +11,6 @@ define(['user-classes/Operator', 'jquery', 'axios'], function (Operator, $, axio
 
         homeButtonClickEvent() {
             super.homeButtonClickEvent();
-            
         };
 
         inputCitizenButtonClickEvent() {
