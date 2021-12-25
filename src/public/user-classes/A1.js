@@ -158,28 +158,28 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                                             method: 'PUT',
                                             url: `/api/citizen/${e.citizen_id}`,
                                             data: {
-                                                data: {
-                                                    number: $('input.id-left-input').val(),
-                                                    full_name: $('input.name-left-input').val(),
-                                                    dob: $('input.date-left-input').val(),
-                                                    gender: $('input:radio[name=gender]').val(),
-                                                    home_address: $('[id=body-address-hamlet]').eq(2).val() + ' - ' + $('[id=body-address-distric]').eq(2).val() + ' - ' + $('[id=body-address-commune]').eq(2).val() + ' - ' + $('[id=body-address-hamlet]').eq(2).val(),
-                                                    permanent_address: $('[id=body-address-hamlet]').eq(0).val() + ' - ' + $('[id=body-address-distric]').eq(0).val() + ' - ' + $('[id=body-address-commune]').eq(0).val() + ' - ' + $('[id=body-address-hamlet]').eq(0).val(),
-                                                    temporary_address: $('[id=body-address-hamlet]').eq(1).val() + ' - ' + $('[id=body-address-distric]').eq(1).val() + ' - ' + $('[id=body-address-commune]').eq(1).val() + ' - ' + $('[id=body-address-hamlet]').eq(1).val(),
-                                                    religion: $('input.religion-mid-input').val(),
-                                                    academic_level: $('input.study-left-input').val(),
-                                                    job: $('input.job-right-input').val()
+                                                data: { // eq + 1 because the search form having display none have the same class as modify form
+                                                    number: $('input.id-left-input').eq(1).val(),
+                                                    full_name: $('input.name-left-input').eq(1).val(),
+                                                    dob: $('input.date-left-input').eq(1).val(),
+                                                    gender: $('input:radio[name=gender]').eq(1).val(),
+                                                    home_address: $('[id=body-address-hamlet]').eq(2 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(2 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(2 + 1).val() + ' - ' + $('[id=body-address-hamlet]').eq(2 + 1).val(),
+                                                    permanent_address: $('[id=body-address-hamlet]').eq(0 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(0 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(0 + 1).val() + ' - ' + $('[id=body-address-hamlet]').eq(0 + 1).val(),
+                                                    temporary_address: $('[id=body-address-hamlet]').eq(1 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(1 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(1 + 1).val() + ' - ' + $('[id=body-address-hamlet]').eq(1 + 1).val(),
+                                                    religion: $('input.religion-mid-input').eq(1).val(),
+                                                    academic_level: $('input.study-left-input').eq(1).val(),
+                                                    job: $('input.job-right-input').eq(1).val()
                                                 }
                                             }
                                         }).then((res) => {
                                             if (res.success) {
-                                                $('input.id-left-input').val("");
-                                                $('input.name-left-input').val("");
-                                                $('input.date-left-input').val("");
-                                                $('input:radio[name=gender]').val("");
-                                                $('input.religion-mid-input').val("");
-                                                $('input.study-left-input').val("");
-                                                $('input.job-right-input').val("");
+                                                $('input.id-left-input').eq(1).val("");
+                                                $('input.name-left-input').eq(1).val("");
+                                                $('input.date-left-input').eq(1).val("");
+                                                $('input:radio[name=gender]').eq(1).val("");
+                                                $('input.religion-mid-input').eq(1).val("");
+                                                $('input.study-left-input').eq(1).val("");
+                                                $('input.job-right-input').eq(1).val("");
                                                 $('[id=body-address-city]').val("");
                                                 $('[id=body-address-distric]').val("");
                                                 $('[id=body-address-commune]').val("");

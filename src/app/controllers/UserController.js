@@ -241,6 +241,27 @@ class UserController {
             }))
             .catch(err => next(createHttpError(500, err)));
     }
+
+    // [PATCH] /api/user/done/:userId
+    done(req, res, next) {
+        console.log(req.params.userId);
+        // User.update({is_done: true},{
+        //     where: {
+        //         per_scope: req.params.userId 
+        //     }
+        // })
+        User.findAll({
+            where: {
+                id: req.params.userId
+            }
+        })
+            .then((a) => res.json({
+                a,
+                success: true,
+                message: "Đã hoàn thành khai báo"
+            }))
+            .catch(err => next(createHttpError(500, err)));
+    }
 }
 
 module.exports = new UserController;
