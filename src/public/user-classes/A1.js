@@ -163,9 +163,9 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                                                     full_name: $('input.name-left-input').eq(1).val(),
                                                     dob: $('input.date-left-input').eq(1).val(),
                                                     gender: $('input:radio[name=gender]').eq(1).val(),
-                                                    home_address: $('[id=body-address-hamlet]').eq(2 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(2 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(2 + 1).val() + ' - ' + $('[id=body-address-hamlet]').eq(2 + 1).val(),
-                                                    permanent_address: $('[id=body-address-hamlet]').eq(0 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(0 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(0 + 1).val() + ' - ' + $('[id=body-address-hamlet]').eq(0 + 1).val(),
-                                                    temporary_address: $('[id=body-address-hamlet]').eq(1 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(1 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(1 + 1).val() + ' - ' + $('[id=body-address-hamlet]').eq(1 + 1).val(),
+                                                    home_address: $('[id=body-address-hamlet]').eq(2 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(2 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(2 + 1).val() + ' - ' + $('[id=body-address-city]').eq(2 + 1).val(),
+                                                    permanent_address: $('[id=body-address-hamlet]').eq(0 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(0 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(0 + 1).val() + ' - ' + $('[id=body-address-city]').eq(0 + 1).val(),
+                                                    temporary_address: $('[id=body-address-hamlet]').eq(1 + 1).val() + ' - ' + $('[id=body-address-distric]').eq(1 + 1).val() + ' - ' + $('[id=body-address-commune]').eq(1 + 1).val() + ' - ' + $('[id=body-address-city]').eq(1 + 1).val(),
                                                     religion: $('input.religion-mid-input').eq(1).val(),
                                                     academic_level: $('input.study-left-input').eq(1).val(),
                                                     job: $('input.job-right-input').eq(1).val()
