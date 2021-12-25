@@ -16,7 +16,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
-                    res.data.wards.forEach((e) => {
+                    res.data.wards.forEach((e, i) => {
                         $('tbody').append('<tr>' +
                             `<td>${e.ward_id}</td>` +
                             `<td><input type="text" class="input-can-change input-ward-change" value="${e.ward_name}"></td>` +
@@ -40,6 +40,35 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '</button>' +
                             '</td>' +
                             '</tr>');
+
+                        // delete ward event
+                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                            axios({
+                                method: 'DELETE',
+                                url: `/api/ward/${e.ward_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfWard();
+                                };
+                            });
+                        });
+
+                        // modify district event
+                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                            axios({
+                                method: 'PUT',
+                                url: `/api/ward/${e.ward_id}`,
+                                data: {
+                                    data: {
+                                        ward_name: $('input.input-can-change.input-ward-change').eq(i).val()
+                                    }
+                                }
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfWard();
+                                };
+                            });
+                        });
                     })
                 } else {
                     console.log(res);

@@ -16,7 +16,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
-                    res.data.districts.forEach((e) => {
+                    res.data.districts.forEach((e, i) => {
                         $('tbody').append('<tr>' +
                             `<td>${e.district_id}</td>` +
                             `<td><input type="text" class="input-can-change input-district-change" value="${e.district_name}"></td>` +
@@ -40,11 +40,41 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '</button>' +
                             '</td>' +
                             '</tr>');
+
+                        // delete district event
+                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                            axios({
+                                method: 'DELETE',
+                                url: `/api/district/${e.district_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfDistrict();
+                                };
+                            });
+                        });
+
+                        // modify district event
+                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                            axios({
+                                method: 'PUT',
+                                url: `/api/district/${e.district_id}`,
+                                data: {
+                                    data: {
+                                        district_name: $('input.input-can-change.input-district-change').eq(i).val()
+                                    }
+                                }
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfDistrict();
+                                };
+                            });
+                        });
                     })
                 } else {
                     console.log(res);
                 }
             })
+
         };
 
         homeButtonClickEvent() {

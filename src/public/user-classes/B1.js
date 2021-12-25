@@ -16,7 +16,7 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
-                    res.data.hamlets.forEach((e) => {
+                    res.data.hamlets.forEach((e, i) => {
                         $('tbody').append('<tr>' +
                             `<td>${e.hamlet_id}</td>` +
                             `<td><input type="text" class="input-can-change input-hamlet-change" value="${e.hamlet_name}"></td>` +
@@ -40,6 +40,35 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                             '</button>' +
                             '</td>' +
                             '</tr>');
+
+                        // delete hamlet event
+                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                            axios({
+                                method: 'DELETE',
+                                url: `/api/hamlet/${e.hamlet_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfHamlet();
+                                };
+                            });
+                        });
+
+                        // modify hamlet event
+                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                            axios({
+                                method: 'PUT',
+                                url: `/api/hamlet/${e.hamlet_id}`,
+                                data: {
+                                    data: {
+                                        hamlet_name: $('input.input-can-change.input-hamlet-change').eq(i).val()
+                                    }
+                                }
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfHamlet();
+                                };
+                            });
+                        });
                     })
                 } else {
                     console.log(res);
@@ -208,7 +237,16 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                             '<td>' +
                             '<button class="td-see-btn td-same-btn citizen-see-btn">' +
                             '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem chi tiết</span>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
                             '</td>' +
                             '</tr>');
                     })
@@ -220,6 +258,7 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
 
         monitoringProgressButtonClickEvent() {
             super.monitoringProgressButtonClickEvent();
+            this.fillTableOfHamlet();
         };
 
         showStatisticButtonClickEvent() {
@@ -228,6 +267,48 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
 
         inputCitizenButtonClickEvent() {
             super.inputCitizenButtonClickEvent();
+
+            $('[id=body-address-city]').append(`<option selected value="${this.arrayOfAddress[2]}">${this.arrayOfAddress[2]}</option>`);
+            $('[id=body-address-distric]').append(`<option selected value="${this.arrayOfAddress[1]}">${this.arrayOfAddress[1]}</option>`);
+            $('[id=body-address-commune]').append(`<option selected value="${this.arrayOfAddress[0]}">${this.arrayOfAddress[0]}</option>`);
+            // $('[id=body-address-hamlet]').append(`<option selected value="</option>`);
+            axios({ // add citizen to the citizen table
+                method: 'GET',
+                url: '/api/citizen/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    res.data.citizens.forEach((e) => {
+                        $('tbody').append('<tr>' +
+                            `<td>${e.citizen_id}</td>` +
+                            `<td>${e.number}</td>` +
+                            '<td>' +
+                            `${e.full_name}` +
+                            '</td>' +
+                            `<td>${e.dob}</td>` +
+                            '<td>' +
+                            `${e.gender}` +
+                            '</td>' +
+                            `<td>${e.permanent_address}</td>` +
+                            '<td>' +
+                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
+                            '</td>' +
+                            '</tr>');
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
         };
 
         printButtonClickEvent() {
