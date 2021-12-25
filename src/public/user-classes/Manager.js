@@ -202,8 +202,9 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
 
         citizenInfoButtonClickEvent() { // render structure of viewing citizen info function
             super.clearRightContent();
+            //render the search form
             $('div.body-right-content').append('<div class="right-content-name">Xem danh sách dân số, thông tin người dân</div>' +
-                '<div class="right-content-search">' +
+                '<div class="right-content-search" id="right-content-search-search">' +
                 '<div class="content-search-head content-same-head">Tìm kiếm người dân</div>' +
                 '<div class="content-search-body">' +
                 '<div class="search-body-code search-body-same">' +
@@ -266,7 +267,165 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</button>' +
                 '</div>' +
                 '</div>');
-
+            //render the modify form
+            $('div.body-right-content').append('<div class="right-content-search" id="right-content-search-modify" style="display:none">' +
+                '<div class="content-search-head content-same-head">Nhập dữ liệu người dân</div>' +
+                '<div class="content-search-body">' +
+                '<div class="search-body-code search-body-same">' +
+                '<div class="dan-code-left search-same-divinput">' +
+                '<div class="code-left-id">Số CMND / CCCD</div>' +
+                '<input type="text" class="id-left-input">' +
+                '</div>' +
+                '<div class="dan-code-mid search-same-divinput">' +
+                '<div class="code-mid-name">Họ và tên</div>' +
+                '<input type="text" class="name-left-input">' +
+                '</div>' +
+                '<div class="dan-code-right search-same-divinput">' +
+                '<div class="code-rigth-gender">Giới tính</div>' +
+                '<input type="radio" id="nam" name="gender" value="nam">' +
+                '<label for="nam">Nam</label>' +
+                '<input type="radio" id="nu" name="gender" value="nu">' +
+                '<label for="nu">Nữ</label>' +
+                '</div>' +
+                '</div>' +
+                '<div class="search-body-date search-body-same">' +
+                '<div class="dan-date-left search-same-divinput">' +
+                '<div class="date-left-date">Ngày sinh</div>' +
+                '<input type="date" class="date-left-input">' +
+                '</div>' +
+                '<div class="dan-date-mid search-same-divinput">' +
+                '<div class="date-mid-religion">Tôn giáo</div>' +
+                '<input type="text" class="religion-mid-input">' +
+                '</div>' +
+                '<div class="dan-date-right search-same-divinput">' +
+                '<div class="date-right-job">Nghề nghiệp</div>' +
+                '<input type="text" class="job-right-input">' +
+                '</div>' +
+                '</div>' +
+                '<div class="search-body-study search-body-same">' +
+                '<div class="dan-study-left search-same-divinput">' +
+                '<div class="study-left-text">Trình độ văn hóa</div>' +
+                '<input type="text" class="study-left-input">' +
+                '</div>' +
+                '</div>' +
+                '<div class="search-body-address search-body-same">' +
+                '<div class="body-address-text">Địa chỉ thường trú</div>' +
+                '<div class="body-address-content">' +
+                '<select name="tinh" id="body-address-city">' +
+                '<option selected disabled>Chon tinh thanh</option>' +
+                '</select>' +
+                '' +
+                '<select name="huyen" id="body-address-distric">' +
+                '<option selected disabled>Chon quan huyen</option>' +
+                '</select>' +
+                '<select name="xa" id="body-address-commune">' +
+                '<option selected disabled>Chon phuong xa</option>' +
+                '</select>' +
+                '<select name="thon" id="body-address-hamlet">' +
+                '<option selected disabled>Chon thon ban</option>' +
+                '</select>' +
+                '</div>' +
+                '' +
+                '</div>' +
+                '<div class="search-body-tamtru search-body-same">' +
+                '<div class="body-tamtru-text">' +
+                '<div class="body-tamtru-text-top">' +
+                'Địa chỉ tạm trú' +
+                '</div>' +
+                '<div class="body-tamtru-text-bottom" style="font-size: 14px;">' +
+                '<input type="checkbox" id="tamtru">' +
+                'Giống thường trú' +
+                '</div>' +
+                '</div>' +
+                '<div class="body-address-content">' +
+                '<select name="tinh" id="body-address-city">' +
+                '<option selected disabled>Chon tinh thanh</option>' +
+                '<option>Ha Noi</option>' +
+                '<option>HCM</option>' +
+                '<option>Da NANG</option>' +
+                '<option>Hai Phong</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '</select>' +
+                '' +
+                '<select name="huyen" id="body-address-distric">' +
+                '<option selected disabled>Chon quan huyen</option>' +
+                '<option value="Thach That">Thach That</option>' +
+                '<option value="Ba vi">Ba Vi</option>' +
+                '</select>' +
+                '<select name="xa" id="body-address-commune">' +
+                '<option selected disabled>Chon phuong xa</option>' +
+                '<option value="Tan Phu">Tan Phu</option>' +
+                '<option value="Cong Hoa">Cong Hoa</option>' +
+                '</select>' +
+                '<select name="thon" id="body-address-hamlet">' +
+                '<option selected disabled>Chon thon ban</option>' +
+                '<option value="ha hoa">Ha Hoa</option>' +
+                '<option value="yen quan">Yen Quan</option>' +
+                '</select>' +
+                '</div>' +
+                '</div>' +
+                '<div class="search-body-hometown search-body-same">' +
+                '<div class="body-hometown-text">' +
+                '<div class="body-hometown-text-top">' +
+                'Quê quán' +
+                '</div>' +
+                '<div class="body-hometown-text-bottom" style="font-size: 14px;">' +
+                '<input type="checkbox" id="hometown">' +
+                'Giống thường trú' +
+                '</div>' +
+                '</div>' +
+                '<div class="body-address-content">' +
+                '<select name="tinh" id="body-address-city">' +
+                '<option selected disabled>Chon tinh thanh</option>' +
+                '<option>Ha Noi</option>' +
+                '<option>HCM</option>' +
+                '<option>Da NANG</option>' +
+                '<option>Hai Phong</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '<option>Quang Ninh</option>' +
+                '</select>' +
+                '' +
+                '<select name="huyen" id="body-address-distric">' +
+                '<option selected disabled>Chon quan huyen</option>' +
+                '<option value="Thach That">Thach That</option>' +
+                '<option value="Ba vi">Ba Vi</option>' +
+                '</select>' +
+                '<select name="xa" id="body-address-commune">' +
+                '<option selected disabled>Chon phuong xa</option>' +
+                '<option value="Tan Phu">Tan Phu</option>' +
+                '<option value="Cong Hoa">Cong Hoa</option>' +
+                '</select>' +
+                '<select name="thon" id="body-address-hamlet">' +
+                '<option selected disabled>Chon thon ban</option>' +
+                '<option value="ha hoa">Ha Hoa</option>' +
+                '<option value="yen quan">Yen Quan</option>' +
+                '</select>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="content-search-foot">' +
+                '<button class="search-foot-btn">' +
+                '<i class="fa fa-plus" aria-hidden="true"></i>' +
+                'THÊM MỚI' +
+                '</button>' +
+                '</div>' +
+                '</div>');
+            //render the citizen table
             $('div.body-right-content').append('<div class="contain-table">' +
                 '<div class="table-head-title">Danh sách người dân</div>' +
                 '<div class="body-table xemdan-tabel">' +

@@ -45,7 +45,7 @@ define(['user-classes/User', 'jquery'], function (User, $) {
                 '</button>' +
                 '</div>' +
                 '</div>' +
-                '<div class="right-content-search">' +
+                '<div class="right-content-search" id="right-content-search-modify">' +
                 '<div class="content-search-head content-same-head">Nhập dữ liệu người dân</div>' +
                 '<div class="content-search-body">' +
                 '<div class="search-body-code search-body-same">' +
