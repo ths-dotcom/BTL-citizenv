@@ -236,6 +236,7 @@ body {
 }
 
 .left-account-name{
+    text-align: center;
     display: flex;
     justify-content: center;
     color: white;

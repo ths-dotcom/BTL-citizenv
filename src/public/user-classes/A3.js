@@ -76,9 +76,116 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             })
         };
 
+        fillRatioTabs() { // fill 4 ratio tabs (children, women, elderly, total)
+            let total = 0;
+            axios({ // fill total ratio
+                method: 'GET',
+                url: '/api/analyst/count'
+            }).then((res) => {
+                if (res.data.success) {
+                    total = res.data.count;
+                    $('div.all-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-all-bottom-left').empty();
+                    $('div.all-top-left-number.same-top-left-number').append(`${res.data.count}`);
+                    $('div.ratio-all-bottom-left').append(`TỔNG <span> ${res.data.count} </span> NGƯỜI`);
+                };
+            });
+
+            axios({ // fill women ratio
+                method: 'GET',
+                url: '/api/analyst/gender'
+            }).then((res) => {
+                if (res.data.success) {
+                    $('div.woman-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-woman-bottom-left').empty();
+                    $('div.ratio-woman-bottom-right').empty();
+                    $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.nu}`);
+                    $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.nu} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-woman-bottom-right').append(`${((res.data.gender.nu / total) * 100).toFixed(2)}%`);
+                };
+            });
+
+            axios({ // fill kid and elderly ratio
+                method: 'GET',
+                url: '/api/analyst/age'
+            }).then((res) => {
+                if (res.data.success) {
+                    //fill kid ratio
+                    $('div.children-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-children-bottom-left').empty();
+                    $('div.ratio-children-bottom-right').empty();
+                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.kid}`);
+                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.kid} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-children-bottom-right').append(`${((res.data.age.kid / total) * 100).toFixed(2)}%`);
+
+                    //kill elderly ratio
+                    $('div.old-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-old-bottom-left').empty();
+                    $('div.ratio-old-bottom-right').empty();
+                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.elder}`);
+                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.elder} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-old-bottom-right').append(`${((res.data.age.elder / total) * 100).toFixed(2)}%`);
+                };
+            });
+        };
+
+        fillRatioTabs() { // fill 4 ratio tabs (children, women, elderly, total)
+            let total = 0;
+            axios({ // fill total ratio
+                method: 'GET',
+                url: '/api/analyst/count'
+            }).then((res) => {
+                if (res.data.success) {
+                    total = res.data.count;
+                    $('div.all-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-all-bottom-left').empty();
+                    $('div.all-top-left-number.same-top-left-number').append(`${res.data.count}`);
+                    $('div.ratio-all-bottom-left').append(`TỔNG <span> ${res.data.count} </span> NGƯỜI`);
+                };
+            });
+
+            axios({ // fill women ratio
+                method: 'GET',
+                url: '/api/analyst/gender'
+            }).then((res) => {
+                if (res.data.success) {
+                    $('div.woman-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-woman-bottom-left').empty();
+                    $('div.ratio-woman-bottom-right').empty();
+                    $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.nu}`);
+                    $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.nu} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-woman-bottom-right').append(`${((res.data.gender.nu / total) * 100).toFixed(2)}%`);
+                };
+            });
+
+            axios({ // fill kid and elderly ratio
+                method: 'GET',
+                url: '/api/analyst/age'
+            }).then((res) => {
+                if (res.data.success) {
+                    //fill kid ratio
+                    $('div.children-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-children-bottom-left').empty();
+                    $('div.ratio-children-bottom-right').empty();
+                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.kid}`);
+                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.kid} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-children-bottom-right').append(`${((res.data.age.kid / total) * 100).toFixed(2)}%`);
+
+                    //kill elderly ratio
+                    $('div.old-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-old-bottom-left').empty();
+                    $('div.ratio-old-bottom-right').empty();
+                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.elder}`);
+                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.elder} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-old-bottom-right').append(`${((res.data.age.elder / total) * 100).toFixed(2)}%`);
+                };
+            });
+        };
+        
         homeButtonClickEvent() {
             super.homeButtonClickEvent();
             this.fillTableOfWard();
+            this.fillRatioTabs();
         };
 
         creatingPlaceButtonClickEvent() {
@@ -252,6 +359,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
         showStatisticButtonClickEvent() {
             super.showStatisticButtonClickEvent();
+            this.fillRatioTabs();
         };
     }
 });
