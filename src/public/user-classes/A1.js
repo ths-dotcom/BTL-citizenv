@@ -44,10 +44,26 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
                         // delete city event
                         $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
-                            console.log("a");
                             axios({
                                 method: 'DELETE',
                                 url: `/api/city/${e.city_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfCity();
+                                };
+                            });
+                        });
+
+                        // modify city event
+                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                            axios({
+                                method: 'PUT',
+                                url: `/api/city/${e.city_id}`,
+                                data: {
+                                    data: {
+                                        city_name: $('input.input-can-change.input-citi-change').eq(i).val()
+                                    }
+                                }
                             }).then((res) => {
                                 if (res.data.success) {
                                     this.fillTableOfCity();
