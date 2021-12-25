@@ -74,33 +74,34 @@ class CitizenController {
 
     // [POST] /api/citizen/list
     searchCitizen(req, res, next) {
+        let number = req.body.data.number;
+        let full_name = req.body.data.full_name;
+        let dob = req.body.data.dob;
+        let gender = req.body.data.gender;
+        let permanent_address = req.body.data.permanent_address;
+        let religion = req.body.data.religion;
+        let job = req.body.data.job;
+        let options = { where: {} };
+
+        if(number) options.where.number = {[Op.substring]: number};
+        if(full_name) options.where.full_name = {[Op.substring]: full_name};
+        if(dob) options.where.dob = dob;
+        if(gender) options.where.gender = gender;
+        if(permanent_address) options.where.permanent_address = {[Op.substring]: permanent_address};
+        if(religion) options.where.religion = {[Op.substring]: religion};
+        if(job) options.where.job = {[Op.substring]: job};
+        
+        //
         if(!req.user.per_scope) {
-            Citizen.findAll({
-                where: {
-                    full_name : {
-                        [Op.substring]: req.body.data.full_name
-                    },
-                    is_deleted: false
-                }
-            })
+            Citizen.findAll(options)
                 .then(citizens => res.json({
                     success: true,
                     citizens
                 }))
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách dân cư')));
         }
-        else {
-            Citizen.findAll({
-                where: {
-                    full_name : {
-                        [Op.substring]: req.body.data.full_name
-                    },
-                    hamlet_id: {
-                        [Op.startsWith] : req.user.per_scope
-                    },
-                    is_deleted: false
-                }
-            })
+        else {  
+            Citizen.findAll(options)
                 .then(citizens => res.json({
                     success: true,
                     citizens
