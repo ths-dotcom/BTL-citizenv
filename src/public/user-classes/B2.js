@@ -9,12 +9,75 @@ define(['user-classes/Operator', 'jquery', 'axios'], function (Operator, $, axio
             this.renderInfo();
         };
 
+        fillRatioTabs() { // fill 4 ratio tabs (children, women, elderly, total)
+            let total = 0;
+            axios({ // fill total ratio
+                method: 'GET',
+                url: '/api/analyst/count'
+            }).then((res) => {
+                if (res.data.success) {
+                    total = res.data.count;
+                    $('div.all-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-all-bottom-left').empty();
+                    $('div.all-top-left-number.same-top-left-number').append(`${res.data.count}`);
+                    $('div.ratio-all-bottom-left').append(`TỔNG <span> ${res.data.count} </span> NGƯỜI`);
+                };
+            });
+
+            axios({ // fill women ratio
+                method: 'GET',
+                url: '/api/analyst/gender'
+            }).then((res) => {
+                if (res.data.success) {
+                    $('div.woman-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-woman-bottom-left').empty();
+                    $('div.ratio-woman-bottom-right').empty();
+                    $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.nu}`);
+                    $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.nu} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-woman-bottom-right').append(`${((res.data.gender.nu / total) * 100).toFixed(2)}%`);
+                };
+            });
+        };
+
         homeButtonClickEvent() {
             super.homeButtonClickEvent();
+
+            this.fillRatioTabs();
         };
 
         inputCitizenButtonClickEvent() {
             super.inputCitizenButtonClickEvent();
+
+            $('[id=body-address-city]').append(`<option selected value="${this.arrayOfAddress[3]}">${this.arrayOfAddress[3]}</option>`);
+            $('[id=body-address-distric]').append(`<option selected value="${this.arrayOfAddress[2]}">${this.arrayOfAddress[2]}</option>`);
+            $('[id=body-address-commune]').append(`<option selected value="${this.arrayOfAddress[1]}">${this.arrayOfAddress[1]}</option>`);
+
+            axios({ // add citizen to the citizen table
+                method: 'GET',
+                url: '/api/citizen/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    res.data.citizens.forEach((e) => {
+                        $('tbody').append('<tr>' +
+                            `<td>${e.citizen_id}</td>` +
+                            `<td>${e.number}</td>` +
+                            '<td>' +
+                            `${e.full_name}` +
+                            '</td>' +
+                            `<td>${e.dob}</td>` +
+                            '<td>' +
+                            `${e.gender}` +
+                            '</td>' +
+                            `<td>${e.permanent_address}</td>` +
+                            '<td>' +
+                            '<button class="see-detail-person">Xem chi tiết</button>' +
+                            '</td>' +
+                            '</tr>');
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
         };
 
         printButtonClickEvent() {

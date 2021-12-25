@@ -2,6 +2,8 @@ define(['user-classes/User', 'jquery'], function (User, $) {
     return class Operator extends User {
         constructor(id, username, name, per_scope, role_id, declare_per, address) {
             super(id, username, name, per_scope, role_id, declare_per, address);
+
+            this.arrayOfAddress = address.split(' - ');
         };
         renderMenuLeft() {
             super.renderMenuLeft();
@@ -90,30 +92,13 @@ define(['user-classes/User', 'jquery'], function (User, $) {
                 '<div class="body-address-content">' +
                 '<select name="tinh" id="body-address-city">' +
                 '<option selected disabled>Chon tinh thanh</option>' +
-                '<option>Ha Noi</option>' +
-                '<option>HCM</option>' +
-                '<option>Da NANG</option>' +
-                '<option>Hai Phong</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
-                '<option>Quang Ninh</option>' +
                 '</select>' +
                 '' +
                 '<select name="huyen" id="body-address-distric">' +
                 '<option selected disabled>Chon quan huyen</option>' +
-                '<option value="Thach That">Thach That</option>' +
-                '<option value="Ba vi">Ba Vi</option>' +
                 '</select>' +
                 '<select name="xa" id="body-address-commune">' +
                 '<option selected disabled>Chon phuong xa</option>' +
-                '<option value="Tan Phu">Tan Phu</option>' +
-                '<option value="Cong Hoa">Cong Hoa</option>' +
                 '</select>' +
                 '<select name="thon" id="body-address-hamlet">' +
                 '<option selected disabled>Chon thon ban</option>' +
@@ -240,186 +225,6 @@ define(['user-classes/User', 'jquery'], function (User, $) {
                 '</tr>' +
                 '</thead>' +
                 '<tbody>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>01</td>' +
-                '<td>0142348127</td>' +
-                '<td>' +
-                'Nguyễn Thị Nhật Anh' +
-                '</td>' +
-                '<td>18/09/2001</td>' +
-                '<td>' +
-                'Nữ' +
-                '</td>' +
-                '<td>xã Cộng Hòa - huyện Quốc Oai - thành phố Hà Nội</td>' +
-                '<td>' +
-                '<button class="see-detail-person">Xem chi tiết</button>' +
-                '</td>' +
-                '</tr>' +
                 '</tbody>' +
                 '</table>' +
                 '</div>' +

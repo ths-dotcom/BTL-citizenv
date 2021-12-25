@@ -16,7 +16,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
-                    res.data.cities.forEach((e) => {
+                    res.data.cities.forEach((e, i) => {
                         // add content to the city table
                         $('tbody').append('<tr>' +
                             `<td>${e.city_id}</td>` +
@@ -43,14 +43,13 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             '</tr>');
 
                         // delete city event
-                        $('button.td-delete-btn.td-same-btn').on('click', () => {
+                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
                             console.log("a");
                             axios({
                                 method: 'DELETE',
                                 url: `/api/city/${e.city_id}`,
                             }).then((res) => {
                                 if (res.data.success) {
-                                    $('tbody').empty();
                                     this.fillTableOfCity();
                                 };
                             });
@@ -62,10 +61,41 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             })
         };
 
+        fillRatioTabs() { // fill 4 ratio tabs (children, women, elderly, total)
+            let total = 0;
+            axios({ // fill total ratio
+                method: 'GET',
+                url: '/api/analyst/count'
+            }).then((res) => {
+                if (res.data.success) {
+                    total = res.data.count;
+                    $('div.all-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-all-bottom-left').empty();
+                    $('div.all-top-left-number.same-top-left-number').append(`${res.data.count}`);
+                    $('div.ratio-all-bottom-left').append(`TỔNG <span> ${res.data.count} </span> NGƯỜI`);
+                };
+            });
+
+            axios({ // fill women ratio
+                method: 'GET',
+                url: '/api/analyst/gender'
+            }).then((res) => {
+                if (res.data.success) {
+                    $('div.woman-top-left-number.same-top-left-number').empty();
+                    $('div.ratio-woman-bottom-left').empty();
+                    $('div.ratio-woman-bottom-right').empty();
+                    $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.nu}`);
+                    $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.nu} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-woman-bottom-right').append(`${((res.data.gender.nu / total) * 100).toFixed(2)}%`);
+                };
+            });
+        };
+
         //overloading all function from manager class for A1
         homeButtonClickEvent() {
             super.homeButtonClickEvent();
 
+            this.fillRatioTabs();
             this.fillTableOfCity();
         };
 
@@ -260,7 +290,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 url: '/api/citizen/list'
             }).then((res) => {
                 if (res.data.success) {
-                    res.data.citizens.forEach((e) => { // add city to the city input
+                    res.data.citizens.forEach((e) => {
                         $('tbody').append('<tr>' +
                             `<td>${e.citizen_id}</td>` +
                             `<td>${e.number}</td>` +
@@ -291,6 +321,8 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
         showStatisticButtonClickEvent() {
             super.showStatisticButtonClickEvent();
+
+            this.fillRatioTabs();
         };
     }
 });

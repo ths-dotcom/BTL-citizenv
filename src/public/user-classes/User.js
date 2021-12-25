@@ -81,7 +81,6 @@ define(['jquery'], function ($) {
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="woman-top-left-number same-top-left-number">' +
-                '44' +
                 '</div>' +
                 '<div class="woman-top-left-text same-top-left-text">PHỤ NỮ</div>' +
                 '</div>' +
@@ -91,13 +90,8 @@ define(['jquery'], function ($) {
                 '</div>' +
                 '<div class="ratio-woman-bottom ratio-same-bottom">' +
                 '<div class="ratio-woman-bottom-left">' +
-                '<span>44 </span>' +
-                '/ ' +
-                '<span>99 </span>' +
-                'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-woman-bottom-right">' +
-                '44,44%' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -129,7 +123,6 @@ define(['jquery'], function ($) {
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="all-top-left-number same-top-left-number">' +
-                '99' +
                 '</div>' +
                 '<div class="all-top-left-text same-top-left-text">TỔNG SỐ NGƯỜI</div>' +
                 '</div>' +
@@ -139,12 +132,8 @@ define(['jquery'], function ($) {
                 '</div>' +
                 '<div class="ratio-all-bottom ratio-same-bottom">' +
                 '<div class="ratio-all-bottom-left">' +
-                'TỔNG' +
-                '<span> 99 </span>' +
-                'NGƯỜI' +
                 '</div>' +
                 '<div class="ratio-all-bottom-right">' +
-                '100%' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
