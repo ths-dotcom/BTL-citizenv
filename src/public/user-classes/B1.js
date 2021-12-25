@@ -16,7 +16,7 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
-                    res.data.hamlets.forEach((e) => {
+                    res.data.hamlets.forEach((e, i) => {
                         $('tbody').append('<tr>' +
                             `<td>${e.hamlet_id}</td>` +
                             `<td><input type="text" class="input-can-change input-hamlet-change" value="${e.hamlet_name}"></td>` +
@@ -40,6 +40,35 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                             '</button>' +
                             '</td>' +
                             '</tr>');
+
+                        // delete hamlet event
+                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                            axios({
+                                method: 'DELETE',
+                                url: `/api/hamlet/${e.hamlet_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfHamlet();
+                                };
+                            });
+                        });
+
+                        // modify hamlet event
+                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                            axios({
+                                method: 'PUT',
+                                url: `/api/hamlet/${e.hamlet_id}`,
+                                data: {
+                                    data: {
+                                        hamlet_name: $('input.input-can-change.input-hamlet-change').eq(i).val()
+                                    }
+                                }
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfHamlet();
+                                };
+                            });
+                        });
                     })
                 } else {
                     console.log(res);
