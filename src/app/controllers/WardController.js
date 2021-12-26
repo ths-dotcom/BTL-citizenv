@@ -140,6 +140,32 @@ class WardController {
             })
             .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
     }
+
+    // [GET] /api/ward/progress
+    progress(req, res, next) {
+        User.findAll({
+            where: {
+                per_scope: {
+                    [Op.startsWith] : req.user.per_scope
+                },
+                role_id: 4
+            }
+        })
+            .then(users => {
+                let count = 0;
+                for(let i of users) {
+                    if(i.dataValues.is_done) ++count;
+                }
+                res.json({
+                    success: true,
+                    progress: {
+                        finish: count,
+                        all: users.length
+                    }
+                })
+            })
+            .catch(err => next(createHttpError(500, err)))
+    }
 }
 
 module.exports = new WardController;
