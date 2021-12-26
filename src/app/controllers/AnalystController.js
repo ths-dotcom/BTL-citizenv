@@ -302,7 +302,7 @@ class AnalystController {
             });
             let khong = 0, phothong = 0, daihoc = 0;
             for(let i of academic) {
-                if(i.dataValues.academic_level.to == 'Không') ++khong;
+                if(i.dataValues.academic_level == 'Không') ++khong;
                 else if(i.dataValues.academic_level == 'Phổ thông') ++phothong;
                 else if(i.dataValues.academic_level == 'Đại học') ++daihoc;
             }
