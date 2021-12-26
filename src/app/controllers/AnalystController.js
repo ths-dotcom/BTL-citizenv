@@ -19,6 +19,10 @@ function getAge(dob) {
     return now.getFullYear() - dob.slice(0, 4);
 }
 
+function getAgeDepend(dob, year) {
+    return year - dob.slice(0, 4);
+}
+
 class AnalystController {
 
     // [GET] /api/analyst/count
@@ -187,34 +191,32 @@ class AnalystController {
             }
             // let now = new Date();
             for(let i of citizens) {
-                let age = getAge(i.dataValues.dob);
-                if(age <= 14) {
-                    let year = getYear(i.dataValues.dob);
-                    if(year <= 1990) ++kid[0];
-                    if(year <= 2000) ++kid[1];
-                    if(year <= 2010) ++kid[2];
-                    if(year <= 2020) ++kid[3];
-                }
-                else if(age <65) {
-                    let year = getYear(i.dataValues.dob);
-                    if(year <= 1990) ++adult[0];
-                    if(year <= 2000) ++adult[1];
-                    if(year <= 2010) ++adult[2];
-                    if(year <= 2020) ++adult[3];
-                }
-                else  {
-                    let year = getYear(i.dataValues.dob);
-                    if(year <= 1990) ++elder[0];
-                    if(year <= 2000) ++elder[1];
-                    if(year <= 2010) ++elder[2];
-                    if(year <= 2020) ++elder[3];
-                }
+                let age = getAgeDepend(i.dataValues.dob, 1990);
+                if(age >= 0 && age <= 14) ++kid[0];
+                if(age >= 14 && age <= 64) ++adult[0];
+                if(age >= 65) ++elder[0];
+
+                age = getAgeDepend(i.dataValues.dob, 2000);
+                if(age >= 0 && age <= 14) ++kid[1];
+                if(age >= 14 && age <= 64) ++adult[1];
+                if(age >= 65) ++elder[1];
+
+                age = getAgeDepend(i.dataValues.dob, 2010);
+                if(age >= 0 && age <= 14) ++kid[2];
+                if(age >= 14 && age <= 64) ++adult[2];
+                if(age >= 65) ++elder[2];
+
+                age = getAgeDepend(i.dataValues.dob, 2020);
+                if(age >= 0 && age <= 14) ++kid[3];
+                if(age >= 14 &&  age <= 64) ++adult[3];
+                if(age >= 65) ++elder[3];
             }
             let countKid = 0, countAdult = 0, countElder = 0;
-            for(let i = 0; i < 4; ++i) {
-                countKid += kid[i];
-                countAdult += adult[i];
-                countElder += elder[i];
+            for(let i of citizens) {
+                let age = getAge(i.dataValues.dob);
+                if(age <= 14) ++countKid;
+                else if(age <= 64) ++countAdult;
+                else ++countElder;
             }
             res.json({
                 success: true,
@@ -239,22 +241,54 @@ class AnalystController {
                     }
                 }
             });
-            let kid = 0, adult = 0, elder = 0;
-            let now = new Date();
+            let kid = [], adult = [], elder = [];
+            for(let i = 0; i < 4; ++i) {
+                kid[i] = 0;
+                adult[i] = 0;
+                elder[i] = 0;
+            }
+            // let now = new Date();
             for(let i of citizens) {
-                let age = now.getFullYear() - i.dataValues.dob.slice(0, 4);
-                if(age <= 14) ++kid;
-                else if(age <65) ++ adult;
-                else ++ elder;
+                let age = getAgeDepend(i.dataValues.dob, 1990);
+                if(age >= 0 && age <= 14) ++kid[0];
+                if(age >= 14 && age <= 64) ++adult[0];
+                if(age >= 65) ++elder[0];
+
+                age = getAgeDepend(i.dataValues.dob, 2000);
+                if(age >= 0 && age <= 14) ++kid[1];
+                if(age >= 14 && age <= 64) ++adult[1];
+                if(age >= 65) ++elder[1];
+
+                age = getAgeDepend(i.dataValues.dob, 2010);
+                if(age >= 0 && age <= 14) ++kid[2];
+                if(age >= 14 && age <= 64) ++adult[2];
+                if(age >= 65) ++elder[2];
+
+                age = getAgeDepend(i.dataValues.dob, 2020);
+                if(age >= 0 && age <= 14) ++kid[3];
+                if(age >= 14 &&  age <= 64) ++adult[3];
+                if(age >= 65) ++elder[3];
+            }
+            let countKid = 0, countAdult = 0, countElder = 0;
+            for(let i of citizens) {
+                let age = getAge(i.dataValues.dob);
+                if(age <= 14) ++countKid;
+                else if(age <= 64) ++countAdult;
+                else ++countElder;
             }
             res.json({
                 success: true,
                 age: {
+                    tong: {
+                        countKid,
+                        countAdult,
+                        countElder
+                    },
                     kid,
                     adult, 
                     elder
                 }
-            })
+            }) 
         }
     }
 
