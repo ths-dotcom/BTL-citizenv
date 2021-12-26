@@ -419,8 +419,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
                 '<div class="this-top-left-number same-top-left-number">' +
-                // percent
-                '80%' +
                 '</div>' +
                 '<div class="this-top-left-text same-top-left-text">Đã hoàn thành</div>' +
                 '</div>' +
@@ -431,15 +429,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="ratio-this-bottom ratio-same-bottom">' +
                 '<div class="ratio-this-bottom-left">' +
-                // Da nhap
-                '<span>8 </span>' +
-                '/ ' +
-                // Tong
-                '<span>10 </span>' +
-                ' TINH' +
                 '</div>' +
                 '<div class="ratio-this-bottom-right">' +
-                'A1GOV' +
                 '</div>' +
                 '</div>' +
                 '<div class="this-bottom-description">' +
