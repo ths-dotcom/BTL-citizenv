@@ -839,15 +839,18 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
 
             //Ngành nghề
             google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(async () => {
 
-            function drawChart() {
+                const academicCitizenResponse = await axios({ // fill total ratio
+                    method: 'GET',
+                    url: '/api/analyst/academic-level'
+                });
 
                 var data = google.visualization.arrayToDataTable([
                     ['Task', 'Tỉ lệ'],
-                    ['Đại học', 2],
-                    ['Phổ thông', 2],
-                    ['Không có', 7]
+                    ['Đại học', academicCitizenResponse.data.academic.daihoc],
+                    ['Phổ thông', academicCitizenResponse.data.academic.phothong],
+                    ['Không có', academicCitizenResponse.data.academic.khong]
                 ]);
 
                 var options = {
@@ -857,7 +860,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
                 var chart = new google.visualization.PieChart(document.getElementById('nganhnghechart_values'));
 
                 chart.draw(data, options);
-            }
+
+            });
         };
     }
 });
