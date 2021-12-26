@@ -31,8 +31,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                                 $('tbody').append('<tr>' +
                                     `<td>${e.ward_id}</td>` +
                                     `<td><input type="text" class="input-can-change input-ward-change" value="${e.ward_name}"></td>` +
-                                    `<td>chưa có</td>` +
-                                    `<td>chưa có</td>` +
                                     `<td>${is_done}` +
                                     ' </td>' +
                                     '<td>' +
