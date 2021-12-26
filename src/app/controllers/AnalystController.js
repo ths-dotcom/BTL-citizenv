@@ -292,6 +292,11 @@ class AnalystController {
         }
     }
 
+    // [GET] /api/analist/academic-level
+    academicLevel(req, res, next) {
+        
+    }
+
 }
 
 module.exports = new AnalystController;
