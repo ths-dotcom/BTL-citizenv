@@ -155,6 +155,71 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
             });
         };
 
+        fillTableOfCitizenUtility(e, i) { // helper method for fillTableOfCitizen()
+            $('tbody').append('<tr>' +
+                `<td>${e.citizen_id}</td>` +
+                `<td>${e.number}</td>` +
+                '<td>' +
+                `${e.full_name}` +
+                '</td>' +
+                `<td>${e.dob}</td>` +
+                '<td>' +
+                `${e.gender}` +
+                '</td>' +
+                `<td>${e.permanent_address}</td>` +
+                '<td>' +
+                '<button class="td-see-btn td-same-btn citizen-see-btn">' +
+                '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                '<span>Xem chi tiết</span>' +
+                '</button>' +
+                '</td>' +
+                '</tr>');
+
+            // view citizen event
+            $('button.td-see-btn.td-same-btn.citizen-see-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                $('#right-content-search-search').hide();
+                $('#right-content-search-modify').show();
+
+                axios({
+                    method: 'GET',
+                    url: `/api/citizen/detail/${e.citizen_id}`,
+                }).then((res) => {
+                    if (res.data.success) {
+                        $('input.id-left-input').val(res.data.citizen.number);
+                        $('input.name-left-input').val(res.data.citizen.full_name);
+                        $('input.date-left-input').val(res.data.citizen.dob);
+                        $('input.religion-mid-input').val(res.data.citizen.religion);
+                        $('input.job-right-input').val(res.data.citizen.job);
+                        $('input.study-left-input').val(res.data.citizen.academic_level);
+                        $('input:radio[name=gender]').val([res.data.citizen.gender]);
+
+                        const arrayOfhome_address = res.data.citizen.home_address.split(' - ');
+                        $('[id=body-address-city]').append(`<option selected value="${arrayOfhome_address[3]}">${arrayOfhome_address[3]}</option>`);
+                        $('[id=body-address-distric]').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
+                        $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
+                        $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
+                    };
+                })
+                
+            });
+        };
+
+        fillTableOfCitizen() { // add citizen to the citizen table
+            axios({
+                method: 'GET',
+                url: '/api/citizen/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    $('tbody').empty();
+                    res.data.citizens.forEach((e, i) => {
+                        this.fillTableOfCitizenUtility(e, i);
+                    })
+                } else {
+                    console.log(res);
+                }
+            });
+        };
+
         homeButtonClickEvent() {
             super.homeButtonClickEvent();
             this.fillTableOfHamlet();
@@ -271,44 +336,61 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                 }
             });
 
-            axios({ // add citizen to the district table
-                method: 'GET',
-                url: '/api/citizen/list'
-            }).then((res) => {
-                console.log(res);
-                if (res.data.success) {
-                    res.data.citizens.forEach((e) => { // add disitict to the distict input
-                        $('tbody').append('<tr>' +
-                            `<td>${e.citizen_id}</td>` +
-                            `<td>${e.number}</td>` +
-                            '<td>' +
-                            `${e.full_name}` +
-                            '</td>' +
-                            `<td>${e.dob}</td>` +
-                            '<td>' +
-                            `${e.gender}` +
-                            '</td>' +
-                            `<td>${e.permanent_address}</td>` +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
-                            '</tr>');
-                    })
-                } else {
-                    console.log(res);
+            $('button.search-foot-btn').off();
+            $('button.search-foot-btn').on('click', () => {
+                let gender = '';
+                let permanent_address = '';
+                if ($('input:radio[name=gender]:checked').eq(0).val()) {
+                    gender = $('input:radio[name=gender]:checked').eq(0).val();
                 }
+
+                if ($('[id=body-address-hamlet]').eq(0).val() != null) {
+                    permanent_address += $('[id=body-address-hamlet]').eq(0).children("option").filter(":selected").text();
+                };
+                if ($('[id=body-address-commune]').eq(0).val() != null) {
+                    if (permanent_address) {
+                        permanent_address += ' - ';
+                    }
+                    permanent_address += $('[id=body-address-commune]').eq(0).children("option").filter(":selected").text();
+                };
+                if ($('[id=body-address-distric]').eq(0).val() != null) {
+                    if (permanent_address) {
+                        permanent_address += ' - ';
+                    }
+                    permanent_address += $('[id=body-address-distric]').eq(0).children("option").filter(":selected").text();
+                };
+                if ($('[id=body-address-city]').eq(0).val() != null) {
+                    if (permanent_address) {
+                        permanent_address += ' - ';
+                    }
+                    permanent_address += $('[id=body-address-city]').eq(0).children("option").filter(":selected").text();
+                };
+                axios({
+                    method: 'POST',
+                    url: `/api/citizen/list`,
+                    data: {
+                        data: { // eq + 0 because the modify form having the same class as the search form, the modify form is display = none
+                            number: $('input.id-left-input').eq(0).val(),
+                            full_name: $('input.name-left-input').eq(0).val(),
+                            dob: $('input.date-left-input').eq(0).val(),
+                            gender: gender,
+                            permanent_address: permanent_address,
+                            religion: $('input.religion-mid-input').eq(0).val(),
+                            academic_level: $('input.study-left-input').eq(0).val(),
+                            job: $('input.job-right-input').eq(0).val()
+                        }
+                    }
+                }).then((res) => {
+                    if (res.data.success) {
+                        $('tbody').empty();
+                        res.data.citizens.forEach((e, i) => {
+                            this.fillTableOfCitizenUtility(e, i);
+                        });
+                    }
+                });
             });
+
+            this.fillTableOfCitizen();
         };
 
         monitoringProgressButtonClickEvent() {

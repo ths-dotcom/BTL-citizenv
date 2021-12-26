@@ -351,6 +351,12 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
                     };
                 })
+
+                // close view citizen
+                $('button.goback-foot-btn').bind('click', () => { // add index to the event to prevent overlap with other modify button
+                    $('#right-content-search-modify').hide();
+                    $('#right-content-search-search').show();
+                });
             });
         };
 
