@@ -78,14 +78,7 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
         renderMenuLeft() {
             super.renderMenuLeft();
 
-            this.inputCitizenButton = $("<div></div>", { "class": "body-left-home" });
-            $("<div class='body-left-home-content'><i class='fa fa-keyboard-o' aria-hidden='true'></i><span>Nhập liệu dân số</span></div>")
-                .appendTo($(this.inputCitizenButton));
-            $(this.inputCitizenButton).on('click', () => {
-                this.resetSelectedButton();
-                this.inputCitizenButton.children('.body-left-home-content').addClass('body-left-home-content-active');
-                this.inputCitizenButtonClickEvent();
-            }); //add input citizen function
+
 
             this.printButton = $("<div></div>", { "class": "body-left-home" });
             $("<div class='body-left-home-content'><i class='fa fa-print' aria-hidden='true'></i><span>In phiếu điều tra</span></div>")
@@ -97,7 +90,7 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
             }); //add printting citizen input form function
 
 
-            $('div.body-left').append($(this.inputCitizenButton), $(this.printButton));
+            $('div.body-left').append($(this.printButton));
         };
 
 
@@ -283,6 +276,19 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
             }).then((res) => {
                 if (res.data.success) {
                     $('tbody').empty();
+                    $('thead').empty();
+                    $('thead').append(
+                        '<tr>' +
+                        '<th>' +
+                        ' Mã tài khoản' +
+                        '</th>' +
+                        ' <th>Tên tỉnh thành</th>' +
+                        '<th>Quyền khai báo</th>' +
+                        '<th>Thời điểm bắt đầu</th>' +
+                        '<th>Thời điểm kết thúc</th>' +
+                        '<th>Trạng thái hoàn thành</th>'
+                    );
+
                     res.data.hamlets.forEach((e) => {
                         let declarePer = '';
                         if (e.declare_per) {
@@ -297,6 +303,11 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                             '</td>' +
                             '<td>14/12/2021</td>' +
                             '<td>22/12/2021</td>' +
+                            '<td>' +
+                            '<label class="switch">' +
+                            '<input type="checkbox" class="finish-checkbox">' +
+                            '<span class="slider round"></span>' +
+                            '</td>' +
                             '</tr>');
                     })
                 } else {
@@ -406,52 +417,6 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
         showStatisticButtonClickEvent() {
             super.showStatisticButtonClickEvent();
             this.fillRatioTabs();
-        };
-
-        inputCitizenButtonClickEvent() {
-            super.inputCitizenButtonClickEvent();
-
-            $('[id=body-address-city]').append(`<option selected value="${this.arrayOfAddress[2]}">${this.arrayOfAddress[2]}</option>`);
-            $('[id=body-address-distric]').append(`<option selected value="${this.arrayOfAddress[1]}">${this.arrayOfAddress[1]}</option>`);
-            $('[id=body-address-commune]').append(`<option selected value="${this.arrayOfAddress[0]}">${this.arrayOfAddress[0]}</option>`);
-            // $('[id=body-address-hamlet]').append(`<option selected value="</option>`);
-            axios({ // add citizen to the citizen table
-                method: 'GET',
-                url: '/api/citizen/list'
-            }).then((res) => {
-                if (res.data.success) {
-                    res.data.citizens.forEach((e) => {
-                        $('tbody').append('<tr>' +
-                            `<td>${e.citizen_id}</td>` +
-                            `<td>${e.number}</td>` +
-                            '<td>' +
-                            `${e.full_name}` +
-                            '</td>' +
-                            `<td>${e.dob}</td>` +
-                            '<td>' +
-                            `${e.gender}` +
-                            '</td>' +
-                            `<td>${e.permanent_address}</td>` +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn citizen-see-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn citizen-fix-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn citizen-delete-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
-                            '</tr>');
-                    })
-                } else {
-                    console.log(res);
-                }
-            });
         };
 
         printButtonClickEvent() {
