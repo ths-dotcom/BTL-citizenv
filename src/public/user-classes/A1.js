@@ -657,6 +657,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
                             data: {
                                 data: {
+                                    delete: true,
                                     start_date: null,
                                     end_date: null
                                 }
