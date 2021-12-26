@@ -753,7 +753,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
         showStatisticButtonClickEvent() {
             super.showStatisticButtonClickEvent();
-
             this.fillRatioTabs();
         };
     }

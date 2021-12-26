@@ -412,10 +412,39 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
         monitoringProgressButtonClickEvent() { // render structure of monitoring progress function
             super.clearRightContent();
             $('div.body-right-content').append('<div class="right-content-name">Theo dõi tiến độ nhập liệu</div>' +
-                '<div class="right-content-progress">' +
-                '<div class="content-progress-chart">' +
-                '<div id="tiendo" style="height: 100%;" class="tiendo-chart"></div>' +
+                '<div class="right-content-progress right-content-ratio">' +
+                '<div class="content-ratio-same">' +
+                '<div class="ratio-same-top">' +
+                '<div class="ratio-same-top-left">' +
+                '<div class="this-top-left-number same-top-left-number">' +
+                // percent
+                '80%' +
                 '</div>' +
+                '<div class="this-top-left-text same-top-left-text">Đã hoàn thành</div>' +
+                '</div>' +
+                '<div class="ratio-this-top-right">' +
+                '<i class="fa fa-hourglass-half" aria-hidden="true"></i>' +
+                '' +
+                '</div>' +
+                '</div>' +
+                '<div class="ratio-this-bottom ratio-same-bottom">' +
+                '<div class="ratio-this-bottom-left">' +
+                // Da nhap
+                '<span>8 </span>' +
+                '/ ' +
+                // Tong
+                '<span>10 </span>' +
+                ' TINH' +
+                '</div>' +
+                '<div class="ratio-this-bottom-right">' +
+                'A1GOV' +
+                '</div>' +
+                '</div>' +
+                '<div class="this-bottom-description">' +
+                'Tiến độ nhập liệu' +
+                '</div>' +
+                '</div>' +
+
                 '<div class="content-ratio-same">' +
                 '<div class="ratio-same-top">' +
                 '<div class="ratio-same-top-left">' +
