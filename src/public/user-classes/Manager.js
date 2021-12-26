@@ -1,4 +1,4 @@
-define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, chartapi) {
+define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, $, chartapi, axios) {
     return class Manager extends User {
         constructor(id, username, name, per_scope, role_id, declare_per, address) {
             super(id, username, name, per_scope, role_id, declare_per, address);
@@ -733,16 +733,22 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '</div>');
 
+            this.fillRatioTabs();
+
             //Biểu đồ tổng dân số
             google.charts.load("current", { packages: ['corechart'] });
-            google.charts.setOnLoadCallback(() => {
+            google.charts.setOnLoadCallback(async () => {
+                const totalCitizenResponse = await axios({ // fill total ratio
+                    method: 'GET',
+                    url: '/api/analyst/count'
+                });
+
                 var data = google.visualization.arrayToDataTable([
                     ["Element", "Dân số", { role: "style" }],
-                    ["1980", 96, "gray"],
-                    ["1990", 110, "#b87333"],
-                    ["2000", 120, "#76A7FA"],
-                    ["2010", 130, "gold"],
-                    ["2020", 140, "#703593"]
+                    ["1990", totalCitizenResponse.data.citizen.countEach[0], "#b87333"],
+                    ["2000", totalCitizenResponse.data.citizen.countEach[1], "#76A7FA"],
+                    ["2010", totalCitizenResponse.data.citizen.countEach[2], "gold"],
+                    ["2020", totalCitizenResponse.data.citizen.countEach[3], "#703593"]
                 ]);
 
                 var view = new google.visualization.DataView(data);
@@ -768,14 +774,17 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
 
             //Biểu đồ theo độ tuổi
             google.charts.load("current", { packages: ['corechart'] });
-            google.charts.setOnLoadCallback(() => {
+            google.charts.setOnLoadCallback(async () => {
+                const ageCitizenResponse = await axios({ // fill total ratio
+                    method: 'GET',
+                    url: '/api/analyst/age'
+                });
                 var data = google.visualization.arrayToDataTable([
                     ['Age', 'Từ 0-14 tuổi', 'Từ 15-64 tuổi', 'Trên 65 tuổi', { role: 'annotation' }],
-                    ['1980', 10, 48, 20, ''],
-                    ['1990', 16, 50, 23, ''],
-                    ['2000', 28, 53, 29, ''],
-                    ['2010', 28, 69, 29, ''],
-                    ['2020', 28, 72, 29, '']
+                    ['1990', ageCitizenResponse.data.age.kid[0], ageCitizenResponse.data.age.adult[0], ageCitizenResponse.data.age.elder[0], ''],
+                    ['2000', ageCitizenResponse.data.age.kid[1], ageCitizenResponse.data.age.adult[1], ageCitizenResponse.data.age.elder[1], ''],
+                    ['2010', ageCitizenResponse.data.age.kid[2], ageCitizenResponse.data.age.adult[2], ageCitizenResponse.data.age.elder[2], ''],
+                    ['2020', ageCitizenResponse.data.age.kid[3], ageCitizenResponse.data.age.adult[3], ageCitizenResponse.data.age.elder[3], '']
                 ]);
 
                 var view = new google.visualization.DataView(data);
@@ -801,16 +810,19 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 chart.draw(view, options_fullStacked);
             });
 
-            //Biểu đồ Giới tính
-            google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(() => {
+            google.charts.setOnLoadCallback(async () => {
+                //Biểu đồ Giới tính
+                google.charts.load('current', { 'packages': ['corechart'] });
+                const genderCitizenResponse = await axios({ // fill total ratio
+                    method: 'GET',
+                    url: '/api/analyst/gender'
+                });
                 var data = google.visualization.arrayToDataTable([
                     ['Year', 'Males', 'Female'],
-                    ['1980', 900, 1000],
-                    ['1990', 1170, 1190],
-                    ['2000', 1210, 1200],
-                    ['2010', 1300, 1270],
-                    ['2020', 1500, 1420]
+                    ['1990', genderCitizenResponse.data.gender.nam[0], genderCitizenResponse.data.gender.nu[0]],
+                    ['2000', genderCitizenResponse.data.gender.nam[1], genderCitizenResponse.data.gender.nu[1]],
+                    ['2010', genderCitizenResponse.data.gender.nam[2], genderCitizenResponse.data.gender.nu[2]],
+                    ['2020', genderCitizenResponse.data.gender.nam[3], genderCitizenResponse.data.gender.nu[3]]
                 ]);
 
                 var options = {

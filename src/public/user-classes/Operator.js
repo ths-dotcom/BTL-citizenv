@@ -34,7 +34,6 @@ define(['user-classes/User', 'jquery'], function (User, $) {
 
         homeButtonClickEvent() {
             super.homeButtonClickEvent();
-
         }
 
         inputCitizenButtonClickEvent() {
