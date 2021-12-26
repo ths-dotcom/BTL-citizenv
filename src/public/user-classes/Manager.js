@@ -381,11 +381,11 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '</div>' +
                 '<div class="content-search-foot">' +
-                '<button class="search-foot-btn goback-foot-btn">' +
+                '<button class="goback-foot-btn">' +
                 '<i class="fa fa-ban" aria-hidden="true"></i>' +
                 ' ĐÓNG LẠI' +
                 '</button>' +
-                '<button class="search-foot-btn save-foot-btn">' +
+                '<button class="save-foot-btn">' +
                 '<i class="fa fa-bookmark" aria-hidden="true"></i>' +
                 ' LƯU LẠI' +
                 '</button>' +

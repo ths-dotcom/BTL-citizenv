@@ -722,9 +722,25 @@ body {
 .goback-foot-btn{
     background-color: rgb(73, 69, 69);
     margin-right: 20px;
+    border: none;
+    min-width: 120px;
+    height: 30px;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
 }
 
 .save-foot-btn{
     background-color: #0173e0;
     display: none;
+    border: none;
+    min-width: 120px;
+    height: 30px;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
 }

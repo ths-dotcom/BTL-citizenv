@@ -53,7 +53,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             });
                         });
 
-                        // modify district event
+                        // modify ward event
                         $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
                             axios({
                                 method: 'PUT',
@@ -66,6 +66,82 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             }).then((res) => {
                                 if (res.data.success) {
                                     this.fillTableOfWard();
+                                };
+                            });
+                        });
+
+                        // view ward event
+                        $('button.td-see-btn.td-same-btn').eq(i).bind('click', () => {
+                            $('div.table-head-title').text('Danh sách các thôn bản');
+                            $('thead tr').children().eq(0).text('Mã thôn bản');
+                            $('thead tr').children().eq(1).text('Tên thôn bản');
+                            this.fillTableOfHamlet(e.ward_id);
+                        });
+                    })
+                } else {
+                    console.log(res);
+                }
+            })
+        };
+
+        fillTableOfHamlet(ward_id) { // fill the table of city (A1, A2, A3, B1)
+            axios({
+                method: 'GET',
+                url: '/api/hamlet/list'
+            }).then((res) => {
+                if (res.data.success) {
+                    $('tbody').empty();
+                    const filteredHamlets = res.data.hamlets.filter(e => e.ward_id == ward_id);
+                    filteredHamlets.forEach((e, i) => {
+                        $('tbody').append('<tr>' +
+                            `<td>${e.hamlet_id}</td>` +
+                            `<td><input type="text" class="input-can-change input-hamlet-change" value="${e.hamlet_name}"></td>` +
+                            `<td>chưa có</td>` +
+                            `<td>chưa có</td>` +
+                            '<td>Chưa hoàn thành' +
+                            '<button class="td-detail-btn">Chi tiết</button>' +
+                            ' </td>' +
+                            '<td>' +
+                            '<button class="td-see-btn td-same-btn">' +
+                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                            '<span>Xem</span>' +
+                            '</button>' +
+                            '<button class="td-fix-btn td-same-btn">' +
+                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                            '<span>Sửa</span>' +
+                            '</button>' +
+                            '<button class="td-delete-btn td-same-btn">' +
+                            '<i class="fa fa-times" aria-hidden="true"></i>' +
+                            '<span>Xóa</span>' +
+                            '</button>' +
+                            '</td>' +
+                            '</tr>');
+
+                        // delete hamlet event
+                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                            axios({
+                                method: 'DELETE',
+                                url: `/api/hamlet/${e.hamlet_id}`,
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfHamlet(ward_id);
+                                };
+                            });
+                        });
+
+                        // modify hamlet event
+                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                            axios({
+                                method: 'PUT',
+                                url: `/api/hamlet/${e.hamlet_id}`,
+                                data: {
+                                    data: {
+                                        hamlet_name: $('input.input-can-change.input-hamlet-change').eq(i).val()
+                                    }
+                                }
+                            }).then((res) => {
+                                if (res.data.success) {
+                                    this.fillTableOfHamlet(ward_id);
                                 };
                             });
                         });
@@ -129,59 +205,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             });
         };
 
-        fillRatioTabs() { // fill 4 ratio tabs (children, women, elderly, total)
-            let total = 0;
-            axios({ // fill total ratio
-                method: 'GET',
-                url: '/api/analyst/count'
-            }).then((res) => {
-                if (res.data.success) {
-                    total = res.data.count;
-                    $('div.all-top-left-number.same-top-left-number').empty();
-                    $('div.ratio-all-bottom-left').empty();
-                    $('div.all-top-left-number.same-top-left-number').append(`${res.data.count}`);
-                    $('div.ratio-all-bottom-left').append(`TỔNG <span> ${res.data.count} </span> NGƯỜI`);
-                };
-            });
-
-            axios({ // fill women ratio
-                method: 'GET',
-                url: '/api/analyst/gender'
-            }).then((res) => {
-                if (res.data.success) {
-                    $('div.woman-top-left-number.same-top-left-number').empty();
-                    $('div.ratio-woman-bottom-left').empty();
-                    $('div.ratio-woman-bottom-right').empty();
-                    $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.nu}`);
-                    $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.nu} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-woman-bottom-right').append(`${((res.data.gender.nu / total) * 100).toFixed(2)}%`);
-                };
-            });
-
-            axios({ // fill kid and elderly ratio
-                method: 'GET',
-                url: '/api/analyst/age'
-            }).then((res) => {
-                if (res.data.success) {
-                    //fill kid ratio
-                    $('div.children-top-left-number.same-top-left-number').empty();
-                    $('div.ratio-children-bottom-left').empty();
-                    $('div.ratio-children-bottom-right').empty();
-                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.kid}`);
-                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.kid} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-children-bottom-right').append(`${((res.data.age.kid / total) * 100).toFixed(2)}%`);
-
-                    //kill elderly ratio
-                    $('div.old-top-left-number.same-top-left-number').empty();
-                    $('div.ratio-old-bottom-left').empty();
-                    $('div.ratio-old-bottom-right').empty();
-                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.elder}`);
-                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.elder} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-old-bottom-right').append(`${((res.data.age.elder / total) * 100).toFixed(2)}%`);
-                };
-            });
-        };
-        
         homeButtonClickEvent() {
             super.homeButtonClickEvent();
             this.fillTableOfWard();
