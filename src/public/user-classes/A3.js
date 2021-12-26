@@ -117,8 +117,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                                 $('tbody').append('<tr>' +
                                     `<td>${e.hamlet_id}</td>` +
                                     `<td><input type="text" class="input-can-change input-hamlet-change" value="${e.hamlet_name}"></td>` +
-                                    `<td>chưa có</td>` +
-                                    `<td>chưa có</td>` +
                                     `<td>${is_done}` +
                                     ' </td>' +
                                     '<td>' +

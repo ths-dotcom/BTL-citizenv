@@ -664,9 +664,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
                 var options = {
                     title: 'Dân số theo trình độ văn hóa'
                 };
-
                 var chart = new google.visualization.PieChart(document.getElementById('nganhnghechart_values'));
-
                 chart.draw(data, options);
 
             });
