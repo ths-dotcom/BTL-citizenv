@@ -270,50 +270,124 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
         creatingAccountButtonClickEvent() {
             super.creatingAccountButtonClickEvent();
 
-            axios({ // fill the table of hamlet
-                method: 'GET',
-                url: '/api/hamlet/list'
-            }).then((res) => {
-                if (res.data.success) {
-                    $('tbody').empty();
-                    $('thead').empty();
-                    $('thead').append(
-                        '<tr>' +
-                        '<th>' +
-                        ' Mã tài khoản' +
-                        '</th>' +
-                        ' <th>Tên tỉnh thành</th>' +
-                        '<th>Quyền khai báo</th>' +
-                        '<th>Thời điểm bắt đầu</th>' +
-                        '<th>Thời điểm kết thúc</th>' +
-                        '<th>Trạng thái hoàn thành</th>'
-                    );
+            function fillTableOfUser() {
+                let arrayOfHamletUser = {};
+                axios({ // fill the table of hamlet account
+                    method: 'GET',
+                    url: '/api/user/hamlet/list'
+                }).then((res) => {
+                    if (res.data.success) {
+                        $('tbody').empty();
+                        res.data.users.forEach((e) => {
+                            arrayOfHamletUser[e.id] = e.declare_per;
+                            let declarePer = '';
+                            if (e.declare_per) {
+                                declarePer = 'Đã kích hoạt';
+                            } else {
+                                declarePer = 'Chưa kích hoạt';
+                            }
+                            $('tbody').append('<tr>' +
+                                `<td>${e.id}</td>` +
+                                `<td>${e.name.slice(3)}</td>` +
+                                `<td>${declarePer}` +
+                                '</td>' +
+                                `<td>${e.start_date}</td>` +
+                                `<td>${e.end_date}</td>` +
+                                '</tr>');
+                        })
+                    } else {
+                        console.log(res);
+                    }
+                });
+                return arrayOfHamletUser;
+            }
+            let arrayOfHamletUser = fillTableOfUser();
 
-                    res.data.hamlets.forEach((e) => {
-                        let declarePer = '';
-                        if (e.declare_per) {
-                            declarePer = 'Đã kích hoạt';
-                        } else {
-                            declarePer = 'Chưa kích hoạt';
-                        }
-                        $('tbody').append('<tr>' +
-                            `<td>${e.hamlet_id}</td>` +
-                            `<td>${e.hamlet_name}</td>` +
-                            `<td>${declarePer}` +
-                            '</td>' +
-                            '<td>14/12/2021</td>' +
-                            '<td>22/12/2021</td>' +
-                            '<td>' +
-                            '<label class="switch">' +
-                            '<input type="checkbox" class="finish-checkbox">' +
-                            '<span class="slider round"></span>' +
-                            '</td>' +
-                            '</tr>');
-                    })
+
+            $('input.name-quyen-input.same-left-input').on('change', () => {
+                if (arrayOfHamletUser[$('input.name-quyen-input.same-left-input').val()] == true) {
+                    $('button.permission-foot-block-btn').show();
+                    $('button.permission-foot-yes-btn.same-foot-yes-btn').hide();
+                } else if (arrayOfHamletUser[$('input.name-quyen-input.same-left-input').val()] == false) {
+                    $('button.permission-foot-block-btn').hide();
+                    $('button.permission-foot-yes-btn.same-foot-yes-btn').show();
                 } else {
-                    console.log(res);
+                    console.log(arrayOfHamletUser[$('input.name-quyen-input.same-left-input').val()]);
+                    $('button.permission-foot-block-btn').hide();
+                    $('button.permission-foot-yes-btn.same-foot-yes-btn').hide();
                 }
-            })
+            });
+
+            $('button.permission-foot-yes-btn.same-foot-yes-btn').on('click', () => {
+                axios({ // change declare permission of an user to true
+                    method: 'PATCH',
+                    url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
+                }).then((res) => {
+                    if (res.data.success) {
+                        axios({ // change declare date
+                            method: 'POST',
+                            url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
+                            data: {
+                                data: {
+                                    delete: false,
+                                    start_date: $('input.permission-time-start').val(),
+                                    end_date: $('input.permission-time-end').val()
+                                }
+                            }
+                        }).then((res) => {
+                            if (res.data.success) {
+                                arrayOfHamletUser = fillTableOfUser();
+                                $('button.permission-foot-block-btn').show();
+                                $('button.permission-foot-yes-btn.same-foot-yes-btn').show();
+                                $('input.name-quyen-input.same-left-input').val('');
+                                $('input.permission-time-start').val('');
+                                $('input.permission-time-end').val('');
+                                $('input.password-quyen-input.same-left-input').val('');
+                            } else {
+                                console.log(res);
+                            }
+                        });
+                    } else {
+                        console.log(res);
+                    }
+                });
+            });
+
+            $('button.permission-foot-block-btn').on('click', () => {
+                axios({ // change declare permission of an user to false
+                    method: 'PATCH',
+                    url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
+                }).then((res) => {
+                    if (res.data.success) {
+                        axios({ // change declare date
+                            method: 'POST',
+                            url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
+                            data: {
+                                data: {
+                                    delete: true,
+                                    start_date: null,
+                                    end_date: null
+                                }
+                            }
+                        }).then((res) => {
+                            if (res.data.success) {
+                                arrayOfHamletUser = fillTableOfUser();
+                                $('button.permission-foot-block-btn').show();
+                                $('button.permission-foot-yes-btn.same-foot-yes-btn').show();
+                                $('input.name-quyen-input.same-left-input').val('');
+                                $('input.permission-time-start').val('');
+                                $('input.permission-time-end').val('');
+                                $('input.password-quyen-input.same-left-input').val('');
+                            } else {
+                                console.log(res);
+                            }
+                        });
+                    } else {
+                        console.log(res);
+                    }
+                });
+            });
+
         };
 
         citizenInfoButtonClickEvent() {
