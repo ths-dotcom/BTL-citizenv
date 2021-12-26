@@ -24,6 +24,10 @@ define(['user-classes/User', 'jquery'], function (User, $) {
                 this.printButtonClickEvent();
             }); //add printting citizen input form function
 
+            if (!this.declare_per) {
+                $(this.inputCitizenButton).addClass('divDisabled');
+            }
+
 
             $('div.body-left').append($(this.inputCitizenButton), $(this.printButton));
         };

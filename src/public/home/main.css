@@ -823,3 +823,8 @@ body {
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .divDisabled {
+    pointer-events: none;
+    color: grey;
+  }
