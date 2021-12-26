@@ -14,8 +14,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
                 '<tr>' +
                 `<th>Mã ${this.monitoring}</th>` +
                 `<th>Tên ${this.monitoring}</th>` +
-                '<th>Chỉ tiêu số dân</th>' +
-                '<th>Tổng số dân đã nhập</th>' +
                 '<th>Tiến độ nhập liệu</th>' +
                 '<th>Thao tác</th>' +
                 '</tr>' +
@@ -541,196 +539,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
                 '<div id="nganhnghechart_values" class="bieudo-chart" style="width: 50%; height: 400px;"></div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="contain-table trangchu-tabel">' +
-                '<div class="table-head-title">Danh sách thống kê tỉnh thành</div>' +
-                '<div class="body-table">' +
-                '<table style="width:100%">' +
-                '<thead>' +
-                '<tr>' +
-                '<th>' +
-                'Chọn tỉnh thành' +
-                '</th>' +
-                '<th>Mã tỉnh</th>' +
-                '<th>Tên tỉnh thành</th>' +
-                '<th>Tổng số dân</th>' +
-                '<th>Số trẻ em</th>' +
-                '<th>Số phụ nữ</th>' +
-                '<th>Số người cao tuổi</th>' +
-                '<th>Thao tác</th>' +
-                '</tr>' +
-                '</thead>' +
-                '<tbody>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>' +
-                '<input type="checkbox" class="custom-control-input" id="customcheck1">' +
-                '</td>' +
-                '<td>01</td>' +
-                '<td>Hà Nội</td>' +
-                '<td>200</td>' +
-                '<td>40</td>' +
-                '<td>100</td>' +
-                '<td>30</td>' +
-                '<td><button class="see-more-btn">Xem chi tiết</button></td>' +
-                '</tr>' +
-                '</tbody>' +
-                '</table>' +
-                '</div>' +
                 '</div>');
 
             this.fillRatioTabs();
@@ -839,15 +647,18 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
 
             //Ngành nghề
             google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(async () => {
 
-            function drawChart() {
+                const academicCitizenResponse = await axios({ // fill total ratio
+                    method: 'GET',
+                    url: '/api/analyst/academic-level'
+                });
 
                 var data = google.visualization.arrayToDataTable([
                     ['Task', 'Tỉ lệ'],
-                    ['Đại học', 2],
-                    ['Phổ thông', 2],
-                    ['Không có', 7]
+                    ['Đại học', academicCitizenResponse.data.academic.daihoc],
+                    ['Phổ thông', academicCitizenResponse.data.academic.phothong],
+                    ['Không có', academicCitizenResponse.data.academic.khong]
                 ]);
 
                 var options = {
@@ -857,7 +668,8 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
                 var chart = new google.visualization.PieChart(document.getElementById('nganhnghechart_values'));
 
                 chart.draw(data, options);
-            }
+
+            });
         };
     }
 });
