@@ -246,16 +246,10 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</select>' +
 
                 '<select name="huyen" id="body-address-distric">' +
-                '<option value="Thach That">Thach That</option>' +
-                '<option value="Ba vi">Ba Vi</option>' +
                 '</select>' +
                 '<select name="xa" id="body-address-commune">' +
-                '<option value="Tan Phu">Tan Phu</option>' +
-                '<option value="Cong Hoa">Cong Hoa</option>' +
                 '</select>' +
                 '<select name="thon" id="body-address-hamlet">' +
-                '<option value="ha hoa">Ha Hoa</option>' +
-                '<option value="yen quan">Yen Quan</option>' +
                 '</select>' +
                 '</div>' +
                 '</div>' +
@@ -274,54 +268,54 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<div class="search-body-code search-body-same">' +
                 '<div class="dan-code-left search-same-divinput">' +
                 '<div class="code-left-id">Số CMND / CCCD</div>' +
-                '<input type="text" class="id-left-input">' +
+                '<input type="text" class="id-left-input modify-id-left-input">' +
                 '</div>' +
                 '<div class="dan-code-mid search-same-divinput">' +
                 '<div class="code-mid-name">Họ và tên</div>' +
-                '<input type="text" class="name-left-input">' +
+                '<input type="text" class="name-left-input modify-name-left-input">' +
                 '</div>' +
                 '<div class="dan-code-right search-same-divinput">' +
                 '<div class="code-rigth-gender">Giới tính</div>' +
-                '<input type="radio" id="nam" name="gender" value="nam">' +
+                '<input type="radio" id="nam" name="gender" value="nam" class="gender-input modify-render-input">' +
                 '<label for="nam">Nam</label>' +
-                '<input type="radio" id="nu" name="gender" value="nữ">' +
+                '<input type="radio" id="nu" name="gender" value="nữ" class="gender-input modify-render-input">' +
                 '<label for="nu">Nữ</label>' +
                 '</div>' +
                 '</div>' +
                 '<div class="search-body-date search-body-same">' +
                 '<div class="dan-date-left search-same-divinput">' +
                 '<div class="date-left-date">Ngày sinh</div>' +
-                '<input type="date" class="date-left-input">' +
+                '<input type="date" class="date-left-input modify-date-left-input">' +
                 '</div>' +
                 '<div class="dan-date-mid search-same-divinput">' +
                 '<div class="date-mid-religion">Tôn giáo</div>' +
-                '<input type="text" class="religion-mid-input">' +
+                '<input type="text" class="religion-mid-input modify-religion-mid-input">' +
                 '</div>' +
                 '<div class="dan-date-right search-same-divinput">' +
                 '<div class="date-right-job">Nghề nghiệp</div>' +
-                '<input type="text" class="job-right-input">' +
+                '<input type="text" class="job-right-input modify-job-right-input">' +
                 '</div>' +
                 '</div>' +
                 '<div class="search-body-study search-body-same">' +
                 '<div class="dan-study-left search-same-divinput">' +
                 '<div class="study-left-text">Trình độ văn hóa</div>' +
-                '<input type="text" class="study-left-input">' +
+                '<input type="text" class="study-left-input modify-study-left-input">' +
                 '</div>' +
                 '</div>' +
                 '<div class="search-body-address search-body-same">' +
                 '<div class="body-address-text">Địa chỉ thường trú</div>' +
                 '<div class="body-address-content">' +
-                '<select name="tinh" id="body-address-city">' +
+                '<select name="tinh" id="body-address-city" class="body-address-city modify-body-address-city">' +
                 '<option selected disabled>Chon tinh thanh</option>' +
                 '</select>' +
                 '' +
-                '<select name="huyen" id="body-address-distric">' +
+                '<select name="huyen" id="body-address-distric" class="body-address-district modify-body-address-district">' +
                 '<option selected disabled>Chon quan huyen</option>' +
                 '</select>' +
-                '<select name="xa" id="body-address-commune">' +
+                '<select name="xa" id="body-address-commune" class="body-address-commune modify-body-address-commune">' +
                 '<option selected disabled>Chon phuong xa</option>' +
                 '</select>' +
-                '<select name="thon" id="body-address-hamlet">' +
+                '<select name="thon" id="body-address-hamlet" class="body-address-hamlet modify-body-address-hamlet">' +
                 '<option selected disabled>Chon thon ban</option>' +
                 '</select>' +
                 '</div>' +
@@ -338,17 +332,17 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '</div>' +
                 '<div class="body-address-content">' +
-                '<select name="tinh" id="body-address-city">' +
+                '<select name="tinh" id="body-address-city" class="body-address-city modify-body-address-city">' +
                 '<option selected disabled>Chọn tỉnh thành</option>' +
                 '</select>' +
                 '' +
-                '<select name="huyen" id="body-address-distric">' +
+                '<select name="huyen" id="body-address-distric" class="body-address-district modify-body-address-district">' +
                 '<option selected disabled>Chọn quận huyện</option>' +
                 '</select>' +
-                '<select name="xa" id="body-address-commune">' +
+                '<select name="xa" id="body-address-commune" class="body-address-commune modify-body-address-commune">' +
                 '<option selected disabled>Chọn phường xã</option>' +
                 '</select>' +
-                '<select name="thon" id="body-address-hamlet">' +
+                '<select name="thon" id="body-address-hamlet" class="body-address-hamlet modify-body-address-hamlet">' +
                 '<option selected disabled>Chọn thôn bản</option>' +
                 '</select>' +
                 '</div>' +
@@ -364,17 +358,17 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '</div>' +
                 '<div class="body-address-content">' +
-                '<select name="tinh" id="body-address-city">' +
+                '<select name="tinh" id="body-address-city" class="body-address-city modify-body-address-city">' +
                 '<option selected disabled>Chon tinh thanh</option>' +
                 '</select>' +
                 '' +
-                '<select name="huyen" id="body-address-distric">' +
+                '<select name="huyen" id="body-address-distric" class="body-address-district modify-body-address-district">' +
                 '<option selected disabled>Chon quan huyen</option>' +
                 '</select>' +
-                '<select name="xa" id="body-address-commune">' +
+                '<select name="xa" id="body-address-commune" class="body-address-commune modify-body-address-commune">' +
                 '<option selected disabled>Chon phuong xa</option>' +
                 '</select>' +
-                '<select name="thon" id="body-address-hamlet">' +
+                '<select name="thon" id="body-address-hamlet" class="body-address-hamlet modify-body-address-hamlet">' +
                 '<option selected disabled>Chon thon ban</option>' +
                 '</select>' +
                 '</div>' +
