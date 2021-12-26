@@ -23,7 +23,6 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
-                            '<button class="td-detail-btn">Chi tiết</button>' +
                             ' </td>' +
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
@@ -293,26 +292,11 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                         }
                         $('tbody').append('<tr>' +
                             `<td>${e.hamlet_id}</td>` +
-                            `<td><input type="text" class="input-can-change input-ward-change" value="${e.hamlet_id}"></td>` +
+                            `<td>${e.hamlet_name}</td>` +
                             `<td>${declarePer}` +
-                            '<button class="change-state-btn">Thay đổi</button>' +
                             '</td>' +
-                            '<td><input type="text" class="input-can-change input-time-start-change" value="14/12/2021"></td>' +
-                            '<td><input type="text" class="input-can-change input-time-end-change" value="22/12/2021"></td>' +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
+                            '<td>14/12/2021</td>' +
+                            '<td>22/12/2021</td>' +
                             '</tr>');
                     })
                 } else {

@@ -190,7 +190,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '<th>Quyền khai báo</th>' +
                 '<th>Thời điểm bắt đầu</th>' +
                 '<th>Thời điểm kết thúc</th>' +
-                '<th>Thao tác</th>' +
                 ' </tr>' +
                 '</thead>' +
                 '<tbody>' +
