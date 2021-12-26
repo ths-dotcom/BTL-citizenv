@@ -485,6 +485,23 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
 
         monitoringProgressButtonClickEvent() {
             super.monitoringProgressButtonClickEvent();
+
+            axios({ // find all cities and render it in city select
+                method: 'GET',
+                url: '/api/hamlet/progress'
+            }).then((res) => {
+                if (res.data.success) {
+                    $('div.this-top-left-number.same-top-left-number').text((res.data.progress.finish / (res.data.progress.all) * 100).toFixed(2) + '%');
+                    $('div.ratio-this-bottom-left').empty();
+                    $('div.ratio-this-bottom-left').append(// Da nhap
+                        `<span>${res.data.progress.finish} </span>` +
+                        '/ ' +
+                        // Tong
+                        `<span>${res.data.progress.all} </span>` +
+                        `${this.monitoring}`);
+                    $('div.ratio-this-bottom-right').text(this.username);
+                };
+            });
             this.fillTableOfHamlet();
         };
 
