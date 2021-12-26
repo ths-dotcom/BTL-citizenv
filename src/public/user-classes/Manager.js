@@ -446,63 +446,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 'Tiến độ nhập liệu' +
                 '</div>' +
                 '</div>' +
-
-                '<div class="content-ratio-same">' +
-                '<div class="ratio-same-top">' +
-                '<div class="ratio-same-top-left">' +
-                '<div class="best-top-left-number same-top-left-number">' +
-                '99%' +
-                '</div>' +
-                '<div class="best-top-left-text same-top-left-text">Đã hoàn thành</div>' +
-                '</div>' +
-                '<div class="ratio-best-top-right">' +
-                '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>' +
-                '' +
-                '</div>' +
-                '</div>' +
-                '<div class="ratio-best-bottom ratio-same-bottom">' +
-                '<div class="ratio-best-bottom-left">' +
-                '<span>12 </span>' +
-                '/ ' +
-                '<span>99 </span>' +
-                'NGƯỜI' +
-                '</div>' +
-                '<div class="ratio-best-bottom-right">' +
-                'Hà Nội' +
-                '</div>' +
-                '</div>' +
-                '<div class="best-bottom-description">' +
-                'Tiến độ nhanh nhất' +
-                '</div>' +
-                '</div>' +
-                '<div class="content-ratio-same">' +
-                '<div class="ratio-same-top">' +
-                '<div class="ratio-same-top-left">' +
-                '<div class="worst-top-left-number same-top-left-number">' +
-                '10%' +
-                '</div>' +
-                '<div class="worst-top-left-text same-top-left-text">Đã hoàn thành</div>' +
-                '</div>' +
-                '<div class="ratio-worst-top-right">' +
-                '<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>' +
-                '' +
-                '</div>' +
-                '</div>' +
-                '<div class="ratio-worst-bottom ratio-same-bottom">' +
-                '<div class="ratio-worst-bottom-left">' +
-                '<span>10 </span>' +
-                '/ ' +
-                '<span>99 </span>' +
-                'NGƯỜI' +
-                '</div>' +
-                '<div class="ratio-worst-bottom-right">' +
-                'Hồ Chí Minh' +
-                '</div>' +
-                '</div>' +
-                '<div class="worst-bottom-description">' +
-                'Tiến độ chậm nhất' +
-                '</div>' +
-                '</div>' +
                 '</div>');
 
             this.renderTableOfPlaces();
