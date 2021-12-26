@@ -406,7 +406,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
             function fillTableOfUser() {
                 let arrayOfDistrictUser = {};
-                axios({ // fill the table of city account
+                axios({ // fill the table of district account
                     method: 'GET',
                     url: '/api/user/district/list'
                 }).then((res) => {
