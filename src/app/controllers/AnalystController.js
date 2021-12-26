@@ -183,15 +183,15 @@ class AnalystController {
                     is_deleted: false
                 }
             });
-            let kid = [], adult = [], elder = [];
+            let khong = [], phothong = [], daihoc = [];
             for(let i = 0; i < 4; ++i) {
-                kid[i] = 0;
-                adult[i] = 0;
-                elder[i] = 0;
+                khong[i] = 0;
+                phothong[i] = 0;
+                daihoc[i] = 0;
             }
             // let now = new Date();
             for(let i of citizens) {
-                let age = getAgeDepend(i.dataValues.dob, 1990);
+                
                 if(age >= 0 && age <= 14) ++kid[0];
                 if(age >= 14 && age <= 64) ++adult[0];
                 if(age >= 65) ++elder[0];
@@ -293,8 +293,52 @@ class AnalystController {
     }
 
     // [GET] /api/analist/academic-level
-    academicLevel(req, res, next) {
-        
+    async academicLevel(req, res, next) {
+        if(!req.user.per_scope) {
+            const academic = await Citizen.findAll({
+                where: {
+                    is_deleted: false
+                }    
+            });
+            let khong = 0, phothong = 0, daihoc = 0;
+            for(let i of academic) {
+                if(i.dataValues.academic_level.to == 'Không') ++khong;
+                else if(i.dataValues.academic_level == 'Phổ thông') ++phothong;
+                else if(i.dataValues.academic_level == 'Đại học') ++daihoc;
+            }
+            res.json({
+                success: true,
+                academic : {
+                    khong,
+                    phothong,
+                    daihoc
+                }
+            })
+        }
+        else {
+            const academic = await Citizen.findAll({
+                where: {
+                    is_deleted: false,
+                    hamlet_id: {
+                        [Op.startsWith]: req.user.per_scope
+                    }
+                }    
+            });
+            let khong = 0, phothong = 0, daihoc = 0;
+            for(let i of academic) {
+                if(i.dataValues.academic_level.to == 'Không') ++khong;
+                else if(i.dataValues.academic_level == 'Phổ thông') ++phothong;
+                else if(i.dataValues.academic_level == 'Đại học') ++daihoc;
+            }
+            res.json({
+                success: true,
+                academic : {
+                    khong,
+                    phothong,
+                    daihoc
+                }
+            })
+        }
     }
 
 }
