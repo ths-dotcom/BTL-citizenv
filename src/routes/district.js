@@ -5,6 +5,7 @@ const districtController = require('../app/controllers/DistrictController');
 const check = require('../app/middlewares/check');
 const authorization = require('../app/middlewares/authorization');
 
+router.get('/progress', authorization.a12, districtController.progress);
 router.put('/:districtId', validator, authorization.a12, districtController.updateDistrict);
 
 router.delete('/:districtId', authorization.a12, districtController.deleteDistrict);

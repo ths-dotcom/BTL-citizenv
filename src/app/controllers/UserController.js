@@ -242,20 +242,78 @@ class UserController {
             .catch(err => next(createHttpError(500, err)));
     }
 
-    // [PATCH] /api/user/done/
-    done(req, res, next) {
-        User.update({is_done: true}, {
+    // [PATCH] /api/user/done/:hamletId
+    async done(req, res, next) {
+        const hamletDone = await User.update({is_done: true}, {
             where: {
-                id: req.user.id
+                per_scope: req.params.hamletId
+            }
+        })
+        let hamletId = req.params.hamletId.slice(0, -2);
+        let roleId = 5;
+        while(hamletId) {
+            const checks = await User.findAll({
+                where: {
+                    per_scope: {
+                        [Op.startsWith]: hamletId
+                    },
+                    role_id: roleId
+                }
+            })
+            for(let i of checks) {
+                if(!i.dataValues.is_done) {
+                    return res.json({
+                        success: true,
+                        message: 'Đã hoàn thành khai báo'
+                    });
+                }
+            }
+            // hamletId = hamletId.slice(0, -2);
+            --roleId;
+            // console.log({
+            //     hamletId,
+            //     roleId
+            // })
+            const done = await User.update({is_done: true}, {
+                where: {
+                    per_scope: {
+                        [Op.eq]: hamletId
+                    },
+                    role_id: roleId
+                }
+            })
+            hamletId = hamletId.slice(0, -2);
+        }
+        res.json({
+            success: true,
+            message: 'Đã hoàn thành khai báo'
+        });
+    }
+
+    // [POST] /api/user/set-date-range/:userId
+    async setDateRange(req, res, next) {
+        if(req.user.per_scope) {
+            let check_start = req.user.start_date <= req.body.data.start_date;
+            let check_end = req.user.end_date >= req.body.data.end_date;
+            if(!check_start || !check_end) {
+                return next(createHttpError(400, 'Ngày không trong phạm vi hợp lệ'));
+            }
+        }
+        User.update({
+            start_date: req.body.data.start_date,
+            end_date: req.body.data.end_date
+        }, {
+            where: {
+                id: req.params.userId
             }
         })
             .then(() => {
                 res.json({
                     success: true,
-                    message: 'Đã hoàn thành khai báo'
-                });
+                    message: 'Cập nhật ngày khai báo thành công'
+                })
             })
-            .catch(err => next(createHttpError(500, err)))
+            .catch(err => next(createHttpError(500, err)));
     }
 }
 

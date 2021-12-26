@@ -28,7 +28,7 @@ class CityController {
     }
 
     // [GET] api/district/list
-    listOfDistricts(req, res, next) {
+    async listOfDistricts(req, res, next) {
         if(!req.user.per_scope) {
             District.findAll({
                 where: {
@@ -50,10 +50,12 @@ class CityController {
                     is_deleted: false
                 }
             })
-                .then(districts => res.json({
-                    success: true,
-                    districts
-                }))
+                .then(districts => {
+                    res.json({
+                        success: true,
+                        districts
+                    })
+                })
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')))
         }
     }
@@ -69,10 +71,19 @@ class CityController {
                     is_deleted: false
                 }
             })
-                .then(districts => res.json({
-                    success: true,
-                    districts
-                }))
+                .then(districts => {
+                    // let cities = [];
+                    // for(let i of districts) {
+                    //     console.log(i.dataValues.city_id);
+                    //     cities.push(i.dataValues.city_id);
+                    // }
+                    // res.json(cities);
+                    // console.log(cities.join(' - '));
+                    res.json({
+                        success: true,
+                        districts
+                    })
+                })
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')));
         }
         else {
@@ -87,10 +98,19 @@ class CityController {
                     is_deleted: false
                 }
             })
-                .then(districts => res.json({
-                    success: true,
-                    districts
-                }))
+                .then(districts => {
+                    let cities = [];
+                    for(let i of districts) {
+                        console.log(i.dataValues.city_id);
+                        cities.push(i.dataValues.city_id);
+                    }
+                    res.json(cities);
+                    console.log(cities.join(' - '));
+                    res.json({
+                        success: true,
+                        districts
+                    })
+                })
                 .catch(err => next(createHttpError(500, 'Lỗi lấy danh sách huyện')));
         }
              
@@ -141,6 +161,32 @@ class CityController {
                     .catch(err => next(createHttpError(500, err)));
             })
             .catch(err => next(createHttpError(500, 'Lỗi hệ thống')));
+    }
+
+    // [GET] /api/district/progress
+    progress(req, res, next) {
+        User.findAll({
+            where: {
+                per_scope: {
+                    [Op.startsWith] : req.user.per_scope
+                },
+                role_id: 3
+            }
+        })
+            .then(users => {
+                let count = 0;
+                for(let i of users) {
+                    if(i.dataValues.is_done) ++count;
+                }
+                res.json({
+                    success: true,
+                    progress: {
+                        finish: count,
+                        all: users.length
+                    }
+                })
+            })
+            .catch(err => next(createHttpError(500, err)))
     }
 
 

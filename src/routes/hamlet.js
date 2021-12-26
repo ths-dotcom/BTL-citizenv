@@ -5,6 +5,7 @@ const hamletController = require('../app/controllers/HamletController');
 const check = require('../app/middlewares/check');
 const authorization = require('../app/middlewares/authorization');
 
+router.get('/progress', authorization.all, hamletController.progress);
 router.put('/:hamletId', validator, authorization.a123b1, hamletController.updateHamlet);
 
 router.delete('/:hamletId', authorization.a123b1, hamletController.deleteHamlet);

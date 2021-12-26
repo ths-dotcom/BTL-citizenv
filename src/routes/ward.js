@@ -5,6 +5,7 @@ const wardController = require('../app/controllers/WardController');
 const check = require('../app/middlewares/check');
 const authorization = require('../app/middlewares/authorization');
 
+router.get('/progress', authorization.a123, wardController.progress);
 router.put('/:wardId', validator, authorization.a123, wardController.updateWard);
 
 router.delete('/:wardId', authorization.a123, wardController.deleteWard);

@@ -5,6 +5,7 @@ const cityController = require('../app/controllers/CityController');
 const check = require('../app/middlewares/check');
 const authorization = require('../app/middlewares/authorization');
 
+router.get('/progress', authorization.a1, cityController.progress);
 router.put('/:cityId', validator, authorization.a1, cityController.updateCity);
 
 router.delete('/:cityId', authorization.a1, cityController.deleteCity);
