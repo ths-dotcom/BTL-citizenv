@@ -66,6 +66,7 @@ define(['jquery', 'axios'], function ($, axios) {
                 method: 'GET',
                 url: '/api/analyst/age'
             }).then((res) => {
+                console.log(res);
                 if (res.data.success) {
                     //fill kid ratio
                     $('div.children-top-left-number.same-top-left-number').empty();

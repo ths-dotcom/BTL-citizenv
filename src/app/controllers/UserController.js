@@ -315,6 +315,22 @@ class UserController {
             })
             .catch(err => next(createHttpError(500, err)));
     }
+
+    // [GET] /api/user/check-done/id
+    checkDone(req, res, next) {
+        User.findOne({
+            where: {
+                per_scope: req.params.id
+            }
+        })
+            .then(user => {
+                res.json({
+                    success: true,
+                    is_done: user.dataValues.is_done
+                })
+            })
+            .catch(err => next(createHttpError(500, err)));
+    }
 }
 
 module.exports = new UserController;

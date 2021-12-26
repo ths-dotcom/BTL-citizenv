@@ -284,24 +284,29 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                             '<th>' +
                             ' Mã tài khoản' +
                             '</th>' +
-                            ' <th>Tên tỉnh thành</th>' +
+                            ' <th>Tên thôn bản</th>' +
                             '<th>Quyền khai báo</th>' +
                             '<th>Thời điểm bắt đầu</th>' +
                             '<th>Thời điểm kết thúc</th>' +
                             '<th>Trạng thái hoàn thành</th>' +
                             ' </tr>'
                         );
-                        res.data.users.forEach((e) => {
+                        res.data.users.forEach((e, i) => {
                             arrayOfHamletUser[e.id] = e.declare_per;
                             let declarePer = '';
                             let start_date = '';
                             let end_date = '';
+                            let is_done = '';
                             if (e.declare_per) {
                                 declarePer = 'Đã kích hoạt';
                                 start_date = e.start_date;
                                 end_date = e.end_date;
                             } else {
                                 declarePer = 'Chưa kích hoạt';
+                            }
+                            console.log(e.is_done);
+                            if (e.is_done) {
+                                is_done = 'checked';
                             }
                             $('tbody').append('<tr>' +
                                 `<td>${e.id}</td>` +
@@ -312,10 +317,30 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                                 `<td>${end_date}</td>` +
                                 '<td>' +
                                 '<label class="switch">' +
-                                '<input type="checkbox">' +
+                                `<input type="checkbox" ${is_done}>` +
                                 '<span class="slider round"></span>' +
                                 '</label>' +
                                 '</tr>');
+
+                            //report complete event
+                            if (!is_done) {
+                                $('input[type=checkbox]:visible').eq(i).bind('change', () => {
+
+                                    axios({ // fill the table of hamlet account
+                                        method: 'PATCH',
+                                        url: `/api/user/done/${e.per_scope}`
+                                    }).then((res) => {
+                                        if (res.data.success) {
+                                            $('input[type=checkbox]:visible').eq(i).prop('disabled', true);
+                                        } else {
+                                            console.log(res);
+                                        }
+                                    })
+
+                                });
+                            } else {
+                                $('input[type=checkbox]:visible').eq(i).prop('disabled', true);
+                            }
                         })
                     } else {
                         console.log(res);

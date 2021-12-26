@@ -5,6 +5,7 @@ const authorization = require('../app/middlewares/authorization');
 const check = require('../app/middlewares/check');
 const UserController = require('../app/controllers/UserController');
 
+router.get('/check-done/:id', authorization.all, UserController.checkDone);
 router.post('/set-date-range/:userId', authorization.all, UserController.setDateRange);
 router.patch('/done/:hamletId', authorization.all, UserController.done);
 router.get('/hamlet/list', authorization.a123b1, UserController.userHamlet);
