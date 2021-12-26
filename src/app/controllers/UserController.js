@@ -292,7 +292,7 @@ class UserController {
 
     // [POST] /api/user/set-date-range/:userId
     async setDateRange(req, res, next) {
-        if(req.user.per_scope) {
+        if(!req.body.data.delete && req.user.per_scope) {
             let check_start = req.user.start_date <= req.body.data.start_date;
             let check_end = req.user.end_date >= req.body.data.end_date;
             if(!check_start || !check_end) {
