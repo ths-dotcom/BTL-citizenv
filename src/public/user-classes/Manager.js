@@ -14,8 +14,6 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
                 '<tr>' +
                 `<th>Mã ${this.monitoring}</th>` +
                 `<th>Tên ${this.monitoring}</th>` +
-                '<th>Chỉ tiêu số dân</th>' +
-                '<th>Tổng số dân đã nhập</th>' +
                 '<th>Tiến độ nhập liệu</th>' +
                 '<th>Thao tác</th>' +
                 '</tr>' +

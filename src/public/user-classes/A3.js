@@ -20,8 +20,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('tbody').append('<tr>' +
                             `<td>${e.ward_id}</td>` +
                             `<td><input type="text" class="input-can-change input-ward-change" value="${e.ward_name}"></td>` +
-                            `<td>chưa có</td>` +
-                            `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
                             ' </td>' +
                             '<td>' +
@@ -329,7 +327,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
 
             function fillTableOfUser() {
                 let arrayOfWardUser = {};
-                axios({ // fill the table of ward account
+                axios({ // fill the table of district account
                     method: 'GET',
                     url: '/api/user/ward/list'
                 }).then((res) => {
@@ -337,6 +335,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         $('tbody').empty();
                         res.data.users.forEach((e) => {
                             arrayOfWardUser[e.id] = e.declare_per;
+                            let declarePer = '';
                             let start_date = '';
                             let end_date = '';
                             if (e.declare_per) {
