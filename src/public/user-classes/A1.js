@@ -574,8 +574,12 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         res.data.users.forEach((e) => {
                             arrayOfCityUser[e.id] = e.declare_per;
                             let declarePer = '';
+                            let start_date = '';
+                            let end_date = '';
                             if (e.declare_per) {
                                 declarePer = 'Đã kích hoạt';
+                                start_date = e.start_date;
+                                end_date = e.end_date;
                             } else {
                                 declarePer = 'Chưa kích hoạt';
                             }
@@ -584,8 +588,8 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                                 `<td>${e.name.slice(3)}</td>` +
                                 `<td>${declarePer}` +
                                 '</td>' +
-                                `<td>${e.start_date}</td>` +
-                                `<td>${e.end_date}</td>` +
+                                `<td>${start_date}</td>` +
+                                `<td>${end_date}</td>` +
                                 '</tr>');
                         })
                     } else {
@@ -612,21 +616,21 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             });
 
             $('button.permission-foot-yes-btn.same-foot-yes-btn').on('click', () => {
-                axios({ // change declare permission of an user to true
-                    method: 'PATCH',
-                    url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
+                axios({ // change declare date
+                    method: 'POST',
+                    url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
+                    data: {
+                        data: {
+                            delete: false,
+                            start_date: $('input.permission-time-start').val(),
+                            end_date: $('input.permission-time-end').val()
+                        }
+                    }
                 }).then((res) => {
                     if (res.data.success) {
-                        axios({ // change declare date
-                            method: 'POST',
-                            url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
-                            data: {
-                                data: {
-                                    delete: false,
-                                    start_date: $('input.permission-time-start').val(),
-                                    end_date: $('input.permission-time-end').val()
-                                }
-                            }
+                        axios({ // change declare permission of an user to true
+                            method: 'PATCH',
+                            url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
                         }).then((res) => {
                             if (res.data.success) {
                                 arrayOfCityUser = fillTableOfUser();
@@ -647,21 +651,21 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             });
 
             $('button.permission-foot-block-btn').on('click', () => {
-                axios({ // change declare permission of an user to false
-                    method: 'PATCH',
-                    url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
+                axios({ // change declare date
+                    method: 'POST',
+                    url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
+                    data: {
+                        data: {
+                            delete: true,
+                            start_date: null,
+                            end_date: null
+                        }
+                    }
                 }).then((res) => {
                     if (res.data.success) {
-                        axios({ // change declare date
-                            method: 'POST',
-                            url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
-                            data: {
-                                data: {
-                                    delete: true,
-                                    start_date: null,
-                                    end_date: null
-                                }
-                            }
+                        axios({ // change declare permission of an user to false
+                            method: 'PATCH',
+                            url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
                         }).then((res) => {
                             if (res.data.success) {
                                 arrayOfCityUser = fillTableOfUser();
