@@ -247,8 +247,8 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                             url: '/api/user/signup',
                             data: {
                                 data: {
-                                    username: 'b1gov' + $('input.code-khaibao-input.same-left-input').val(),
-                                    name: 'B1 ' + $('input.name-khaibao-input.same-left-input').val(),
+                                    username: 'b2gov' + $('input.code-khaibao-input.same-left-input').val(),
+                                    name: 'B2 ' + $('input.name-khaibao-input.same-left-input').val(),
                                     password: $('input.password-khaibao-input.same-left-input').val()
                                 }
                             }
