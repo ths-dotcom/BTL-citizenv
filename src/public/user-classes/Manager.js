@@ -838,27 +838,26 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
             });
 
             //Ngành nghề
-            google.charts.load('current', { 'packages': ['bar'] });
-            google.charts.setOnLoadCallback(() => {
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
                 var data = google.visualization.arrayToDataTable([
-                    ['Year', 'Nông nghiệp', 'Công nghiệp', 'Dịch vụ'],
-                    ['1980', 1000, 400, 200],
-                    ['1990', 1170, 460, 250],
-                    ['2000', 660, 1120, 300],
-                    ['2010', 1030, 540, 350],
-                    ['2020', 1400, 1230, 400]
+                    ['Task', 'Tỉ lệ'],
+                    ['Đại học', 2],
+                    ['Phổ thông', 2],
+                    ['Không có', 7]
                 ]);
 
                 var options = {
-                    chart: {
-                        title: 'Dân số theo trình độ văn hóa',
-                        subtitle: 'Đại học, Công nghiệp và Dịch vụ: 1980-2020',
-                    }
+                    title: 'Dân số theo trình độ văn hóa'
                 };
 
-                var chart = new google.charts.Bar(document.getElementById('nganhnghechart_values'));
-                chart.draw(data, google.charts.Bar.convertOptions(options));
-            });
+                var chart = new google.visualization.PieChart(document.getElementById('nganhnghechart_values'));
+
+                chart.draw(data, options);
+            }
         };
     }
 });
