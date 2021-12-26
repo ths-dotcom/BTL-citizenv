@@ -262,11 +262,11 @@ define(['user-classes/Operator', 'jquery', 'axios'], function (Operator, $, axio
                 url: '/api/analyst/count'
             }).then((res) => {
                 if (res.data.success) {
-                    total = res.data.count;
+                    total = res.data.citizen.tong;
                     $('div.all-top-left-number.same-top-left-number').empty();
                     $('div.ratio-all-bottom-left').empty();
-                    $('div.all-top-left-number.same-top-left-number').append(`${res.data.count}`);
-                    $('div.ratio-all-bottom-left').append(`TỔNG <span> ${res.data.count} </span> NGƯỜI`);
+                    $('div.all-top-left-number.same-top-left-number').append(`${res.data.citizen.tong}`);
+                    $('div.ratio-all-bottom-left').append(`TỔNG <span> ${res.data.citizen.tong} </span> NGƯỜI`);
                 };
             });
 
@@ -278,9 +278,9 @@ define(['user-classes/Operator', 'jquery', 'axios'], function (Operator, $, axio
                     $('div.woman-top-left-number.same-top-left-number').empty();
                     $('div.ratio-woman-bottom-left').empty();
                     $('div.ratio-woman-bottom-right').empty();
-                    $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.nu}`);
-                    $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.nu} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-woman-bottom-right').append(`${((res.data.gender.nu / total) * 100).toFixed(2)}%`);
+                    $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.tong.countNu}`);
+                    $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.tong.countNu} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-woman-bottom-right').append(`${((res.data.gender.tong.countNu / total) * 100).toFixed(2)}%`);
                 };
             });
 
@@ -293,17 +293,17 @@ define(['user-classes/Operator', 'jquery', 'axios'], function (Operator, $, axio
                     $('div.children-top-left-number.same-top-left-number').empty();
                     $('div.ratio-children-bottom-left').empty();
                     $('div.ratio-children-bottom-right').empty();
-                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.kid}`);
-                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.kid} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-children-bottom-right').append(`${((res.data.age.kid / total) * 100).toFixed(2)}%`);
+                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.tong.countKid}`);
+                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.tong.countKid} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-children-bottom-right').append(`${((res.data.age.tong.countKid / total) * 100).toFixed(2)}%`);
 
                     //kill elderly ratio
                     $('div.old-top-left-number.same-top-left-number').empty();
                     $('div.ratio-old-bottom-left').empty();
                     $('div.ratio-old-bottom-right').empty();
-                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.elder}`);
-                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.elder} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-old-bottom-right').append(`${((res.data.age.elder / total) * 100).toFixed(2)}%`);
+                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.tong.countElder}`);
+                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.tong.countElder} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-old-bottom-right').append(`${((res.data.age.tong.countElder / total) * 100).toFixed(2)}%`);
                 };
             });
         };

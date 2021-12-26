@@ -495,17 +495,17 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('div.children-top-left-number.same-top-left-number').empty();
                     $('div.ratio-children-bottom-left').empty();
                     $('div.ratio-children-bottom-right').empty();
-                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.kid}`);
-                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.kid} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-children-bottom-right').append(`${((res.data.age.kid / total) * 100).toFixed(2)}%`);
+                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.tong.countKid}`);
+                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.tong.countKid} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-children-bottom-right').append(`${((res.data.age.tong.countKid / total) * 100).toFixed(2)}%`);
 
                     //kill elderly ratio
                     $('div.old-top-left-number.same-top-left-number').empty();
                     $('div.ratio-old-bottom-left').empty();
                     $('div.ratio-old-bottom-right').empty();
-                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.elder}`);
-                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.elder} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-old-bottom-right').append(`${((res.data.age.elder / total) * 100).toFixed(2)}%`);
+                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.tong.countElder}`);
+                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.tong.countElder} </span> / <span>${total} </span> NGƯỜI`);
+                    $('div.ratio-old-bottom-right').append(`${((res.data.age.tong.countElder / total) * 100).toFixed(2)}%`);
                 };
             });
         };
