@@ -45,46 +45,50 @@ define(['jquery', 'axios'], function ($, axios) {
                     $('div.ratio-all-bottom-left').empty();
                     $('div.all-top-left-number.same-top-left-number').append(`${res.data.citizen.tong}`);
                     $('div.ratio-all-bottom-left').append(`TỔNG <span> ${res.data.citizen.tong} </span> NGƯỜI`);
+                    total = res.data.citizen.tong;
+
+                    axios({ // fill women ratio
+                        method: 'GET',
+                        url: '/api/analyst/gender'
+                    }).then((res) => {
+                        if (res.data.success) {
+                            $('div.woman-top-left-number.same-top-left-number').empty();
+                            $('div.ratio-woman-bottom-left').empty();
+                            $('div.ratio-woman-bottom-right').empty();
+                            $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.tong.countNu}`);
+                            $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.tong.countNu} </span> / <span>${total} </span> NGƯỜI`);
+                            $('div.ratio-woman-bottom-right').append(`${((res.data.gender.tong.countNu / total) * 100).toFixed(2)}%`);
+                        };
+                    });
+
+                    axios({ // fill kid and elderly ratio
+                        method: 'GET',
+                        url: '/api/analyst/age'
+                    }).then((res) => {
+                        console.log(res);
+                        if (res.data.success) {
+                            //fill kid ratio
+                            $('div.children-top-left-number.same-top-left-number').empty();
+                            $('div.ratio-children-bottom-left').empty();
+                            $('div.ratio-children-bottom-right').empty();
+                            $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.tong.countKid}`);
+                            $('div.ratio-children-bottom-left').append(`<span>${res.data.age.tong.countKid} </span> / <span>${total} </span> NGƯỜI`);
+                            $('div.ratio-children-bottom-right').append(`${((res.data.age.tong.countKid / total) * 100).toFixed(2)}%`);
+
+                            //kill elderly ratio
+                            $('div.old-top-left-number.same-top-left-number').empty();
+                            $('div.ratio-old-bottom-left').empty();
+                            $('div.ratio-old-bottom-right').empty();
+                            $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.tong.countElder}`);
+                            $('div.ratio-old-bottom-left').append(`<span>${res.data.age.tong.countElder} </span> / <span>${total} </span> NGƯỜI`);
+                            $('div.ratio-old-bottom-right').append(`${((res.data.age.tong.countElder / total) * 100).toFixed(2)}%`);
+                        };
+                    });
                 };
             });
 
-            axios({ // fill women ratio
-                method: 'GET',
-                url: '/api/analyst/gender'
-            }).then((res) => {
-                if (res.data.success) {
-                    $('div.woman-top-left-number.same-top-left-number').empty();
-                    $('div.ratio-woman-bottom-left').empty();
-                    $('div.ratio-woman-bottom-right').empty();
-                    $('div.woman-top-left-number.same-top-left-number').append(`${res.data.gender.tong.countNu}`);
-                    $('div.ratio-woman-bottom-left').append(`<span>${res.data.gender.tong.countNu} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-woman-bottom-right').append(`${((res.data.gender.tong.countNu / total) * 100).toFixed(2)}%`);
-                };
-            });
 
-            axios({ // fill kid and elderly ratio
-                method: 'GET',
-                url: '/api/analyst/age'
-            }).then((res) => {
-                console.log(res);
-                if (res.data.success) {
-                    //fill kid ratio
-                    $('div.children-top-left-number.same-top-left-number').empty();
-                    $('div.ratio-children-bottom-left').empty();
-                    $('div.ratio-children-bottom-right').empty();
-                    $('div.children-top-left-number.same-top-left-number').append(`${res.data.age.tong.countKid}`);
-                    $('div.ratio-children-bottom-left').append(`<span>${res.data.age.tong.countKid} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-children-bottom-right').append(`${((res.data.age.tong.countKid / total) * 100).toFixed(2)}%`);
 
-                    //kill elderly ratio
-                    $('div.old-top-left-number.same-top-left-number').empty();
-                    $('div.ratio-old-bottom-left').empty();
-                    $('div.ratio-old-bottom-right').empty();
-                    $('div.old-top-left-number.same-top-left-number').append(`${res.data.age.tong.countElder}`);
-                    $('div.ratio-old-bottom-left').append(`<span>${res.data.age.tong.countElder} </span> / <span>${total} </span> NGƯỜI`);
-                    $('div.ratio-old-bottom-right').append(`${((res.data.age.tong.countElder / total) * 100).toFixed(2)}%`);
-                };
-            });
         };
 
         resetSelectedButton() {
