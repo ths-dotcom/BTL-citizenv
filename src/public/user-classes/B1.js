@@ -278,6 +278,19 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                 }).then((res) => {
                     if (res.data.success) {
                         $('tbody').empty();
+                        $('thead').empty();
+                        $('thead').append(
+                            '<tr>' +
+                            '<th>' +
+                            ' Mã tài khoản' +
+                            '</th>' +
+                            ' <th>Tên tỉnh thành</th>' +
+                            '<th>Quyền khai báo</th>' +
+                            '<th>Thời điểm bắt đầu</th>' +
+                            '<th>Thời điểm kết thúc</th>' +
+                            '<th>Trạng thái hoàn thành</th>' +
+                            ' </tr>'
+                        );
                         res.data.users.forEach((e) => {
                             arrayOfHamletUser[e.id] = e.declare_per;
                             let declarePer = '';
@@ -293,6 +306,11 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                                 '</td>' +
                                 `<td>${e.start_date}</td>` +
                                 `<td>${e.end_date}</td>` +
+                                '<td>' +
+                                '<label class="switch">' +
+                                '<input type="checkbox">' +
+                                '<span class="slider round"></span>' +
+                                '</label>' +
                                 '</tr>');
                         })
                     } else {
