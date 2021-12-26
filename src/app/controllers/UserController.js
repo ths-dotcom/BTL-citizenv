@@ -289,6 +289,32 @@ class UserController {
             message: 'Đã hoàn thành khai báo'
         });
     }
+
+    // [POST] /api/user/set-date-range/:userId
+    async setDateRange(req, res, next) {
+        if(req.user.per_scope) {
+            let check_start = req.user.start_date <= req.body.data.start_date;
+            let check_end = req.user.end_date >= req.body.data.end_date;
+            if(!check_start || !check_end) {
+                return next(createHttpError(400, 'Ngày không trong phạm vi hợp lệ'));
+            }
+        }
+        User.update({
+            start_date: req.body.data.start_date,
+            end_date: req.body.data.end_date
+        }, {
+            where: {
+                id: req.params.userId
+            }
+        })
+            .then(() => {
+                res.json({
+                    success: true,
+                    message: 'Cập nhật ngày khai báo thành công'
+                })
+            })
+            .catch(err => next(createHttpError(500, err)));
+    }
 }
 
 module.exports = new UserController;
