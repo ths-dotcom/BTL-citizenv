@@ -276,9 +276,9 @@ define(['user-classes/User', 'jquery', 'lib/gstatic'], function (User, $, charta
                 '</div>' +
                 '<div class="dan-code-right search-same-divinput">' +
                 '<div class="code-rigth-gender">Giới tính</div>' +
-                '<input type="radio" id="nam" name="gender" value="nam" class="gender-input modify-render-input">' +
+                '<input type="radio" id="nam" name="gender2" value="nam" class="gender-input modify-render-input">' +
                 '<label for="nam">Nam</label>' +
-                '<input type="radio" id="nu" name="gender" value="nữ" class="gender-input modify-render-input">' +
+                '<input type="radio" id="nu" name="gender2" value="nữ" class="gender-input modify-render-input">' +
                 '<label for="nu">Nữ</label>' +
                 '</div>' +
                 '</div>' +
