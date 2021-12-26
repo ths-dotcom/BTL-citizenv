@@ -563,32 +563,106 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
         creatingAccountButtonClickEvent() {
             super.creatingAccountButtonClickEvent();
 
-            axios({ // fill the table of city
-                method: 'GET',
-                url: '/api/user/city/list'
-            }).then((res) => {
-                if (res.data.success) {
-                    $('tbody').empty();
-                    res.data.users.forEach((e) => {
-                        let declarePer = '';
-                        if (e.declare_per) {
-                            declarePer = 'Đã kích hoạt';
-                        } else {
-                            declarePer = 'Chưa kích hoạt';
-                        }
-                        $('tbody').append('<tr>' +
-                            `<td>${e.id}</td>` +
-                            `<td>${e.name.slice(3)}</td>` +
-                            `<td>${declarePer}` +
-                            '</td>' +
-                            '<td>14/12/2021</td>' +
-                            '<td>22/12/2021</td>' +
-                            '</tr>');
-                    })
+            function fillTableOfUser() {
+                let arrayOfCityUser = {};
+                axios({ // fill the table of city account
+                    method: 'GET',
+                    url: '/api/user/city/list'
+                }).then((res) => {
+                    if (res.data.success) {
+                        $('tbody').empty();
+                        res.data.users.forEach((e) => {
+                            arrayOfCityUser[e.id] = e.declare_per;
+                            let declarePer = '';
+                            if (e.declare_per) {
+                                declarePer = 'Đã kích hoạt';
+                            } else {
+                                declarePer = 'Chưa kích hoạt';
+                            }
+                            $('tbody').append('<tr>' +
+                                `<td>${e.id}</td>` +
+                                `<td>${e.name.slice(3)}</td>` +
+                                `<td>${declarePer}` +
+                                '</td>' +
+                                `<td>${e.start_date}</td>` +
+                                `<td>${e.end_date}</td>` +
+                                '</tr>');
+                        })
+                    } else {
+                        console.log(res);
+                    }
+                });
+                return arrayOfCityUser;
+            }
+            let arrayOfCityUser = fillTableOfUser();
+
+
+            $('input.name-quyen-input.same-left-input').on('change', () => {
+                if (arrayOfCityUser[$('input.name-quyen-input.same-left-input').val()] == true) {
+                    $('button.permission-foot-block-btn').show();
+                    $('button.permission-foot-yes-btn.same-foot-yes-btn').hide();
+                } else if (arrayOfCityUser[$('input.name-quyen-input.same-left-input').val()] == false) {
+                    $('button.permission-foot-block-btn').hide();
+                    $('button.permission-foot-yes-btn.same-foot-yes-btn').show();
                 } else {
-                    console.log(res);
+                    console.log(arrayOfCityUser[$('input.name-quyen-input.same-left-input').val()]);
+                    $('button.permission-foot-block-btn').hide();
+                    $('button.permission-foot-yes-btn.same-foot-yes-btn').hide();
                 }
-            })
+            });
+
+            $('button.permission-foot-yes-btn.same-foot-yes-btn').on('click', () => {
+                axios({ // change declare permission of an user to true
+                    method: 'PATCH',
+                    url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
+                }).then((res) => {
+                    if (res.data.success) {
+                        axios({ // change declare date
+                            method: 'POST',
+                            url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
+                            data: {
+                                data: {
+                                    start_date: $('input.permission-time-start').val(),
+                                    end_date: $('input.permission-time-end').val()
+                                }
+                            }
+                        }).then((res) => {
+                            if (res.data.success) {
+                                arrayOfCityUser = fillTableOfUser();
+                                $('button.permission-foot-block-btn').show();
+                                $('button.permission-foot-yes-btn.same-foot-yes-btn').show();
+                                $('input.name-quyen-input.same-left-input').val('');
+                                $('input.permission-time-start').val('');
+                                $('input.permission-time-end').val('');
+                                $('input.password-quyen-input.same-left-input').val('');
+                            } else {
+                                console.log(res);
+                            }
+                        });
+                    } else {
+                        console.log(res);
+                    }
+                });
+            });
+
+            $('button.permission-foot-block-btn').on('click', () => {
+                axios({ // change declare permission of an user to false
+                    method: 'PATCH',
+                    url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
+                }).then((res) => {
+                    if (res.data.success) {
+                        arrayOfCityUser = fillTableOfUser();
+                        $('button.permission-foot-block-btn').show();
+                        $('button.permission-foot-yes-btn.same-foot-yes-btn').show();
+                        $('input.name-quyen-input.same-left-input').val('');
+                        $('input.permission-time-start').val('');
+                        $('input.permission-time-end').val('');
+                        $('input.password-quyen-input.same-left-input').val('');
+                    } else {
+                        console.log(res);
+                    }
+                });
+            });
 
         };
 
