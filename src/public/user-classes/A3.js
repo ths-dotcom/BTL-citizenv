@@ -219,7 +219,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 '</td>' +
                 `<td>${e.permanent_address}</td>` +
                 '<td>' +
-                '<button class="td-see-btn td-same-btn citizen-see-btn">' +
+                '<button class="td-delete-btn td-same-btn citizen-see-btn">' +
                 '<i class="fa fa-eye" aria-hidden="true"></i>' +
                 '<span>Xem chi tiết</span>' +
                 '</button>' +
@@ -227,7 +227,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                 '</tr>');
 
             // view citizen event
-            $('button.td-see-btn.td-same-btn.citizen-see-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+            $('button.td-delete-btn.td-same-btn.citizen-see-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
                 $('#right-content-search-search').hide();
                 $('#right-content-search-modify').show();
 
@@ -236,22 +236,30 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     url: `/api/citizen/detail/${e.citizen_id}`,
                 }).then((res) => {
                     if (res.data.success) {
-                        $('input.id-left-input').val(res.data.citizen.number);
-                        $('input.name-left-input').val(res.data.citizen.full_name);
-                        $('input.date-left-input').val(res.data.citizen.dob);
-                        $('input.religion-mid-input').val(res.data.citizen.religion);
-                        $('input.job-right-input').val(res.data.citizen.job);
-                        $('input.study-left-input').val(res.data.citizen.academic_level);
-                        $('input:radio[name=gender]').val([res.data.citizen.gender]);
-
+                        $('input.id-left-input.modify-id-left-input').val(res.data.citizen.number);
+                        $('input.name-left-input.modify-name-left-input').val(res.data.citizen.full_name);
+                        $('input.date-left-input.modify-date-left-input').val(res.data.citizen.dob);
+                        $('input.religion-mid-input.modify-religion-mid-input').val(res.data.citizen.religion);
+                        $('input.job-right-input.modify-job-right-input').val(res.data.citizen.job);
+                        $('input.study-left-input.modify-study-left-input').val(res.data.citizen.academic_level);
+                        $('input.gender-input.modify-render-input').val([res.data.citizen.gender]);
                         const arrayOfhome_address = res.data.citizen.home_address.split(' - ');
-                        $('[id=body-address-city]').append(`<option selected value="${arrayOfhome_address[3]}">${arrayOfhome_address[3]}</option>`);
-                        $('[id=body-address-distric]').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
-                        $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
-                        $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
+                        $('select.body-address-city.modify-body-address-city').append(`<option selected value="${arrayOfhome_address[3]}">${arrayOfhome_address[3]}</option>`);
+                        // $('[id=body-address-city]').append(`<option selected value="${arrayOfhome_address[3]}">${arrayOfhome_address[3]}</option>`);
+                        $('select.body-address-district.modify-body-address-district').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
+                        // $('[id=body-address-distric]').append(`<option selected value="${arrayOfhome_address[2]}">${arrayOfhome_address[2]}</option>`);
+                        $('select.body-address-commune.modify-body-address-commune').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
+                        // $('[id=body-address-commune]').append(`<option selected value="${arrayOfhome_address[1]}">${arrayOfhome_address[1]}</option>`);
+                        $('select.body-address-hamlet.modify-body-address-hamlet').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
+                        // $('[id=body-address-hamlet]').append(`<option selected value="${arrayOfhome_address[0]}">${arrayOfhome_address[0]}</option>`);
                     };
                 })
-                
+
+                // close view citizen
+                $('button.goback-foot-btn').bind('click', () => { // add index to the event to prevent overlap with other modify button
+                    $('#right-content-search-modify').hide();
+                    $('#right-content-search-search').show();
+                });
             });
         };
 
