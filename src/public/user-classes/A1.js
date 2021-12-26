@@ -622,6 +622,7 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
                             data: {
                                 data: {
+                                    delete: false,
                                     start_date: $('input.permission-time-start').val(),
                                     end_date: $('input.permission-time-end').val()
                                 }
@@ -651,13 +652,29 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     url: `/api/user/declare-permission/${$('input.name-quyen-input.same-left-input').val()}`
                 }).then((res) => {
                     if (res.data.success) {
-                        arrayOfCityUser = fillTableOfUser();
-                        $('button.permission-foot-block-btn').show();
-                        $('button.permission-foot-yes-btn.same-foot-yes-btn').show();
-                        $('input.name-quyen-input.same-left-input').val('');
-                        $('input.permission-time-start').val('');
-                        $('input.permission-time-end').val('');
-                        $('input.password-quyen-input.same-left-input').val('');
+                        axios({ // change declare date
+                            method: 'POST',
+                            url: `/api/user/set-date-range/${$('input.name-quyen-input.same-left-input').val()}`,
+                            data: {
+                                data: {
+                                    delete: true,
+                                    start_date: '',
+                                    end_date: ''
+                                }
+                            }
+                        }).then((res) => {
+                            if (res.data.success) {
+                                arrayOfCityUser = fillTableOfUser();
+                                $('button.permission-foot-block-btn').show();
+                                $('button.permission-foot-yes-btn.same-foot-yes-btn').show();
+                                $('input.name-quyen-input.same-left-input').val('');
+                                $('input.permission-time-start').val('');
+                                $('input.permission-time-end').val('');
+                                $('input.password-quyen-input.same-left-input').val('');
+                            } else {
+                                console.log(res);
+                            }
+                        });
                     } else {
                         console.log(res);
                     }
