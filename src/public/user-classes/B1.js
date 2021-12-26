@@ -323,20 +323,24 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
                                 '</tr>');
 
                             //report complete event
-                            $('input[type=checkbox]:visible').eq(i).bind('change', () => {
-                                if (!is_done) {
+                            if (!is_done) {
+                                $('input[type=checkbox]:visible').eq(i).bind('change', () => {
+
                                     axios({ // fill the table of hamlet account
                                         method: 'PATCH',
-                                        url: `/api/user/done/${e.id}`
+                                        url: `/api/user/done/${e.per_scope}`
                                     }).then((res) => {
                                         if (res.data.success) {
-                                            fillTableOfUser();
+                                            $('input[type=checkbox]:visible').eq(i).prop('disabled', true);
                                         } else {
                                             console.log(res);
                                         }
                                     })
-                                }
-                            });
+
+                                });
+                            } else {
+                                $('input[type=checkbox]:visible').eq(i).prop('disabled', true);
+                            }
                         })
                     } else {
                         console.log(res);
