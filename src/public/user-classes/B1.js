@@ -238,26 +238,39 @@ define(['user-classes/Manager', 'user-classes/Operator', 'jquery', 'axios'], fun
             super.creatingPlaceButtonClickEvent();
             this.fillTableOfHamlet();
 
-            $('button.code-foot-yes-btn.same-foot-yes-btn').on('click', () => { // post Hamlet event
+            $('button.code-foot-yes-btn.same-foot-yes-btn').on('click', () => { // post city event
                 axios({
                     method: 'POST',
                     url: '/api/hamlet',
                     data: {
                         data: {
                             hamlet_name: $('input.name-khaibao-input.same-left-input').val(),
-                            hamlet_id: $('input.code-khaibao-input.same-left-input').val(),
-                            password: $('input.password-khaibao-input.same-left-input').val()
+                            hamlet_id: $('input.code-khaibao-input.same-left-input').val()
                         }
                     }
                 }).then((res) => {
-                    $('input.name-khaibao-input.same-left-input').val("");
-                    $('input.code-khaibao-input.same-left-input').val("");
-                    $('input.password-khaibao-input.same-left-input').val("");
                     if (res.data.success) {
                         this.fillTableOfHamlet();
+
+                        axios({
+                            method: 'POST',
+                            url: '/api/user/signup',
+                            data: {
+                                data: {
+                                    username: 'b1gov' + $('input.code-khaibao-input.same-left-input').val(),
+                                    name: 'B1 ' + $('input.name-khaibao-input.same-left-input').val(),
+                                    password: $('input.password-khaibao-input.same-left-input').val()
+                                }
+                            }
+                        }).then((res) => {
+                            if (!res.data.success) console.log(res);
+                        });
                     } else {
                         console.log(userResponse);
                     }
+                    $('input.name-khaibao-input.same-left-input').val("");
+                    $('input.code-khaibao-input.same-left-input').val("");
+                    $('input.password-khaibao-input.same-left-input').val("");
                 })
             });
         };

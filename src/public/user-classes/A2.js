@@ -367,26 +367,39 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             super.creatingPlaceButtonClickEvent();
             this.fillTableOfDistrict();
 
-            $('button.code-foot-yes-btn.same-foot-yes-btn').on('click', () => { // post District event
+            $('button.code-foot-yes-btn.same-foot-yes-btn').on('click', () => { // post city event
                 axios({
                     method: 'POST',
                     url: '/api/district',
                     data: {
                         data: {
                             district_name: $('input.name-khaibao-input.same-left-input').val(),
-                            district_id: $('input.code-khaibao-input.same-left-input').val(),
-                            password: $('input.password-khaibao-input.same-left-input').val()
+                            district_id: $('input.code-khaibao-input.same-left-input').val()
                         }
                     }
                 }).then((res) => {
-                    $('input.name-khaibao-input.same-left-input').val("");
-                    $('input.code-khaibao-input.same-left-input').val("");
-                    $('input.password-khaibao-input.same-left-input').val("");
                     if (res.data.success) {
                         this.fillTableOfDistrict();
+
+                        axios({
+                            method: 'POST',
+                            url: '/api/user/signup',
+                            data: {
+                                data: {
+                                    username: 'a3gov' + $('input.code-khaibao-input.same-left-input').val(),
+                                    name: 'A3 ' + $('input.name-khaibao-input.same-left-input').val(),
+                                    password: $('input.password-khaibao-input.same-left-input').val()
+                                }
+                            }
+                        }).then((res) => {
+                            if (!res.data.success) console.log(res);
+                        });
                     } else {
                         console.log(userResponse);
                     }
+                    $('input.name-khaibao-input.same-left-input').val("");
+                    $('input.code-khaibao-input.same-left-input').val("");
+                    $('input.password-khaibao-input.same-left-input').val("");
                 })
             });
         };
