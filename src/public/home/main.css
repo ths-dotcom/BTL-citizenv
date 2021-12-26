@@ -332,6 +332,9 @@ body {
 .worst-top-left-number, .worst-bottom-description{
     color: red;
 }
+.this-top-left-number, .this-bottom-description{
+    color: #00918c;
+}
 
 .same-top-left-text{
     font-size: 20px;
@@ -359,6 +362,11 @@ body {
     font-size: 30px;
     color: red;
 }
+.ratio-this-top-right i{
+    font-size: 30px;
+    color: #00918c;
+}
+
 .ratio-same-bottom{
     display: flex;
     align-items: center;
@@ -382,6 +390,10 @@ body {
 .ratio-worst-bottom{
     border-top: 4px solid red;
 }
+.ratio-this-bottom{
+    border-top: 4px solid #00918c;
+}
+
 .right-content-all{
     display: flex;
     justify-content: space-between;
@@ -601,9 +613,10 @@ body {
 .right-content-progress{
     display: flex;
     margin: 0 6px;
+    justify-content: space-around;
 }
 
-.best-bottom-description, .worst-bottom-description{
+.best-bottom-description, .worst-bottom-description, .this-bottom-description{
     display: flex;
     justify-content: center;
     margin-top: 8px;

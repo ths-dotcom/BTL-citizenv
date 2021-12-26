@@ -23,7 +23,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
-                            '<button class="td-detail-btn">Chi tiết</button>' +
                             ' </td>' +
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
@@ -100,7 +99,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
-                            '<button class="td-detail-btn">Chi tiết</button>' +
                             ' </td>' +
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
@@ -176,7 +174,6 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                             `<td>chưa có</td>` +
                             `<td>chưa có</td>` +
                             '<td>Chưa hoàn thành' +
-                            '<button class="td-detail-btn">Chi tiết</button>' +
                             ' </td>' +
                             '<td>' +
                             '<button class="td-see-btn td-same-btn">' +
@@ -367,26 +364,39 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
             super.creatingPlaceButtonClickEvent();
             this.fillTableOfDistrict();
 
-            $('button.code-foot-yes-btn.same-foot-yes-btn').on('click', () => { // post District event
+            $('button.code-foot-yes-btn.same-foot-yes-btn').on('click', () => { // post city event
                 axios({
                     method: 'POST',
                     url: '/api/district',
                     data: {
                         data: {
                             district_name: $('input.name-khaibao-input.same-left-input').val(),
-                            district_id: $('input.code-khaibao-input.same-left-input').val(),
-                            password: $('input.password-khaibao-input.same-left-input').val()
+                            district_id: $('input.code-khaibao-input.same-left-input').val()
                         }
                     }
                 }).then((res) => {
-                    $('input.name-khaibao-input.same-left-input').val("");
-                    $('input.code-khaibao-input.same-left-input').val("");
-                    $('input.password-khaibao-input.same-left-input').val("");
                     if (res.data.success) {
                         this.fillTableOfDistrict();
+
+                        axios({
+                            method: 'POST',
+                            url: '/api/user/signup',
+                            data: {
+                                data: {
+                                    username: 'a3gov' + $('input.code-khaibao-input.same-left-input').val(),
+                                    name: 'A3 ' + $('input.name-khaibao-input.same-left-input').val(),
+                                    password: $('input.password-khaibao-input.same-left-input').val()
+                                }
+                            }
+                        }).then((res) => {
+                            if (!res.data.success) console.log(res);
+                        });
                     } else {
                         console.log(userResponse);
                     }
+                    $('input.name-khaibao-input.same-left-input').val("");
+                    $('input.code-khaibao-input.same-left-input').val("");
+                    $('input.password-khaibao-input.same-left-input').val("");
                 })
             });
         };
@@ -408,26 +418,11 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                         }
                         $('tbody').append('<tr>' +
                             `<td>${e.district_id}</td>` +
-                            `<td><input type="text" class="input-can-change input-district-change" value="${e.district_name}"></td>` +
+                            `<td>${e.district_name}</td>` +
                             `<td>${declarePer}` +
-                            '<button class="change-state-btn">Thay đổi</button>' +
                             '</td>' +
-                            '<td><input type="text" class="input-can-change input-time-start-change" value="14/12/2021"></td>' +
-                            '<td><input type="text" class="input-can-change input-time-end-change" value="22/12/2021"></td>' +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
+                            '<td>14/12/2021</td>' +
+                            '<td>22/12/2021</td>' +
                             '</tr>');
                     })
                 } else {
