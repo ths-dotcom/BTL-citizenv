@@ -32,11 +32,19 @@ class AnalystController {
             let count = 0, countEach = [];
             for(let i = 0; i < 4; ++i) countEach[i] = 0;
             for(let i of citizens) {
-                let year = getYear(i.)
+                let year = getYear(i.dataValues.dob);
+                if(year <= 1990) ++countEach[0];
+                if(year <= 2000) ++countEach[1];
+                if(year <= 2010) ++countEach[2];
+                if(year <= 2020) ++countEach[3];
             }
+            for(let i = 0; i < 4; ++i) count += countEach[i];
             res.json({
                 success: true,
-                count: citizens.length
+                citizen: {
+                    tong: countEach[3],
+                    countEach
+                }
             })
         }
         else {
@@ -48,9 +56,22 @@ class AnalystController {
                     is_deleted: false
                 }
             });
+            let count = 0, countEach = [];
+            for(let i = 0; i < 4; ++i) countEach[i] = 0;
+            for(let i of citizens) {
+                let year = getYear(i.dataValues.dob);
+                if(year <= 1990) ++countEach[0];
+                if(year <= 2000) ++countEach[1];
+                if(year <= 2010) ++countEach[2];
+                if(year <= 2020) ++countEach[3];
+            }
+            for(let i = 0; i < 4; ++i) count += countEach[i];
             res.json({
                 success: true,
-                count: citizens.length
+                citizen: {
+                    tong: countEach[3],
+                    countEach
+                }
             })
         }
     }
@@ -72,16 +93,16 @@ class AnalystController {
                 if(i.dataValues.gender == 'nữ' ) {
                     let year = getYear(i.dataValues.dob);
                     if(year <= 1990) ++nu[0];
-                    else if(year <= 2000) ++nu[1];
-                    else if(year <= 2010) ++nu[2];
-                    else if(year <= 2020) ++nu[3];
+                    if(year <= 2000) ++nu[1];
+                    if(year <= 2010) ++nu[2];
+                    if(year <= 2020) ++nu[3];
                 }
                 else if(i.dataValues.gender == 'nam') {
                     let year = getYear(i.dataValues.dob);
                     if(year <= 1990) ++nam[0]
-                    else if(year <= 2000) ++nam[1];
-                    else if(year <= 2010) ++nam[2];
-                    else if(year <= 2020) ++nam[3];
+                    if(year <= 2000) ++nam[1];
+                    if(year <= 2010) ++nam[2];
+                    if(year <= 2020) ++nam[3];
                 }
             }
             let countNam = 0, countNu = 0;
@@ -93,8 +114,8 @@ class AnalystController {
                 success: true,
                 gender: {
                     tong: {
-                        countNam,
-                        countNu
+                        countNam: nam[3],
+                        countNu: nu[3]
                     },
                     nam,
                     nu
@@ -119,16 +140,16 @@ class AnalystController {
                 if(i.dataValues.gender == 'nữ' ) {
                     let year = getYear(i.dataValues.dob);
                     if(year <= 1990) ++nu[0];
-                    else if(year <= 2000) ++nu[1];
-                    else if(year <= 2010) ++nu[2];
-                    else if(year <= 2020) ++nu[3];
+                    if(year <= 2000) ++nu[1];
+                    if(year <= 2010) ++nu[2];
+                    if(year <= 2020) ++nu[3];
                 }
                 else if(i.dataValues.gender == 'nam') {
                     let year = getYear(i.dataValues.dob);
                     if(year <= 1990) ++nam[0]
-                    else if(year <= 2000) ++nam[1];
-                    else if(year <= 2010) ++nam[2];
-                    else if(year <= 2020) ++nam[3];
+                    if(year <= 2000) ++nam[1];
+                    if(year <= 2010) ++nam[2];
+                    if(year <= 2020) ++nam[3];
                 }
             }
             let countNam = 0, countNu = 0;
@@ -140,8 +161,8 @@ class AnalystController {
                 success: true,
                 gender: {
                     tong: {
-                        countNam,
-                        countNu
+                        countNam: nam[3],
+                        countNu: nu[3]
                     },
                     nam,
                     nu
@@ -170,23 +191,23 @@ class AnalystController {
                 if(age <= 14) {
                     let year = getYear(i.dataValues.dob);
                     if(year <= 1990) ++kid[0];
-                    else if(year <= 2000) ++kid[1];
-                    else if(year <= 2010) ++kid[2];
-                    else if(year <= 2020) ++kid[3];
+                    if(year <= 2000) ++kid[1];
+                    if(year <= 2010) ++kid[2];
+                    if(year <= 2020) ++kid[3];
                 }
                 else if(age <65) {
                     let year = getYear(i.dataValues.dob);
                     if(year <= 1990) ++adult[0];
-                    else if(year <= 2000) ++adult[1];
-                    else if(year <= 2010) ++adult[2];
-                    else if(year <= 2020) ++adult[3];
+                    if(year <= 2000) ++adult[1];
+                    if(year <= 2010) ++adult[2];
+                    if(year <= 2020) ++adult[3];
                 }
                 else  {
                     let year = getYear(i.dataValues.dob);
                     if(year <= 1990) ++elder[0];
-                    else if(year <= 2000) ++elder[1];
-                    else if(year <= 2010) ++elder[2];
-                    else if(year <= 2020) ++elder[3];
+                    if(year <= 2000) ++elder[1];
+                    if(year <= 2010) ++elder[2];
+                    if(year <= 2020) ++elder[3];
                 }
             }
             let countKid = 0, countAdult = 0, countElder = 0;
