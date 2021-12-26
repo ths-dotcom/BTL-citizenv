@@ -77,7 +77,7 @@ define(['user-classes/User', 'jquery', 'lib/gstatic', 'axios'], function (User, 
 
             $('div.body-left').append($(this.creatingPlaceButton), $(this.creatingAccountButton), $(this.citizenInfoButton), $(this.monitoringProgressButton), $(this.showStatisticButton));
             if (!this.declare_per) {
-                $(this.creatingPlaceButton).prop('disabled', true);
+                $(this.creatingPlaceButton).addClass('divDisabled');
             }
         };
 
