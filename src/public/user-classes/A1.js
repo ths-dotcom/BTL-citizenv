@@ -18,65 +18,80 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('tbody').empty();
                     res.data.cities.forEach((e, i) => {
                         // add content to the city table
-                        $('tbody').append('<tr>' +
-                            `<td>${e.city_id}</td>` +
-                            `<td><input type="text" class="input-can-change input-citi-change" value="${e.city_name}"></td>` +
-                            `<td>chưa có</td>` +
-                            `<td>chưa có</td>` +
-                            '<td>Chưa hoàn thành' +
-                            ' </td>' +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
-                            '</tr>');
-
-                        // delete city event
-                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
-                            axios({
-                                method: 'DELETE',
-                                url: `/api/city/${e.city_id}`,
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    this.fillTableOfCity();
-                                };
-                            });
-                        });
-
-                        // modify city event
-                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
-                            axios({
-                                method: 'PUT',
-                                url: `/api/city/${e.city_id}`,
-                                data: {
-                                    data: {
-                                        city_name: $('input.input-can-change.input-citi-change').eq(i).val()
-                                    }
+                        axios({
+                            method: 'GET',
+                            url: `/api/user/check-done/${e.city_id}`
+                        }).then((res) => {
+                            if (res.data.success) {
+                                let is_done = '';
+                                if (res.data.is_done) {
+                                    is_done = 'Hoàn thành';
+                                } else {
+                                    is_done = 'Chưa hoàn thành';
                                 }
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    this.fillTableOfCity();
-                                };
-                            });
+
+                                $('tbody').append('<tr>' +
+                                    `<td>${e.city_id}</td>` +
+                                    `<td><input type="text" class="input-can-change input-citi-change" value="${e.city_name}"></td>` +
+                                    `<td>chưa có</td>` +
+                                    `<td>chưa có</td>` +
+                                    `<td>${is_done}` +
+                                    ' </td>' +
+                                    '<td>' +
+                                    '<button class="td-see-btn td-same-btn">' +
+                                    '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                                    '<span>Xem</span>' +
+                                    '</button>' +
+                                    '<button class="td-fix-btn td-same-btn">' +
+                                    '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                                    '<span>Sửa</span>' +
+                                    '</button>' +
+                                    '<button class="td-delete-btn td-same-btn">' +
+                                    '<i class="fa fa-times" aria-hidden="true"></i>' +
+                                    '<span>Xóa</span>' +
+                                    '</button>' +
+                                    '</td>' +
+                                    '</tr>');
+
+                                // delete city event
+                                $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                                    axios({
+                                        method: 'DELETE',
+                                        url: `/api/city/${e.city_id}`,
+                                    }).then((res) => {
+                                        if (res.data.success) {
+                                            this.fillTableOfCity();
+                                        };
+                                    });
+                                });
+
+                                // modify city event
+                                $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                                    axios({
+                                        method: 'PUT',
+                                        url: `/api/city/${e.city_id}`,
+                                        data: {
+                                            data: {
+                                                city_name: $('input.input-can-change.input-citi-change').eq(i).val()
+                                            }
+                                        }
+                                    }).then((res) => {
+                                        if (res.data.success) {
+                                            this.fillTableOfCity();
+                                        };
+                                    });
+                                });
+
+                                // view city event
+                                $('button.td-see-btn.td-same-btn').eq(i).bind('click', () => {
+                                    $('div.table-head-title').text('Danh sách các quận huyện');
+                                    $('thead tr').children().eq(0).text('Mã quận huyện');
+                                    $('thead tr').children().eq(1).text('Tên quận huyện');
+                                    this.fillTableOfDistrict(e.city_id);
+                                });
+                            }
                         });
 
-                        // view city event
-                        $('button.td-see-btn.td-same-btn').eq(i).bind('click', () => {
-                            $('div.table-head-title').text('Danh sách các quận huyện');
-                            $('thead tr').children().eq(0).text('Mã quận huyện');
-                            $('thead tr').children().eq(1).text('Tên quận huyện');
-                            this.fillTableOfDistrict(e.city_id);
-                        });
                     })
                 } else {
                     console.log(res);
@@ -93,65 +108,78 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('tbody').empty();
                     const filteredDistricts = res.data.districts.filter(e => e.city_id == city_id);
                     filteredDistricts.forEach((e, i) => {
-                        $('tbody').append('<tr>' +
-                            `<td>${e.district_id}</td>` +
-                            `<td><input type="text" class="input-can-change input-district-change" value="${e.district_name}"></td>` +
-                            `<td>chưa có</td>` +
-                            `<td>chưa có</td>` +
-                            '<td>Chưa hoàn thành' +
-                            ' </td>' +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
-                            '</tr>');
-
-                        // delete district event
-                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
-                            axios({
-                                method: 'DELETE',
-                                url: `/api/district/${e.district_id}`,
-                            }).then((res) => {
-                                console.log(res);
-                                if (res.data.success) {
-                                    this.fillTableOfDistrict(city_id);
-                                };
-                            });
-                        });
-
-                        // modify district event
-                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
-                            axios({
-                                method: 'PUT',
-                                url: `/api/district/${e.district_id}`,
-                                data: {
-                                    data: {
-                                        district_name: $('input.input-can-change.input-district-change').eq(i).val()
-                                    }
+                        axios({
+                            method: 'GET',
+                            url: `/api/user/check-done/${e.district_id}`
+                        }).then((res) => {
+                            if (res.data.success) {
+                                let is_done = '';
+                                if (res.data.is_done) {
+                                    is_done = 'Hoàn thành';
+                                } else {
+                                    is_done = 'Chưa hoàn thành';
                                 }
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    this.fillTableOfDistrict(city_id);
-                                };
-                            });
-                        });
+                                $('tbody').append('<tr>' +
+                                    `<td>${e.district_id}</td>` +
+                                    `<td><input type="text" class="input-can-change input-district-change" value="${e.district_name}"></td>` +
+                                    `<td>chưa có</td>` +
+                                    `<td>chưa có</td>` +
+                                    `<td>${is_done}` +
+                                    ' </td>' +
+                                    '<td>' +
+                                    '<button class="td-see-btn td-same-btn">' +
+                                    '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                                    '<span>Xem</span>' +
+                                    '</button>' +
+                                    '<button class="td-fix-btn td-same-btn">' +
+                                    '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                                    '<span>Sửa</span>' +
+                                    '</button>' +
+                                    '<button class="td-delete-btn td-same-btn">' +
+                                    '<i class="fa fa-times" aria-hidden="true"></i>' +
+                                    '<span>Xóa</span>' +
+                                    '</button>' +
+                                    '</td>' +
+                                    '</tr>');
 
-                        // view city event
-                        $('button.td-see-btn.td-same-btn').eq(i).bind('click', () => {
-                            $('div.table-head-title').text('Danh sách các phường xã');
-                            $('thead tr').children().eq(0).text('Mã phường xã');
-                            $('thead tr').children().eq(1).text('Tên phường xã');
-                            this.fillTableOfWard(e.district_id);
+                                // delete district event
+                                $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                                    axios({
+                                        method: 'DELETE',
+                                        url: `/api/district/${e.district_id}`,
+                                    }).then((res) => {
+                                        console.log(res);
+                                        if (res.data.success) {
+                                            this.fillTableOfDistrict(city_id);
+                                        };
+                                    });
+                                });
+
+                                // modify district event
+                                $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                                    axios({
+                                        method: 'PUT',
+                                        url: `/api/district/${e.district_id}`,
+                                        data: {
+                                            data: {
+                                                district_name: $('input.input-can-change.input-district-change').eq(i).val()
+                                            }
+                                        }
+                                    }).then((res) => {
+                                        if (res.data.success) {
+                                            this.fillTableOfDistrict(city_id);
+                                        };
+                                    });
+                                });
+
+                                // view city event
+                                $('button.td-see-btn.td-same-btn').eq(i).bind('click', () => {
+                                    $('div.table-head-title').text('Danh sách các phường xã');
+                                    $('thead tr').children().eq(0).text('Mã phường xã');
+                                    $('thead tr').children().eq(1).text('Tên phường xã');
+                                    this.fillTableOfWard(e.district_id);
+                                });
+                            }
                         });
                     })
                 } else {
@@ -169,64 +197,77 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('tbody').empty();
                     const filteredWards = res.data.wards.filter(e => e.district_id == district_id);
                     filteredWards.forEach((e, i) => {
-                        $('tbody').append('<tr>' +
-                            `<td>${e.ward_id}</td>` +
-                            `<td><input type="text" class="input-can-change input-ward-change" value="${e.ward_name}"></td>` +
-                            `<td>chưa có</td>` +
-                            `<td>chưa có</td>` +
-                            '<td>Chưa hoàn thành' +
-                            ' </td>' +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
-                            '</tr>');
-
-                        // delete ward event
-                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
-                            axios({
-                                method: 'DELETE',
-                                url: `/api/ward/${e.ward_id}`,
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    this.fillTableOfWard(district_id);
-                                };
-                            });
-                        });
-
-                        // modify district event
-                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
-                            axios({
-                                method: 'PUT',
-                                url: `/api/ward/${e.ward_id}`,
-                                data: {
-                                    data: {
-                                        ward_name: $('input.input-can-change.input-ward-change').eq(i).val()
-                                    }
+                        axios({
+                            method: 'GET',
+                            url: `/api/user/check-done/${e.ward_id}`
+                        }).then((res) => {
+                            if (res.data.success) {
+                                let is_done = '';
+                                if (res.data.is_done) {
+                                    is_done = 'Hoàn thành';
+                                } else {
+                                    is_done = 'Chưa hoàn thành';
                                 }
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    this.fillTableOfWard(district_id);
-                                };
-                            });
-                        });
+                                $('tbody').append('<tr>' +
+                                    `<td>${e.ward_id}</td>` +
+                                    `<td><input type="text" class="input-can-change input-ward-change" value="${e.ward_name}"></td>` +
+                                    `<td>chưa có</td>` +
+                                    `<td>chưa có</td>` +
+                                    `<td>${is_done}` +
+                                    ' </td>' +
+                                    '<td>' +
+                                    '<button class="td-see-btn td-same-btn">' +
+                                    '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                                    '<span>Xem</span>' +
+                                    '</button>' +
+                                    '<button class="td-fix-btn td-same-btn">' +
+                                    '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                                    '<span>Sửa</span>' +
+                                    '</button>' +
+                                    '<button class="td-delete-btn td-same-btn">' +
+                                    '<i class="fa fa-times" aria-hidden="true"></i>' +
+                                    '<span>Xóa</span>' +
+                                    '</button>' +
+                                    '</td>' +
+                                    '</tr>');
 
-                        // view city event
-                        $('button.td-see-btn.td-same-btn').eq(i).bind('click', () => {
-                            $('div.table-head-title').text('Danh sách các thôn bản');
-                            $('thead tr').children().eq(0).text('Mã thôn bản');
-                            $('thead tr').children().eq(1).text('Tên thôn bản');
-                            this.fillTableOfHamlet(e.ward_id);
+                                // delete ward event
+                                $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                                    axios({
+                                        method: 'DELETE',
+                                        url: `/api/ward/${e.ward_id}`,
+                                    }).then((res) => {
+                                        if (res.data.success) {
+                                            this.fillTableOfWard(district_id);
+                                        };
+                                    });
+                                });
+
+                                // modify district event
+                                $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                                    axios({
+                                        method: 'PUT',
+                                        url: `/api/ward/${e.ward_id}`,
+                                        data: {
+                                            data: {
+                                                ward_name: $('input.input-can-change.input-ward-change').eq(i).val()
+                                            }
+                                        }
+                                    }).then((res) => {
+                                        if (res.data.success) {
+                                            this.fillTableOfWard(district_id);
+                                        };
+                                    });
+                                });
+
+                                // view city event
+                                $('button.td-see-btn.td-same-btn').eq(i).bind('click', () => {
+                                    $('div.table-head-title').text('Danh sách các thôn bản');
+                                    $('thead tr').children().eq(0).text('Mã thôn bản');
+                                    $('thead tr').children().eq(1).text('Tên thôn bản');
+                                    this.fillTableOfHamlet(e.ward_id);
+                                });
+                            }
                         });
                     })
                 } else {
@@ -244,56 +285,69 @@ define(['user-classes/Manager', 'jquery', 'axios'], function (Manager, $, axios)
                     $('tbody').empty();
                     const filteredHamlets = res.data.hamlets.filter(e => e.ward_id == ward_id);
                     filteredHamlets.forEach((e, i) => {
-                        $('tbody').append('<tr>' +
-                            `<td>${e.hamlet_id}</td>` +
-                            `<td><input type="text" class="input-can-change input-hamlet-change" value="${e.hamlet_name}"></td>` +
-                            `<td>chưa có</td>` +
-                            `<td>chưa có</td>` +
-                            '<td>Chưa hoàn thành' +
-                            ' </td>' +
-                            '<td>' +
-                            '<button class="td-see-btn td-same-btn">' +
-                            '<i class="fa fa-eye" aria-hidden="true"></i>' +
-                            '<span>Xem</span>' +
-                            '</button>' +
-                            '<button class="td-fix-btn td-same-btn">' +
-                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-                            '<span>Sửa</span>' +
-                            '</button>' +
-                            '<button class="td-delete-btn td-same-btn">' +
-                            '<i class="fa fa-times" aria-hidden="true"></i>' +
-                            '<span>Xóa</span>' +
-                            '</button>' +
-                            '</td>' +
-                            '</tr>');
-
-                        // delete hamlet event
-                        $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
-                            axios({
-                                method: 'DELETE',
-                                url: `/api/hamlet/${e.hamlet_id}`,
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    this.fillTableOfHamlet(ward_id);
-                                };
-                            });
-                        });
-
-                        // modify hamlet event
-                        $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
-                            axios({
-                                method: 'PUT',
-                                url: `/api/hamlet/${e.hamlet_id}`,
-                                data: {
-                                    data: {
-                                        hamlet_name: $('input.input-can-change.input-hamlet-change').eq(i).val()
-                                    }
+                        axios({
+                            method: 'GET',
+                            url: `/api/user/check-done/${e.hamlet_id}`
+                        }).then((res) => {
+                            if (res.data.success) {
+                                let is_done = '';
+                                if (res.data.is_done) {
+                                    is_done = 'Hoàn thành';
+                                } else {
+                                    is_done = 'Chưa hoàn thành';
                                 }
-                            }).then((res) => {
-                                if (res.data.success) {
-                                    this.fillTableOfHamlet(ward_id);
-                                };
-                            });
+                                $('tbody').append('<tr>' +
+                                    `<td>${e.hamlet_id}</td>` +
+                                    `<td><input type="text" class="input-can-change input-hamlet-change" value="${e.hamlet_name}"></td>` +
+                                    `<td>chưa có</td>` +
+                                    `<td>chưa có</td>` +
+                                    `<td>${is_done}` +
+                                    ' </td>' +
+                                    '<td>' +
+                                    '<button class="td-see-btn td-same-btn">' +
+                                    '<i class="fa fa-eye" aria-hidden="true"></i>' +
+                                    '<span>Xem</span>' +
+                                    '</button>' +
+                                    '<button class="td-fix-btn td-same-btn">' +
+                                    '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+                                    '<span>Sửa</span>' +
+                                    '</button>' +
+                                    '<button class="td-delete-btn td-same-btn">' +
+                                    '<i class="fa fa-times" aria-hidden="true"></i>' +
+                                    '<span>Xóa</span>' +
+                                    '</button>' +
+                                    '</td>' +
+                                    '</tr>');
+
+                                // delete hamlet event
+                                $('button.td-delete-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other delete button
+                                    axios({
+                                        method: 'DELETE',
+                                        url: `/api/hamlet/${e.hamlet_id}`,
+                                    }).then((res) => {
+                                        if (res.data.success) {
+                                            this.fillTableOfHamlet(ward_id);
+                                        };
+                                    });
+                                });
+
+                                // modify hamlet event
+                                $('button.td-fix-btn.td-same-btn').eq(i).bind('click', () => { // add index to the event to prevent overlap with other modify button
+                                    axios({
+                                        method: 'PUT',
+                                        url: `/api/hamlet/${e.hamlet_id}`,
+                                        data: {
+                                            data: {
+                                                hamlet_name: $('input.input-can-change.input-hamlet-change').eq(i).val()
+                                            }
+                                        }
+                                    }).then((res) => {
+                                        if (res.data.success) {
+                                            this.fillTableOfHamlet(ward_id);
+                                        };
+                                    });
+                                });
+                            }
                         });
                     })
                 } else {
